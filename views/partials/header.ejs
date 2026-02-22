@@ -1,0 +1,37 @@
+<header>
+    <div class="head-logo">
+        <a href="/">
+            <h1>Meditrace</h1>
+        </a>
+    </div>
+    <!-- <form class="head-search">
+        <input type="text" name="search" placeholder="Поиск по блогам">
+        <button class="btn">
+            <img src="/img/icon/search.png" alt="">
+            <p>Найти</p>
+        </button>
+    </form> -->
+    <div class="head-nav">
+        <a href="/" class="nav-link">How It works</a>
+        <a href="/" class="nav-link">About</a>
+        <a href="/" class="nav-link">Pricing</a>
+        <a href="/" class="nav-link">Contact</a>
+    </div>
+    <div class="head-button">
+        <%
+            if(user._id && user.full_name.length > 0){
+        %>
+            <a href="/api/signout" class="buttons">Выход</a>
+            <a href="/profile/<%=user._id%>">
+                <img src="/img/avatar.png" alt="" class="profile-img">
+            </a>
+        <%
+            }else{
+        %>
+            <a href="/login" class="buttons">Sign In</a>
+            <a href="/regester" class="buttons">Get Started</a>
+        <%
+            }
+        %>
+    </div>
+</header>

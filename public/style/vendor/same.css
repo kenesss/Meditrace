@@ -1,0 +1,25 @@
+.container{
+    padding: 100px 5% 50px;
+    background-color: #f4f4f4;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+p{
+    font: Montserrat, sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+.btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: #00A2DC;
+    padding: 0 15px;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 4px;
+    font-weight: 500;
+}

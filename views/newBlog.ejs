@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+    <%- include('partials/head.ejs')%>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/header.ejs')%>
+    <div class="container">
+        <div class="main">
+            <form action="/api/blog/new" method="POST" class="form form-new" enctype="multipart/form-data">
+                <h3>Новый блог</h3>
+                <fieldset class="fieldset">
+                    <input type="text" placeholder="Введите заголовок блога" name="name">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <select name="genre" id="" class="choose">
+                        <%
+                            genres.forEach(genre => {
+                        %>
+                            <option value="<%=genre._id%>"><%= genre.name%></option>
+                        <%
+                            })
+                        %>
+                        <!-- <option value="">Выберите категорию</option> -->
+                    </select>
+                </fieldset>
+                <fieldset class="fieldset choose_file">
+                    <input type="file" name="img">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <input type="text" placeholder="Введите описание блога" name="description">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <button type="submit">Создать</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <%- include('partials/scripts.ejs')%>
+</body>
+</html>

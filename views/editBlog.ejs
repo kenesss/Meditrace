@@ -1,0 +1,49 @@
+<html lang="en">
+<head>
+    <%- include('partials/head.ejs')%>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/header.ejs')%>
+    <div class="container">
+        <div class="main">
+            <form action="/api/blog/edit" method="POST" class="form form-new" enctype="multipart/form-data">
+                <h3>Новый блог</h3>
+                <fieldset>
+                    <input type="hidden" value="<%=blog._id%>" name="id">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <input type="text" value="<%=blog.name%>" placeholder="Введите заголовок блога" name="name">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <select name="genre" id="" class="choose">
+                        <% 
+                            genres.forEach(genre => {
+                                if(genre.id == blog.country){
+                        %>
+                            <option value="<%=genre._id%>" selected><%= genre.name%></option>
+                        <%
+                                }else{
+                        %>
+                            <option value="<%=genre._id%>"><%= genre.name%></option>
+                        <%
+                                }
+                            })
+                        %>
+                    </select>
+                </fieldset>
+                <fieldset class="fieldset choose_file">
+                    <input type="file" name="img">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <input type="text" value="<%=blog.description%>" placeholder="Введите описание блога" name="description">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <button type="submit">Создать</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <%- include('partials/scripts.ejs')%>
+</body>
+</html>

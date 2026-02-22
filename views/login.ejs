@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <%- include('partials/head.ejs')%>
+    <title>Document</title>
+</head>
+<body>
+    <%- include('partials/header.ejs')%>
+    <div>
+        <div class="main">
+            <form action="/api/signin" method="POST" class="form">
+                <h3>Вход</h3>
+                <fieldset class="fieldset">
+                    <input type="email" placeholder="Введите email" name="email">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <input type="password" placeholder="Введите пароль" name="password">
+                </fieldset>
+                <fieldset class="fieldset">
+                    <button type="submit">Войти</button>
+                </fieldset>
+                <p>Войти с помощью: </p>
+                    <a href="/api/auth/github">Github</a>
+            </form>
+        </div>
+    </div>
+    <%- include('partials/scripts.ejs')%>
+</body>
+</html>
