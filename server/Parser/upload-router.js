@@ -1,26 +1,20 @@
-const express = require('express')
-const session = require("express-session");
-const mongooseStore = require("connect-mongo");
-const passport = require('passport')
-const path = require('path');
+const express = require('express');
 const multer = require('multer');
+const path = require('path');
 const fs = require('fs');
+const router = express.Router();
+
+// ИСПОЛЬЗУЕМ БОЛЕЕ МОЩНУЮ БИБЛИОТЕКУ
 const PDFParser = require("pdf2json");
 
-const app = express()
-
-// --- СТАРЫЙ БЛОК КОНФИГУРАЦИИ ---
-require('./server/config/db')
-require("./server/config/passport.js");
-
-// --- НОВЫЙ БЛОК: СОЗДАНИЕ ПАПКИ ЗАГРУЗОК ---
-const uploadDir = path.join(__dirname, 'uploads');
+// ФИКС 1: Создаем папку uploads, если её нет
+const uploadDir = path.join(__dirname, '../../uploads');
 if (!fs.existsSync(uploadDir)){
     fs.mkdirSync(uploadDir, { recursive: true });
     console.log('Создана папка для загрузок:', uploadDir);
 }
 
-// --- НОВЫЙ БЛОК: НАСТРОЙКА MULTER ---
+// Настройка multer для загузки файлов
 const upload = multer({ 
   dest: uploadDir,
   limits: {
@@ -35,41 +29,8 @@ const upload = multer({
   }
 });
 
-// --- ОБЪЕДИНЕННЫЕ НАСТРОЙКИ ПРИЛОЖЕНИЯ ---
-app.use(express.static(__dirname + '/public'))
-app.use(express.static(__dirname)); // Добавлено из второго кода
-app.use(express.urlencoded());
-app.use(express.json()); // Полезно для работы с PDF данными
-
-app.use(
-  session({
-    name: "decodeblog.session",
-    secret: "keyboard cat",
-    maxAge: 1000 * 60 * 60 * 7,
-    resave: false,
-    store: mongooseStore.create({
-      mongoUrl: "mongodb://localhost:27017",
-    }),
-  })
-);
-app.use(passport.initialize());
-app.use(passport.session());
-
-// --- СТАРЫЕ РОУТЫ БЛОГА ---
-app.use(require("./server/pages/router"))
-app.use(require("./server/Genres/router"));
-app.use(require("./server/auth/router"));
-app.use(require("./server/Blogs/router"));
-app.use(require("./server/Comments/router"));
-
-// --- НОВЫЕ РОУТЫ PDF (БЕЗШОВНО) ---
-
-// Главная страница загрузки (Внимание: если в ./server/pages/router тоже есть '/', этот код может не сработать первым)
-app.get('/pdf-upload-page', (req, res) => {
-    res.render('upload.ejs');
-});
-
-app.post('/upload', (req, res) => {
+// Маршрут для загрузки и обработки PDF
+router.post('/upload', (req, res) => {
     upload.single('reportPdf')(req, res, function(err) {
         if (err instanceof multer.MulterError) {
             console.error('Multer error:', err);
@@ -81,27 +42,39 @@ app.post('/upload', (req, res) => {
             console.error('Upload error:', err);
             return res.status(400).json({ success: false, error: err.message });
         }
+        
+        // Если ошибок нет, продолжаем обработку
         handlePdfUpload(req, res);
     });
 });
 
-// ФУНКЦИЯ ОБРАБОТКИ PDF
+// Функция обработки PDF
 async function handlePdfUpload(req, res) {
     let pdfPath = req.file ? req.file.path : null;
+
     try {
         if (!req.file) {
             return res.status(400).json({ success: false, error: 'Файл не выбран' });
         }
+
         console.log('Загружен файл:', req.file.originalname);
+
         let results = [];
+
         try {
             const pdfParser = new PDFParser(null, 1); 
+            
             await new Promise((resolve, reject) => {
                 pdfParser.on("pdfParser_dataError", errData => reject(new Error(errData.parserError)));
-                pdfParser.on("pdfParser_dataReady", () => resolve());
+                pdfParser.on("pdfParser_dataReady", () => resolve()); // Нам не нужен pdfData здесь
                 pdfParser.loadPDF(pdfPath);
             });
+            
+            // ИСПРАВЛЕНИЕ: Вызываем getRawTextContent у pdfParser, как в твоем parser.js!
             const rawText = pdfParser.getRawTextContent();
+            console.log("Длина извлеченного текста:", rawText.length, "символов");
+            
+            // 1. Разбиваем на строки и чистим мусор (твоя оригинальная логика)
             const lines = rawText.split('\n')
                 .map(line => line.trim())
                 .filter(line => {
@@ -112,23 +85,34 @@ async function handlePdfUpload(req, res) {
                            !line.includes("Науқас");
                 });
 
+            console.log("\n=== НАЙДЕННЫЕ ДАННЫЕ В PDF ===");
+            
             let allParsedData = [];
+            
+            // ТВОЯ ОРИГИНАЛЬНАЯ И ИДЕАЛЬНО РАБОЧАЯ РЕГУЛЯРКА ИЗ parser.js
             const regex = /^([А-Яа-яA-Z\s.(),-]{3,})\s+(\d+[.,]?\d*)\s+([%|г\/л|млн\/мкл|фл|пг|г\/дл|тыс\/мкл|мм\/ч|нмоль\/л]+)\s+(.*)$/i;
 
+            // 2. Парсим каждую строку
             lines.forEach(line => {
                 const match = line.match(regex);
                 if (match) {
                     const [_, name, value, unit, range] = match;
+                    
                     allParsedData.push({
                         name: name.trim(),
                         val: parseFloat(value.replace(',', '.')), 
                         unit: unit.trim(),
                         reference: range.trim()
                     });
+                    
+                    console.log(`✓ ${name.trim()} | ${value} | ${unit}`);
                 }
             });
+            console.log("==============================\n");
 
+            // 3. Выбираем только те анализы, которые нужны для графика
             const targetAnalyses = ['Тестостерон', 'Кортизол', 'Гемоглобин', 'Холестерин', 'Глюкоза', 'Лейкоциты'];
+            
             results = targetAnalyses.map(targetName => {
                 const found = allParsedData.find(item => item.name.toLowerCase().includes(targetName.toLowerCase()));
                 if (found) {
@@ -146,16 +130,24 @@ async function handlePdfUpload(req, res) {
             console.warn("Парсинг PDF не удался:", parseErr.message);
         }
 
+        // Логируем финальный результат, который уйдет на сайт
+        console.log("--- ИТОГОВЫЙ ОТВЕТ ДЛЯ САЙТА ---");
+        results.forEach(item => console.log(`${item.name}: ${item.val} ${item.unit}`));
+        console.log("--------------------------------\n");
+
+        // Удаляем временный файл
         if (pdfPath && fs.existsSync(pdfPath)) {
             fs.unlinkSync(pdfPath);
         }
 
+        // Отправляем ответ на фронтенд
         res.json({
             success: true,
             date: req.body.testDate || new Date().toISOString().split('T')[0],
             testType: req.body.testType || "Invitro Report",
             results: results
         });
+
     } catch (error) {
         console.error("Критическая ошибка:", error);
         if (pdfPath && fs.existsSync(pdfPath)) {
@@ -165,13 +157,8 @@ async function handlePdfUpload(req, res) {
     }
 }
 
-// --- НАСТРОЙКИ ШАБЛОНИЗАТОРА ---
-app.set("view engine", "ejs")
-app.set("public engine", "ejs") // Оставлено как было в первом коде
-app.set('views', [path.join(__dirname, 'views'), __dirname]); // Поддержка обеих структур папок
+module.exports = router;
 
-// --- ЗАПУСК ---
-const PORT = 8000 // Оставил порт 8000, так как он был в оригинале
-app.listen(PORT, () => {
-    console.log(`Server listening on ${PORT}`);
-})
+router.get('/pdf-upload-page', (req, res) => {
+    res.render('upload.ejs');
+});

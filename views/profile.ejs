@@ -3,66 +3,25 @@
     <title>Document</title>
 <body>
     <%- include('partials/header.ejs')%>
+    <div>
+        <div>
+            <h1>welcome back, <%=user.full_name%></h1>
+            <p>Mange your medical analysis and get AI-powered insights</p>
+        </div>
+    </div>
+    <div class="AI-insights">
+        <img src="/img/ai-insights.png" alt="AI Insights">
+        <div class="AI-text">
+            <h2>Insight of the Day</h2>
+            <p>Based on your Oct 12 report, increasing Magnesium may improve your sleep scores. Consider foods like almonds, spinach, and dark chocolate.</p>
+        </div>
+    </div>
     <div class="main-profile">
         <div class="main-left-profile">
             <div class="left-text profile_text">
-                <h1>Мои блоги</h1>
-                <a href="/new" class="btn">Новый блог</a>
+                <h1>Upload Medical Analysis</h1>
+                <a href="/pdf-upload-page" class="btn">Upload</a>
             </div>
-            <%
-                blog.forEach(item => {
-            %> 
-            <div class="block">
-                <div class = "block-img">
-                    <img src="<%=item.image%>" alt="">
-                </div>
-                <div class="left-subtext">
-                    <%
-                        if(loginUser.id == user.id){
-                    %>
-                    <div class="box">
-                        <div class = "box_bar">
-                            <i class="fa-solid fa-list" onclick="ChangeMenu(event)"></i>
-                            <div id = "burger-menu">
-                                <div class = "menu-item">
-                                    <a href="/edit/<%=item._id%>">Редактировать</a>
-                                    <a onclick="deleteBlog('<%=item._id%>', '<%=item.author._id%>')" >Удалить</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <%
-                        }
-                    %>  
-                    <h2><%=item.name%></h2>
-                    <p><%=item.description%></p>
-                </div>
-                <div class="left-icons">
-                    <div class="icon-line">
-                        <img src="/img/icon/date.png" alt="">
-                        <p>26.06.2020</p>
-                    </div>
-                    <div class="icon-line">
-                        <img src="/img/icon/eye.png" alt="">
-                        <p>21</p>
-                    </div>
-                    <div class="icon-line">
-                        <img src="/img/icon/message.png" alt="">
-                        <p>4</p>
-                    </div>
-                    <div class="icon-line">
-                        <img src="/img/icon/dmessage.png" alt="">
-                        <p><%=item.genre.name%></p>
-                    </div>
-                    <div class="icon-line">
-                        <img src="/img/icon/Vector.png" alt="">
-                        <p><%=item.author.full_name%></p>
-                    </div>
-                </div>
-            </div>
-            <%
-                })
-            %>
         </div>
         <div class="main-right">
             <img src="/img/avatar.png" class="foto-profile" alt="foto">
