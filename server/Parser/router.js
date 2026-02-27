@@ -4,34 +4,39 @@ const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 
+const Genres = require('../Genres/Genres');
+const User = require('../auth/User');
+const Blog = require('../Blogs/blog');
+const Comment = require("../Comments/Comments");
+
 // ИСПОЛЬЗУЕМ БОЛЕЕ МОЩНУЮ БИБЛИОТЕКУ
 const PDFParser = require("pdf2json");
 
 // ФИКС 1: Создаем папку uploads, если её нет
 const uploadDir = path.join(__dirname, '../../uploads');
-if (!fs.existsSync(uploadDir)){
+if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
     console.log('Создана папка для загрузок:', uploadDir);
 }
 
 // Настройка multer для загузки файлов
-const upload = multer({ 
-  dest: uploadDir,
-  limits: {
-    fileSize: 10 * 1024 * 1024 // 10MB лимит
-  },
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype === 'application/pdf') {
-      cb(null, true);
-    } else {
-      cb(new Error('Только PDF файлы разрешены'), false);
+const upload = multer({
+    dest: uploadDir,
+    limits: {
+        fileSize: 10 * 1024 * 1024 // 10MB лимит
+    },
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype === 'application/pdf') {
+            cb(null, true);
+        } else {
+            cb(new Error('Только PDF файлы разрешены'), false);
+        }
     }
-  }
 });
 
 // Маршрут для загрузки и обработки PDF
 router.post('/upload', (req, res) => {
-    upload.single('reportPdf')(req, res, function(err) {
+    upload.single('reportPdf')(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             console.error('Multer error:', err);
             if (err.code === 'LIMIT_FILE_SIZE') {
@@ -42,7 +47,7 @@ router.post('/upload', (req, res) => {
             console.error('Upload error:', err);
             return res.status(400).json({ success: false, error: err.message });
         }
-        
+
         // Если ошибок нет, продолжаем обработку
         handlePdfUpload(req, res);
     });
@@ -62,33 +67,33 @@ async function handlePdfUpload(req, res) {
         let results = [];
 
         try {
-            const pdfParser = new PDFParser(null, 1); 
-            
+            const pdfParser = new PDFParser(null, 1);
+
             await new Promise((resolve, reject) => {
                 pdfParser.on("pdfParser_dataError", errData => reject(new Error(errData.parserError)));
                 pdfParser.on("pdfParser_dataReady", () => resolve()); // Нам не нужен pdfData здесь
                 pdfParser.loadPDF(pdfPath);
             });
-            
+
             // ИСПРАВЛЕНИЕ: Вызываем getRawTextContent у pdfParser, как в твоем parser.js!
             const rawText = pdfParser.getRawTextContent();
             console.log("Длина извлеченного текста:", rawText.length, "символов");
-            
+
             // 1. Разбиваем на строки и чистим мусор (твоя оригинальная логика)
             const lines = rawText.split('\n')
                 .map(line => line.trim())
                 .filter(line => {
-                    return line.length > 0 && 
-                           !line.startsWith("Warning:") && 
-                           !line.includes("---Page") &&
-                           !line.includes("Индивидуальный") &&
-                           !line.includes("Науқас");
+                    return line.length > 0 &&
+                        !line.startsWith("Warning:") &&
+                        !line.includes("---Page") &&
+                        !line.includes("Индивидуальный") &&
+                        !line.includes("Науқас");
                 });
 
             console.log("\n=== НАЙДЕННЫЕ ДАННЫЕ В PDF ===");
-            
+
             let allParsedData = [];
-            
+
             // ТВОЯ ОРИГИНАЛЬНАЯ И ИДЕАЛЬНО РАБОЧАЯ РЕГУЛЯРКА ИЗ parser.js
             const regex = /^([А-Яа-яA-Z\s.(),-]{3,})\s+(\d+[.,]?\d*)\s+([%|г\/л|млн\/мкл|фл|пг|г\/дл|тыс\/мкл|мм\/ч|нмоль\/л]+)\s+(.*)$/i;
 
@@ -97,14 +102,14 @@ async function handlePdfUpload(req, res) {
                 const match = line.match(regex);
                 if (match) {
                     const [_, name, value, unit, range] = match;
-                    
+
                     allParsedData.push({
                         name: name.trim(),
-                        val: parseFloat(value.replace(',', '.')), 
+                        val: parseFloat(value.replace(',', '.')),
                         unit: unit.trim(),
                         reference: range.trim()
                     });
-                    
+
                     console.log(`✓ ${name.trim()} | ${value} | ${unit}`);
                 }
             });
@@ -112,7 +117,7 @@ async function handlePdfUpload(req, res) {
 
             // 3. Выбираем только те анализы, которые нужны для графика
             const targetAnalyses = ['Тестостерон', 'Кортизол', 'Гемоглобин', 'Холестерин', 'Глюкоза', 'Лейкоциты'];
-            
+
             results = targetAnalyses.map(targetName => {
                 const found = allParsedData.find(item => item.name.toLowerCase().includes(targetName.toLowerCase()));
                 if (found) {
@@ -157,8 +162,15 @@ async function handlePdfUpload(req, res) {
     }
 }
 
-module.exports = router;
-
-router.get('/pdf-upload-page', (req, res) => {
-    res.render('upload.ejs');
+router.get("/pdf-upload-page/:id?", async function (req, res) {
+    try {
+        res.render("upload", { 
+            user: req.user ? req.user : {}, 
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
 });
+
+module.exports = router;

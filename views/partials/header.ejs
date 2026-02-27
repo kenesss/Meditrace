@@ -1,9 +1,5 @@
 <header>
-    <div class="head-logo">
-        <a href="/">
-            <h1>Meditrace</h1>
-        </a>
-    </div>
+
     <!-- <form class="head-search">
         <input type="text" name="search" placeholder="Поиск по блогам">
         <button class="btn">
@@ -11,27 +7,48 @@
             <p>Найти</p>
         </button>
     </form> -->
-    <div class="head-nav">
-        <a href="/" class="nav-link">How It works</a>
-        <a href="/" class="nav-link">About</a>
-        <a href="/" class="nav-link">Pricing</a>
-        <a href="/" class="nav-link">Contact</a>
-    </div>
-    <div class="head-button">
-        <%
-            if(user._id && user.full_name.length > 0){
+
+    <% if(user._id && user.full_name.length> 0){
         %>
-            <a href="/api/signout" class="buttons">Выход</a>
-            <a href="/profile/<%=user._id%>">
-                <img src="/img/avatar.png" alt="" class="profile-img">
-            </a>
-        <%
-            }else{
-        %>
-            <a href="/login" class="buttons">Sign In</a>
-            <a href="/regester" class="buttons">Get Started</a>
-        <%
-            }
-        %>
-    </div>
+        <div class="head-container">
+            <div class="head-logo-log">
+                <div class="head-nav-log">
+                    <h1>Welcome back, <%=user.full_name%>!</h1>
+                    <p>Mange your medical analysis and get AI-powered insights</p>
+                </div>
+            </div>
+            <div class="head-profile">
+                <div class="profile">
+                    <a href="/add-members/<%= user._id %>">
+                        <img src="/img/avatar.png" alt="" class="profile-img">
+                        <p>
+                            <%=user.full_name%>
+                        </p>
+                    </a>
+                </div>
+                <div class="logout">
+                    <a href="/api/signout"><img src="/img/icon/Icon8.png" alt="">Logout</a>
+                </div>
+            </div>
+        </div>
+        <% }else{ %>
+            <div class="head-container">
+                <div class="head-logo">
+                    <a href="/">
+                        <h1>Meditrace</h1>
+                    </a>
+                </div>
+                <div class="head-nav">
+                    <a href="/" class="nav-link">How It works</a>
+                    <a href="/" class="nav-link">About</a>
+                    <a href="/" class="nav-link">Pricing</a>
+                    <a href="/" class="nav-link">Contact</a>
+                </div>
+                <div class="head-button">
+                    <a href="/login" class="buttons">Sign In</a>
+                    <a href="/regester" class="buttons">Get Started</a>
+                </div>
+            </div>
+            <% } %>
+
 </header>

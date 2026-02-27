@@ -66,9 +66,24 @@ router.get("/profile/:id", async (req, res) => {
     res.redirect("/not-found");
   }
 });
+
 router.get("/not-found", (req, res) => {
   res.render("notFound");
 })
+
+router.get("/add-members/:id", async function (req, res) {
+    try {
+        const allGenres = await Genres.find(); 
+        
+        res.render("addMembers", { 
+            user: req.user ? req.user : {}, 
+            genres: allGenres // Важно!
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("Server Error");
+    }
+});
 
 router.get("/details/:id", async(req, res) => {
   const comments = await Comment.find({ blogId: req.params.id }).populate("authorId");

@@ -1,44 +1,85 @@
 <html lang="en">
-    <%- include('partials/head.ejs')%>
+<%- include('partials/head.ejs')%>
     <title>Document</title>
-<body>
-    <%- include('partials/header.ejs')%>
-    <div>
-        <div>
-            <h1>welcome back, <%=user.full_name%></h1>
-            <p>Mange your medical analysis and get AI-powered insights</p>
-        </div>
-    </div>
-    <div class="AI-insights">
-        <img src="/img/ai-insights.png" alt="AI Insights">
-        <div class="AI-text">
-            <h2>Insight of the Day</h2>
-            <p>Based on your Oct 12 report, increasing Magnesium may improve your sleep scores. Consider foods like almonds, spinach, and dark chocolate.</p>
-        </div>
-    </div>
-    <div class="main-profile">
-        <div class="main-left-profile">
-            <div class="left-text profile_text">
-                <h1>Upload Medical Analysis</h1>
-                <a href="/pdf-upload-page" class="btn">Upload</a>
+
+    <body>
+        <%- include('partials/header.ejs')%>
+            <div class="AI-insights">
+                <div class="container-base">
+                    <img src="/public/img/icon/Icon10.png" alt="">
+                </div>
+                <div class="AI-text">
+                    <h2>Insight of the Day</h2>
+                    <p>Based on your Oct 12 report, increasing Magnesium may improve your sleep scores. Consider foods
+                        like almonds, spinach, and dark chocolate.</p>
+                </div>
             </div>
-        </div>
-        <div class="main-right">
-            <img src="/img/avatar.png" class="foto-profile" alt="foto">
-            <p><span>Полное имя:</span><%=user.full_name%></p>
-            <p><span>E-mail: </span><%=user.email%></p>
-            <%
-                if(loginUser.id == user.id){
-            %>
-                        <a class="edit-btn">Редактировать профиль</a>
-            <%
-                }
-            %>
-        </div>
-    </div>
-    <footer>
-        <%- include('partials/footer.ejs')%>
-    </footer>
-    <%- include('partials/scripts.ejs')%>
-</body>
+            <% if(true){ %>
+                <div class="analytics-section">
+                    <div class="analytics">
+                        <div class="analytics-card">
+                            <div class="analytics-card-header">
+                                <img src="/public/img/icon/Container4.png" alt="">
+                                <div class="analytics-card-header-text">
+                                    <img src="/public/img/icon/Icon.png" alt="">
+                                    <p>-2,5%</p>
+                                </div>
+                            </div class="analytics-card-body">
+                            <p>117/77</p>
+                            <p>Blood Pressure</p>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-card-header">
+                                <img src="/public/img/icon/Visualize1.png" alt="">
+                                <div class="analytics-card-header-text">
+                                    <img src="/public/img/icon/Icon.png" alt="">
+                                    <p>-12.5%</p>
+                                </div>
+                            </div class="analytics-card-body">
+                            <p>175 mg/dL</p>
+                            <p>Cholesterol</p>
+                        </div>
+                        <div class="analytics-card">
+                            <div class="analytics-card-header">
+                                <img src="/public/img/icon/Visualize3.png" alt="">
+                                <div class="analytics-card-header-text">
+                                    <img src="/public/img/icon/Icon.png" alt="">
+                                    <p>Normal</p>
+                                </div>
+                            </div class="analytics-card-body">
+                            <p>89 mg/dL</p>
+                            <p>Glucose</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="recent-analyses">
+                    <h2>Recent Analyses</h2>
+                    <div class="recent-analyses-cards" onclick="window.location.href='/pdf-upload-page/<%= user._id %>'" style="cursor: pointer;">
+                        <img src="/public/img/icon/Icon11.png" alt="">
+                        <p>No analyses uploaded yet</p>
+                        <p>Upload your first medical analysis. to get started</p>
+                    </div>
+                </div>
+                <div class="recent-analyses">
+                    <h2>AI Analysis & Recommendations</h2>
+                    <div class="recent-analyses-cards">
+                        <img src="/public/img/icon/Icon12.png" alt="">
+                        <p>Select an analysis to view details</p>
+                    </div>
+                </div>
+                <% }else{ %>
+                    <div class="no-data-section">
+                        <h2>No data available</h2>
+                        <p>Please upload a PDF report to see your analytics.</p>
+                        <div class="upload-btn">
+                            <a href="/pdf-upload-page">+</a>
+                        </div>
+                    </div>
+                    <% } %>
+                        <footer>
+                            <%- include('partials/footer.ejs')%>
+                        </footer>
+                        <%- include('partials/scripts.ejs')%>
+    </body>
+
 </html>

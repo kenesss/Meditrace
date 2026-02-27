@@ -1,0 +1,63 @@
+<html lang="en">
+<%- include('partials/head.ejs')%>
+    <title>Document</title>
+
+    <body>
+        <%- include('partials/header.ejs')%>
+            <div class="add-members-container">
+                <div class="back-to-dashboard" onclick="window.location.href='/profile/<%= user._id %>'"
+                    style="cursor: pointer;">
+                    <img src="/public/img/icon/Icon13.png" alt="">
+                    <p>Back to Dashboard</p>
+                </div>
+                <div class="add-members-content">
+                    <div class="family-members-info">
+                        <h2>Family Members</h2>
+                        <p>Manage health records for entire family</p>
+                    </div>
+                    <button class="member-btn" type="button" onclick="openAddMemberModal()">+ Add Family
+                        Members</button>
+                </div>
+            </div>
+
+            <div class="no-family-members">
+                <img src="/public/img/icon/Icon14.png" alt="">
+                <h3>No family members added yet</h3>
+                <p>Add family members to manage their health records in one place</p>
+                <button class="member-btn" type="button" onclick="openAddMemberModal()">+ Add Your First Family
+                    Member</button>
+            </div>
+            <div id="addMemberModal" class="modal-overlay" onclick="if(event.target===this) closeAddMemberModal()">
+                <div class="modal" role="dialog" aria-modal="true" aria-labelledby="addMemberTitle">
+                    <div class="modal-header">
+                        <h3 id="addMemberTitle">Add Family Member</h3>
+                        <button class="modal-close" type="button" onclick="closeAddMemberModal()">✕</button>
+                    </div>
+                    <div class="error" id="modalError"></div>
+                    <form class="modal-form" id="addMemberForm" action="/add-members/<%= user._id %>" method="POST">
+                        <fieldset class="fieldset">
+                            <input type="email" placeholder="Введите email" name="email">
+                        </fieldset>
+                        <fieldset class="fieldset">
+                            <input type="text" placeholder="Введите полное имя" name="full_name">
+                        </fieldset>
+                        <fieldset class="fieldset">
+                            <input type="password" placeholder="Введите пароль" name="password">
+                        </fieldset>
+                        <fieldset class="fieldset">
+                            <input type="password" placeholder="Подтвердите пароль" name="re_password">
+                        </fieldset>
+                        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px;">
+                            <button type="button" onclick="closeAddMemberModal()">Cancel</button>
+                            <button type="submit">Add Member</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <footer>
+                <%- include('partials/footer.ejs')%>
+            </footer>
+            <%- include('partials/scripts.ejs')%>
+    </body>
+
+</html>
