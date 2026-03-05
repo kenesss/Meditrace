@@ -18,20 +18,59 @@
                 </div>
             </div>
             <div class="head-profile">
-                <div class="profile">
-                    <a href="/add-members/<%= user._id %>">
+                <div class="profile-container">
+                    <div class="profile-trigger" id="profileTrigger">
                         <img src="/img/avatar.png" alt="" class="profile-img">
                         <p>
                             <%=user.full_name%>
                         </p>
-                    </a>
+                        <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            class="chevron-icon">
+                            <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </div>
+
+                    <div class="profile-dropdown" id="profileDropdown">
+                        <div class="dropdown-header">SWITCH PROFILE</div>
+
+                        <div class="dropdown-user active">
+                            <div class="user-avatar" style="background: linear-gradient(135deg, #6366f1, #a855f7);">Y
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">You</span>
+                                <span class="user-role">Admin</span>
+                            </div>
+                            <div class="status-icon">✔</div>
+                        </div>
+
+                        <div class="dropdown-user">
+                            <div class="user-avatar" style="background: linear-gradient(135deg, #a855f7, #ec4899);">Z
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">Zhibek</span>
+                                <span class="user-role">Sister</span>
+                            </div>
+                            <div class="status-icon unchecked">✔</div>
+                        </div>
+
+                        <div class="dropdown-divider"></div>
+
+                        <a href="/add-members/<%= user._id %>" class="manage-link">
+                            <img src="/public/img/icon/Settings-purple.png" alt="" class="manage-icon">
+                            Manage Family Members
+                        </a>
+                    </div>
                 </div>
-                <div>
-                    <a href="/setting/<%= user._id %>" class="edit-btn">Редактировать профиль</a>
-                </div>
-                <div class="logout">
-                    <a href="/api/signout"><img src="/img/icon/Icon8.png" alt="">Logout</a>
-                </div>
+
+                <a href="/setting/<%= user._id %>" class="logout-link">
+                    <img src="/public/img/icon/Settings.png" alt="">
+                    <span>Setting</span>
+                </a>
+                <a href="/api/signout" class="logout-link">
+                    <img src="/img/icon/Icon8.png" alt="">
+                    <span>Logout</span>
+                </a>
             </div>
         </div>
         <% }else{ %>
