@@ -2,9 +2,8 @@ header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 23px 5%;
+    padding: 23px 10%;
     border-bottom: 1px solid #F3F4F6;
-    margin: 0px 5%;
 }
 .head-logo a{
     text-decoration: none;
@@ -103,6 +102,7 @@ header{
     padding: 10px 16px;
     border-radius: 14px;
     text-decoration: none;
+    color: #111;
 }
 .profile img{
     width: 40px;

@@ -6,7 +6,7 @@ const Blog = require('../Blogs/blog')
 const Comment = require("../Comments/Comments");
 
 
-router.get('/', async(req, res) => {
+router.get('/', async (req, res) => {
   const options = {};
   const genres = await Genres.findOne({ key: req.query.genre });
   if (genres) {
@@ -18,38 +18,40 @@ router.get('/', async(req, res) => {
   if (req.query.page && req.query.page > 0) {
     page = req.query.page;
   }
-  if(req.query.search && req.query.search.length > 0){
+  if (req.query.search && req.query.search.length > 0) {
     options.$or = [
       {
         name: new RegExp(req.query.search, 'i')
       }
     ]
   }
-    res.locals.search = req.query.search
+  res.locals.search = req.query.search
   const totalBlog = await Blog.countDocuments(options);
-  const allGenres = await Genres.find() 
+  const allGenres = await Genres.find()
   const blog = await Blog.find(options).limit(limit).skip(page * limit).populate("genre").populate("author");
-  res.render("index", {genres: allGenres, user: req.user ? req.user : {}, blog: blog, pages: Math.ceil(totalBlog / limit)});
+  res.render("index", { genres: allGenres, user: req.user ? req.user : {}, blog: blog, pages: Math.ceil(totalBlog / limit) });
 })
 
 router.get("/login", (req, res) => {
-  res.render("login", {user: req.user ? req.user :{}});
+  res.render("login", { user: req.user ? req.user : {} });
 });
 
 router.get("/regester", (req, res) => {
   res.render("regester", { user: req.user ? req.user : {} });
 });
 
-router.get("/new", async(req, res) => {
+router.get("/new", async (req, res) => {
   const allGenres = await Genres.find()
-  res.render("newBlog", { genres: allGenres, user: req.user ? req.user : {}});
+  res.render("newBlog", { genres: allGenres, user: req.user ? req.user : {} });
 });
 
-router.get("/edit/:id", async(req, res) => {
+router.get("/edit/:id", async (req, res) => {
   const allGenres = await Genres.find()
-  const blog = await Blog.findById(req.params.id) 
-  res.render("editBlog", { genres: allGenres, user: req.user ? req.user : {}, blog});
+  const blog = await Blog.findById(req.params.id)
+  res.render("editBlog", { genres: allGenres, user: req.user ? req.user : {}, blog });
 });
+
+
 
 router.get("/profile/:id", async (req, res) => {
   const allGenres = await Genres.find();
@@ -72,20 +74,32 @@ router.get("/not-found", (req, res) => {
 })
 
 router.get("/add-members/:id", async function (req, res) {
-    try {
-        const allGenres = await Genres.find(); 
-        
-        res.render("addMembers", { 
-            user: req.user ? req.user : {}, 
-            genres: allGenres // Важно!
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("Server Error");
-    }
+  try {
+    const allGenres = await Genres.find();
+
+    res.render("addMembers", {
+      user: req.user ? req.user : {},
+      genres: allGenres 
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Server Error");
+  }
 });
 
-router.get("/details/:id", async(req, res) => {
+router.get("/setting/:id", async function (req, res) {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    res.render("setting", {
+      user: user,
+      loginUser: req.user,
+    });
+  } else {
+    res.redirect("/not-found");
+  }
+});
+
+router.get("/details/:id", async (req, res) => {
   const comments = await Comment.find({ blogId: req.params.id }).populate("authorId");
   const blog = await Blog.findById(req.params.id).populate("genre").populate("author");
   const allGenres = await Genres.find();
