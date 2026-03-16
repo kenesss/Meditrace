@@ -4,6 +4,7 @@ const Genres = require('../Genres/Genres')
 const User = require('../auth/User')
 const Blog = require('../Blogs/blog')
 const Comment = require("../Comments/Comments");
+const Analysis = require('../Parser/Analysis');
 
 
 router.get('/', async (req, res) => {
@@ -54,18 +55,29 @@ router.get("/edit/:id", async (req, res) => {
 
 
 router.get("/profile/:id", async (req, res) => {
-  const allGenres = await Genres.find();
-  const blog = await Blog.find().populate("genre").populate('author')
-  const user = await User.findById(req.params.id);
-  if (user) {
-    res.render("profile", {
-      user: user,
-      genres: allGenres,
-      loginUser: req.user,
-      blog: blog,
-    });
-  } else {
-    res.redirect("/not-found");
+  try {
+    const allGenres = await Genres.find();
+    const blog = await Blog.find().populate("genre").populate('author');
+    const user = await User.findById(req.params.id);
+
+    if (user) {
+      // КЛЮЧЕВОЙ МОМЕНТ: Ищем анализы пользователя в БД
+      const analyses = await Analysis.find({ userId: req.params.id }).sort({ testDate: -1 });
+
+      // Передаем переменную analyses в шаблон
+      res.render("profile", {
+        user: user,
+        genres: allGenres,
+        loginUser: req.user,
+        blog: blog,
+        analyses: analyses // <-- ОШИБКА БЫЛА ТУТ: эта строка обязательна!
+      });
+    } else {
+      res.redirect("/not-found");
+    }
+  } catch (error) {
+    console.error("Ошибка при загрузке профиля:", error);
+    res.status(500).send("Internal Server Error");
   }
 });
 
@@ -104,6 +116,17 @@ router.get("/setting/:id", async function (req, res) {
   const user = await User.findById(req.params.id);
   if (user) {
     res.render("setting", {
+      user: user,
+      loginUser: req.user,
+    });
+  } else {
+    res.redirect("/not-found");
+  }
+});
+router.get("/ai/:id", async function (req, res) {
+  const user = await User.findById(req.params.id);
+  if (user) {
+    res.render("ai", {
       user: user,
       loginUser: req.user,
     });

@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express')
 const session = require("express-session");
 const mongooseStore = require("connect-mongo");
@@ -6,6 +7,8 @@ const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
 const PDFParser = require("pdf2json");
+
+console.log("Ключ OpenAI загружен:", process.env.OPENAI_API_KEY ? "Да" : "Нет");
 
 const app = express()
 
@@ -51,12 +54,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(require("./server/Genres/router"));
-app.use(require("./server/auth/router"));
-app.use(require("./server/pages/router"))
-app.use(require("./server/Blogs/router"));
-app.use(require("./server/Comments/router"));
 app.use(require("./server/Parser/router"));
+app.use(require("./server/pages/router"));
+app.use(require("./server/auth/router")); 
+app.use(require("./server/ai/router"));
 
 app.set("view engine", "ejs")
 app.set("public engine", "ejs") 

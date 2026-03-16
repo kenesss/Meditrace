@@ -4,17 +4,18 @@ const path = require('path');
 const fs = require('fs');
 const router = express.Router();
 
+// Импорт моделей
+const Analysis = require('./Analysis'); // Путь к созданной модели
 const Genres = require('../Genres/Genres');
 const User = require('../auth/User');
 const Blog = require('../Blogs/blog');
 const Comment = require("../Comments/Comments");
 
-// ИСПОЛЬЗУЕМ БОЛЕЕ МОЩНУЮ БИБЛИОТЕКУ
 const PDFParser = require("pdf2json");
 
-// Настройка multer для работы с памятью (не сохраняет файл на диск)
-const storage = multer.memoryStorage(); 
-const upload = multer({ 
+// Настройка multer для работы с памятью
+const storage = multer.memoryStorage();
+const upload = multer({
     storage: storage,
     limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
     fileFilter: (req, file, cb) => {
@@ -39,290 +40,115 @@ router.post('/upload', (req, res) => {
             console.error('Upload error:', err);
             return res.status(400).json({ success: false, error: err.message });
         }
-
-        // Если ошибок нет, продолжаем обработку
         handlePdfUpload(req, res);
     });
 });
 
-// Функция обработки PDF
+// Основная функция обработки
 async function handlePdfUpload(req, res) {
-
     try {
-
         if (!req.file) {
-
             return res.status(400).json({ success: false, error: 'Файл не выбран' });
-
         }
-
-
 
         console.log('Загружен файл:', req.file.originalname);
 
-        console.log('User ID from session:', req.session.userId);
-
-        console.log('Is temp user:', req.session.isTempUser);
-
-        console.log('File size:', req.file.buffer.length, 'bytes');
-
-
-
-        let results = [];
-
-
-
-        try {
-
-            const pdfParser = new PDFParser(null, 1);
-
-
-
-            // Создаем временный файл для парсинга (pdf2json требует файл)
-
-            const tempPath = path.join(__dirname, '../../temp_' + Date.now() + '.pdf');
-
-            require('fs').writeFileSync(tempPath, req.file.buffer);
-
-
-
-            await new Promise((resolve, reject) => {
-
-                pdfParser.on("pdfParser_dataError", errData => reject(new Error(errData.parserError)));
-
-                pdfParser.on("pdfParser_dataReady", () => resolve());
-
-                pdfParser.loadPDF(tempPath);
-
-            });
-
-
-
-            const rawText = pdfParser.getRawTextContent();
-
-            console.log("Длина извлеченного текста:", rawText.length, "символов");
-
-
-
-            // Удаляем временный файл
-
-            require('fs').unlinkSync(tempPath);
-
-
-
-            // Парсинг биомаркеров
-
-            const lines = rawText.split('\n')
-
-                .map(line => line.trim())
-
-                .filter(line => {
-
-                    return line.length > 0 &&
-
-                        !line.startsWith("Warning:") &&
-
-                        !line.includes("---Page") &&
-
-                        !line.includes("Индивидуальный") &&
-
-                        !line.includes("Науқас") &&
-
-                        !line.includes("PAGE") &&
-
-                        !line.includes("Page") &&
-
-                        !line.match(/^\d+$/) && // Убираем строки с только цифрами
-
-                        !line.match(/^[A-ZА-ЯЁё]+$/i); // Убираем строки с только заголовками
-
-                });
-
-
-
-            // Расширенный список анализов для поиска
-
-            const targetAnalyses = [
-
-                'Тестостерон', 'Кортизол', 'Гемоглобин', 'Холестерин', 'Глюкоза', 'Лейкоциты',
-
-                'Эритроциты', 'Тромбоциты', 'Гематокрит', 'MCV', 'MCH', 'MCHC', 'RDW',
-
-                'Нейтрофилы', 'Лимфоциты', 'Моноциты', 'Эозинофилы', 'Базофилы',
-
-                'СОЭ', 'СРБ', 'Креатинин', 'Мочевина', 'Мочевая кислота',
-
-                'Билирубин общий', 'Билирубин прямой', 'Билирубин непрямой',
-
-                'АЛТ', 'АСТ', 'ЩФ', 'ГГТ', 'Амилаза',
-
-                'Белок общий', 'Альбумин', 'Калий', 'Натрий', 'Хлор',
-
-                'Кальций', 'Фосфор', 'Магний', 'Железо',
-
-                'Тиреотропин', 'Т3 свободный', 'Т4 свободный', 'Т4 общий',
-
-                'Пролактин', 'Эстрадиол', 'Прогестерон', 'ФСГ', 'ЛГ',
-
-                'Витамин D', 'Витамин B12', 'Фолиевая кислота',
-
-                'Триглицериды', 'ЛПНП', 'ЛПВП', 'ЛПОНП',
-
-                'С-реактивный белок', 'Фибриноген', 'D-димер',
-
-                'Инсулин', 'С-пептид', 'Гликированный гемоглобин'
-
-            ];
-
-
-
-            // 1. ИСПРАВЛЕННАЯ РЕГУЛЯРКА:
-
-            // (.*?) - берет любые символы в названии (включая запятые и скобки)
-
-            // круглые скобки (...) для точного совпадения единиц измерения
-
-            const regex = /^(.*?)\s+(\d+[.,]?\d*)\s+(%|г\/л|млн\/мкл|фл|пг|г\/дл|тыс\/мкл|мм\/ч|нмоль\/л|ммоль\/л|мкмоль\/л|мкг\/л|мг\/дл|нг\/мл|мед\/л|ед\/л|т\/год|г\/%|мк\/л|ме\/л)(?:\s+(.*))?$/i;
-
-
-
-            let allParsedData = [];
-            let skipNext = false; // Флаг для пропуска склеенных строк
-
-            // Проходим по строкам
-            for (let i = 0; i < lines.length; i++) {
-                if (skipNext) {
-                    skipNext = false;
-                    continue; 
-                }
-
-                // Убираем надстрочные знаки и чистим мусор
-                let cleanLine = lines[i]
-                    .replace(/ᴺᴬ/g, '')
-                    .replace(/NA/g, '')
-                    .replace(/^Клинический анализ крови\s*/i, '') 
-                    .trim();
-                
-                // РАЗЛЕПЛЯЕМ слипшиеся скобки и цифры (например: "эр.)34.9" превращаем в "эр.) 34.9")
-                cleanLine = cleanLine.replace(/\)(\d+[.,]?\d*)/g, ') $1');
-                
-                // Схлопываем множественные пробелы
-                cleanLine = cleanLine.replace(/\s{2,}/g, ' ');
-
-                let match = cleanLine.match(regex);
-                
-                let usedCombined = false;
-                let combinedLineStr = "";
-
-                // Пробуем склеить текущую строку со следующей
-                if (!match && i < lines.length - 1) {
-                    let nextCleanLine = lines[i+1].replace(/ᴺᴬ/g, '').replace(/NA/g, '').trim();
-                    nextCleanLine = nextCleanLine.replace(/\)(\d+[.,]?\d*)/g, ') $1'); // Тоже разлепляем
-                    combinedLineStr = cleanLine + " " + nextCleanLine;
-                    match = combinedLineStr.replace(/\s{2,}/g, ' ').match(regex);
-                    
-                    if (match) {
-                        skipNext = true; 
-                        usedCombined = true;
-                    }
-                }
-
-                if (match) {
-                    let [_, name, value, unit, range] = match;
-                    
-                    let cleanName = name
-                        .replace(/^\(Комментарий\)\s*/i, '') 
-                        .trim(); 
-                    
-                    // Железобетонный хак для СОЭ (ищем по оригинальному сырому имени)
-                    if (name.toLowerCase().includes('седиментацион') || name.toLowerCase().includes('соэ')) {
-                        cleanName = 'СОЭ';
-                    }
-
-                    // Убираем оставшийся мусор по краям (например, висящие двоеточия)
-                    cleanName = cleanName.replace(/^[^\wа-яА-ЯёЁ]+|[^\wа-яА-ЯёЁ]+$/g, ''); 
-
-                    // Пропускаем мусор от ISSAM и проверяем длину
-                    if (cleanName.length > 1 && !cleanName.includes('ISSAM')) {
-                        allParsedData.push({
-                            name: cleanName,
-                            val: parseFloat(value.replace(',', '.')),
-                            unit: unit.trim(),
-                            reference: range ? range.trim() : ''
-                        });
-                    }
-                }
+        // Определяем ID пользователя (поддержка Passport.js и ручных сессий)
+        const userId = req.user ? req.user._id : req.session.userId;
+
+        const pdfParser = new PDFParser(null, 1);
+        const tempPath = path.join(__dirname, '../../temp_' + Date.now() + '.pdf');
+        fs.writeFileSync(tempPath, req.file.buffer);
+
+        await new Promise((resolve, reject) => {
+            pdfParser.on("pdfParser_dataError", errData => reject(new Error(errData.parserError)));
+            pdfParser.on("pdfParser_dataReady", () => resolve());
+            pdfParser.loadPDF(tempPath);
+        });
+
+        const rawText = pdfParser.getRawTextContent();
+        fs.unlinkSync(tempPath);
+
+        const lines = rawText.split('\n')
+            .map(line => line.trim())
+            .filter(line => line.length > 0 && !line.includes("---Page") && !line.match(/^\d+$/));
+
+        const targetAnalyses = [
+            'Тестостерон', 'Кортизол', 'Гемоглобин', 'Холестерин', 'Глюкоза', 'Лейкоциты',
+            'Эритроциты', 'Тромбоциты', 'Гематокрит', 'MCV', 'MCH', 'MCHC', 'RDW',
+            'Нейтрофилы', 'Лимфоциты', 'Моноциты', 'Эозинофилы', 'Базофилы',
+            'СОЭ', 'СРБ', 'Креатинин', 'Мочевина', 'Мочевая кислота',
+            'Билирубин общий', 'Билирубин прямой', 'АЛТ', 'АСТ', 'ЩФ', 'ГГТ',
+            'Белок общий', 'Альбумин', 'Калий', 'Натрий', 'Хлор', 'Железо',
+            'Тиреотропин', 'Витамин D', 'Инсулин', 'Гликированный гемоглобин'
+        ];
+
+        const regex = /^(.*?)\s+(\d+[.,]?\d*)\s+(%|г\/л|млн\/мкл|фл|пг|г\/дл|тыс\/мкл|мм\/ч|нмоль\/л|ммоль\/л|мкмоль\/л|мкг\/л|мг\/дл|нг\/мл|мед\/л|ед\/л|ме\/л)(?:\s+(.*))?$/i;
+
+        let allParsedData = [];
+        let skipNext = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            if (skipNext) { skipNext = false; continue; }
+
+            let cleanLine = lines[i].replace(/ᴺᴬ|NA/g, '').trim();
+            cleanLine = cleanLine.replace(/\)(\d+[.,]?\d*)/g, ') $1');
+            cleanLine = cleanLine.replace(/\s{2,}/g, ' ');
+
+            let match = cleanLine.match(regex);
+
+            if (!match && i < lines.length - 1) {
+                let nextLine = lines[i + 1].replace(/ᴺᴬ|NA/g, '').trim();
+                let combined = (cleanLine + " " + nextLine).replace(/\s{2,}/g, ' ');
+                match = combined.match(regex);
+                if (match) skipNext = true;
             }
 
-            console.log(`\n=== НАЙДЕНО БИОМАРКЕРОВ: ${allParsedData.length} ===`);
-            allParsedData.forEach((item, index) => {
-                console.log(`${index + 1}. ${item.name}: ${item.val} ${item.unit} ${item.reference ? '(' + item.reference + ')' : ''}`);
-            });
-            console.log("=====================================\n");
+            if (match) {
+                let [_, name, value, unit, range] = match;
+                let cleanName = name.replace(/^\(Комментарий\)\s*/i, '').trim()
+                    .replace(/^[^\wа-яА-ЯёЁ]+|[^\wа-яА-ЯёЁ]+$/g, '');
 
-            // Функция для унификации похожих букв кириллицы и латиницы (МСНС / MCHC)
-            const normalizeLetters = (str) => {
-                return str.toLowerCase()
-                    .replace(/м/g, 'm').replace(/с/g, 'c')
-                    .replace(/н/g, 'h').replace(/в/g, 'v')
-                    .replace(/о/g, 'o').replace(/а/g, 'a')
-                    .replace(/р/g, 'p').replace(/е/g, 'e')
-                    .replace(/х/g, 'x');
-            };
+                if (name.toLowerCase().includes('соэ')) cleanName = 'СОЭ';
 
-            // УМНЫЙ ПОИСК ЦЕЛЕВЫХ АНАЛИЗОВ
-            results = targetAnalyses.map(targetName => {
-                const found = allParsedData.find(item => {
-                    // Пропускаем названия через "переводчик" перед сравнением
-                    const iName = normalizeLetters(item.name);
-                    const tName = normalizeLetters(targetName);
-
-                    // Строгая проверка: если ищем обычный гемоглобин, отсекаем гликированный
-                    if (tName === 'гемоглобин' && iName.includes('гликирован')) return false;
-                    
-                    return iName.includes(tName);
-                });
-
-                if (found) {
-                    return {
-                        name: targetName,
-                        val: found.val,
-                        unit: found.unit,
-                        reference: found.reference
-                    };
+                if (cleanName.length > 1 && !cleanName.includes('ISSAM')) {
+                    allParsedData.push({
+                        name: cleanName,
+                        val: parseFloat(value.replace(',', '.')),
+                        unit: unit.trim(),
+                        reference: range ? range.trim() : ''
+                    });
                 }
-                return null;
-            }).filter(item => item !== null);
-
-            // Если целевых анализов мало, добавляем первые 10 найденных
-            if (results.length < 5 && allParsedData.length > results.length) {
-                const additionalAnalyses = allParsedData
-                    .filter(item => !results.some(r => r.name.toLowerCase() === item.name.toLowerCase()))
-                    .slice(0, 10 - results.length)
-                    .map(item => ({
-                        name: item.name,
-                        val: item.val,
-                        unit: item.unit,
-                        reference: item.reference
-                    }));
-                
-                results = [...results, ...additionalAnalyses];
             }
-
-
-
-        } catch (parseErr) {
-
-            console.warn("Парсинг PDF не удался:", parseErr.message);
-
         }
 
-        // Логируем финальный результат, который уйдет на сайт
-        console.log("--- ИТОГОВЫЙ ОТВЕТ ДЛЯ САЙТА ---");
-        results.forEach(item => console.log(`${item.name}: ${item.val} ${item.unit}`));
-        console.log("--------------------------------\n");
+        const normalize = (str) => str.toLowerCase().replace(/м/g, 'm').replace(/с/g, 'c').replace(/н/g, 'h').replace(/о/g, 'o');
 
-        // Отправляем ответ на фронтенд
+        let results = targetAnalyses.map(target => {
+            const found = allParsedData.find(item => {
+                const iName = normalize(item.name);
+                const tName = normalize(target);
+                if (tName === 'гемоглобин' && iName.includes('гликирован')) return false;
+                return iName.includes(tName);
+            });
+            return found ? { name: target, val: found.val, unit: found.unit, reference: found.reference } : null;
+        }).filter(item => item !== null);
+
+        // --- СОХРАНЕНИЕ В БАЗУ ДАННЫХ ---
+        if (userId && results.length > 0) {
+            const newAnalysis = new Analysis({
+                userId: userId,
+                testDate: req.body.testDate || new Date(),
+                testType: req.body.testType || "Invitro Report",
+                fileName: req.file.originalname,
+                indicators: results
+            });
+            await newAnalysis.save();
+            console.log(`✅ Анализ сохранен в БД для пользователя: ${userId}`);
+        } else {
+            console.log("⚠️ Анализ не сохранен: либо нет userId, либо пустые результаты");
+        }
+
         res.json({
             success: true,
             date: req.body.testDate || new Date().toISOString().split('T')[0],
@@ -338,12 +164,38 @@ async function handlePdfUpload(req, res) {
 
 router.get("/pdf-upload-page/:id?", async function (req, res) {
     try {
-        res.render("upload", { 
-            user: req.user ? req.user : {}, 
-        });
+        res.render("upload", { user: req.user || {} });
     } catch (error) {
-        console.error(error);
         res.status(500).send("Server Error");
+    }
+});
+
+// Маршрут для удаления конкретного анализа
+router.delete('/delete-analysis/:id', async (req, res) => {
+    try {
+        const analysisId = req.params.id;
+        const userId = req.user ? req.user._id : req.session.userId;
+
+        if (!userId) {
+            return res.status(401).json({ success: false, error: "Необходима авторизация" });
+        }
+
+        // Удаляем только если ID анализа совпадает и он принадлежит текущему пользователю
+        const deletedResult = await Analysis.findOneAndDelete({ 
+            _id: analysisId, 
+            userId: userId 
+        });
+
+        if (deletedResult) {
+            console.log(`🗑️ Анализ ${analysisId} удален`);
+            res.json({ success: true });
+        } else {
+            res.status(404).json({ success: false, error: "Анализ не найден или нет прав" });
+        }
+
+    } catch (error) {
+        console.error("Ошибка при удалении анализа:", error);
+        res.status(500).json({ success: false, error: error.message });
     }
 });
 

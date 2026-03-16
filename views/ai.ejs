@@ -1,0 +1,39 @@
+<%- include('partials/head.ejs')%>
+<title>Meditrace AI Assistant</title>
+
+<body>
+    <%- include('partials/header.ejs')%>
+
+    <main class="chat-container">
+        <div class="back-to-dashboard" onclick="window.location.href='/profile/<%= user._id %>'" style="cursor: pointer;">
+            <img src="/public/img/icon/Icon13.png" alt="">
+            <p>Back to Dashboard</p>
+        </div>
+
+        <div class="ai-chat-main">
+            <div class="chat-header">
+                <h2>🤖 Meditrace AI Assistant</h2>
+                <p>Ваш персональный помощник по здоровью</p>
+            </div>
+
+            <div id="chat-messages" class="chat-messages-area">
+                <div class="message ai-message">
+                    Здравствуйте! Я готов проанализировать ваши показатели или ответить на вопросы о здоровье. Чем могу помочь?
+                </div>
+            </div>
+
+            <form id="chat-form" class="chat-input-container">
+                <input type="text" id="user-input" placeholder="Напишите ваш вопрос здесь..." required autocomplete="off">
+                <button type="submit">
+                    <span>Отправить</span>
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <%- include('partials/footer.ejs')%>
+    </footer>
+
+    <%- include('partials/scripts.ejs')%>
+</body>
