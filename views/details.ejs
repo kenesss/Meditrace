@@ -1,0 +1,108 @@
+<html lang="en">
+<head>
+    <%- include('partials/head.ejs')%>
+    <title>Document</title>
+</head>
+<body>
+        <%- include('partials/header.ejs')%>
+        <div class="main">
+            <div class="main-left">
+                <div class="block">
+                    <img src="<%=blog.image%>" alt="">
+                    <div class="left-icons">
+                        <div class="icon-line">
+                            <img src="/img/icon/date.png" alt="">
+                            <p>26.06.2020</p>
+                        </div>
+                        <div class="icon-line">
+                            <img src="/img/icon/eye.png" alt="">
+                            <p>21</p>
+                        </div>
+                        <div class="icon-line">
+                            <img src="/img/icon/message.png" alt="">
+                            <p>4</p>
+                        </div>
+                        <div class="icon-line">
+                            <img src="/img/icon/dmessage.png" alt="">
+                            <p><%=blog.genre.name%></p>
+                        </div>
+                        <div class="icon-line">
+                            <a href="/profile">
+                                <img src="/img/icon/Vector.png" alt="">
+                            </a>
+                            <p><%=blog.author.full_name%></p>
+                        </div>
+                    </div>
+                    <div class="left-subtext">
+                        <h2><%=blog.name%></h2>
+                        <p><%=blog.description%></p>
+                    </div>
+                </div>
+                <div class="comments">
+                    <h3>Коментарий</h3>
+                    <%
+                        if(user && user._id){
+                    %>
+                        <form class="add-comment-form" action="/api/comment" method="POST">
+                            <textarea id="comment-text" placeholder="Введит текст комментария" name="comment_text"></textarea>
+                            <input type="hidden" value="<%=user._id%>" id="comment_author" name="comment_author">
+                            <input type="hidden" value="<%=blog._id%>" id="comment_blog" name="comment_blog">
+                            <button type="submit">Сохранить</button>
+                        </form>
+                    <%
+                        }else{
+                    %>
+                            <p>
+                                <a href="/login">Войдите</a>
+                                или 
+                                <a href="/regester">Зарегистрируйтесь</a>
+                                чтобы оставить коментарий
+                            </p>
+                    <% 
+                        }
+                    %>
+
+                    <%
+                    if(comments){
+                    %>
+                        <div class="comments-list">
+                    <%
+                        comments.forEach(comment => {
+                    %>
+
+                        <div class="comment-item">
+                            <div class="commentator">
+                                <img src="/img/avatar.png" alt="">
+                                <h3><%=comment.authorId.full_name%></h3>
+                            </div>
+                            <p><%=comment.text%></p>
+                        </div>
+
+                    <%
+                        })
+                    }
+                    %>
+                    </div>
+                </div>
+            </div>
+        
+        <div class="main-right">
+            <h1>Категории</h1>
+            <div class="right-categories">
+                <% genres.forEach(genre => {
+                    %>
+                        <ul>
+                            <li>
+                                <a href="?genre=<%=genre.key%>"><%=genre.name%></a>
+                            </li>
+                        </ul>
+                    <%
+                    })
+                %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/scripts.ejs')%>
+</body>
+</html>

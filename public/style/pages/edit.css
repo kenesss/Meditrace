@@ -1,0 +1,16 @@
+.form-new{
+    padding: 0;
+    align-items: flex-start;
+}
+.form-new fieldset{
+    width: 55%;
+}
+.choose{
+    padding: 15px 20px;
+    border: 1px solid rgba(31, 31, 31, .1);
+    border-radius: 7px;
+}
+.choose_file{
+    background-color: #fff;
+    
+}

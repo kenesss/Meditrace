@@ -1,0 +1,31 @@
+{
+  "name": "decodeblog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "main": "server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "bcrypt": "^5.1.1",
+    "connect-mongo": "^5.1.0",
+    "dotenv": "^17.3.1",
+    "ejs": "^3.1.9",
+    "express": "^4.22.1",
+    "express-session": "^1.18.0",
+    "fs": "^0.0.1-security",
+    "mongoose": "^8.3.3",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.1.0",
+    "passport": "^0.7.0",
+    "passport-github2": "^0.1.12",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7",
+    "pdf2json": "^4.0.2"
+  }
+}

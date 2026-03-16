@@ -1,0 +1,564 @@
+/* CSS стили для Meditrace */
+
+/* CSS переменные */
+:root {
+    --primary-purple: #a855f7;
+    --primary-purple-hover: #9333ea;
+    --text-dark: #111827;
+    --text-gray: #6b7280;
+    --text-gray-hover: #374151;
+    --bg-color: #ffffff;
+    --border-color: #f3f4f6;
+}
+
+/* Базовые стили шапки для главной страницы */
+.site-header {
+    background-color: var(--bg-color);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 24px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    font-family: 'Inter', sans-serif;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-decoration: none;
+    letter-spacing: -0.025em;
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    margin-right: auto; 
+    margin-left: 48px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    transition: color 0.2s ease-in-out;
+}
+
+.nav-link:hover { color: var(--text-gray-hover); }
+.nav-link.active { color: var(--primary-purple); font-weight: 500; }
+
+.auth-actions {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.sign-in-btn {
+    text-decoration: none;
+    color: var(--text-gray);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.sign-in-btn:hover { color: var(--text-dark); }
+
+.get-started-btn {
+    text-decoration: none;
+    background-color: var(--primary-purple);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.get-started-btn:hover {
+    background-color: var(--primary-purple-hover);
+}
+
+/* Скрываем кнопку бургера на десктопе */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-dark);
+    padding: 4px;
+}
+
+/* Header для страницы профиля */
+.profile-header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.profile-header .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1a202c;
+    margin-bottom: 0.5rem;
+}
+
+.header-left p {
+    color: #4a5568;
+    font-size: 1.1rem;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(102, 126, 234, 0.1);
+    border-radius: 12px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.settings-btn, .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.settings-btn {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+.settings-btn:hover {
+    background: #667eea;
+    color: white;
+}
+
+.logout-btn {
+    background: rgba(239, 68, 68, 0.1);
+    color: #ef4444;
+}
+
+.logout-btn:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .site-header { padding: 0 16px; }
+    
+    .mobile-menu-btn { 
+        display: flex; 
+        align-items: center; 
+    }
+    
+    .sign-in-btn { display: none; } /* Скрываем текстовый логин ради экономии места */
+    
+    .get-started-btn {
+        padding: 8px 16px;
+        font-size: 0.875rem;
+    }
+
+    .auth-actions { gap: 16px; }
+
+    /* Мобильное меню (выпадающее) */
+    .nav-links {
+        display: none; /* Скрыто по умолчанию */
+        position: absolute;
+        top: 72px;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-color);
+        flex-direction: column;
+        padding: 24px;
+        border-bottom: 1px solid var(--border-color);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        margin: 0;
+        gap: 24px;
+    }
+
+    /* Класс, который будет добавлять JS */
+    .nav-links.show {
+        display: flex;
+    }
+    
+    .profile-header .header-container {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+    
+    .header-right {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Сохраняем существующие стили для авторизации */
+.auth-page {
+  background-color: #f8f9fc; 
+  margin: 0; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  min-height: 100vh; 
+  color: #333; 
+}
+
+.auth-page .page-wrapper { 
+  display: flex; 
+  width: 100%; 
+  max-width: 1200px; 
+  padding: 40px; 
+  gap: 40px; 
+}
+
+.auth-page .info-section { 
+  flex: 1; 
+  padding-top: 40px; 
+}
+
+.auth-page .logo { 
+  font-size: 24px; 
+  font-weight: 700; 
+  color: #111; 
+  margin-bottom: 40px; 
+}
+
+.auth-page .main-title { 
+  font-size: 48px; 
+  line-height: 1.2; 
+  font-weight: 700; 
+  margin-bottom: 20px; 
+}
+
+.auth-page .gradient-text { 
+  background: linear-gradient(90deg, #a855f7, #ec4899); 
+  -webkit-background-clip: text; 
+  background-clip: text;
+  -webkit-text-fill-color: transparent; 
+}
+
+.auth-page .description { 
+  color: #666; 
+  font-size: 16px; 
+  line-height: 1.5; 
+  margin-bottom: 30px; 
+  max-width: 400px; 
+}
+
+.auth-page .features { 
+  list-style: none; 
+  padding: 0; 
+}
+
+.auth-page .features li { 
+  font-size: 14px; 
+  color: #555; 
+  margin-bottom: 10px; 
+  display: flex; 
+  align-items: center; 
+}
+
+.auth-page .features li::before { 
+  content: '•'; 
+  color: #a855f7; 
+  font-size: 20px; 
+  margin-right: 10px; 
+}
+
+.auth-page .form-section { 
+  flex: 1; 
+  display: flex; 
+  justify-content: flex-end; 
+}
+
+.auth-page .form-card { 
+  background: white; 
+  padding: 40px; 
+  border-radius: 24px; 
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08); 
+  width: 100%; 
+  max-width: 420px; 
+}
+
+.auth-page .form-card h2 { 
+  font-size: 24px; 
+  margin: 0 0 5px 0; 
+}
+
+.auth-page .form-card p { 
+  color: #888; 
+  font-size: 14px; 
+  margin-bottom: 25px; 
+}
+
+.auth-page .input-group { 
+  margin-bottom: 20px; 
+  text-align: left; 
+}
+
+.auth-page .input-group label { 
+  display: block; 
+  font-size: 12px; 
+  color: #555; 
+  margin-bottom: 8px; 
+  font-weight: 600; 
+}
+
+.auth-page .input-wrapper { 
+  position: relative; 
+}
+
+.auth-page .input-wrapper input { 
+  width: 100%; 
+  padding: 12px 12px 12px 40px; 
+  border: 1px solid #e5e7eb; 
+  border-radius: 12px; 
+  font-size: 14px; 
+  outline: none; 
+  transition: border 0.3s; 
+}
+
+.auth-page .input-wrapper input:focus { 
+  border-color: #a855f7; 
+}
+
+.auth-page .input-icon { 
+  position: absolute; 
+  left: 12px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  color: #aaa; 
+  font-size: 16px; 
+}
+
+.auth-page .btn-primary { 
+  width: 100%; 
+  padding: 14px; 
+  background: linear-gradient(90deg, #a855f7, #ec4899); 
+  color: white; 
+  border: none; 
+  border-radius: 12px; 
+  font-size: 16px; 
+  font-weight: 600; 
+  cursor: pointer; 
+  transition: opacity 0.3s; 
+  margin-top: 10px; 
+}
+
+.auth-page .btn-primary:hover { 
+  opacity: 0.9; 
+}
+
+.auth-page .form-footer { 
+  text-align: center; 
+  margin-top: 20px; 
+  font-size: 14px; 
+  color: #666; 
+}
+
+.auth-page .form-footer a { 
+  color: #a855f7; 
+  text-decoration: none; 
+  font-weight: 600; 
+}
+
+.auth-page .extra-links { 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+  font-size: 12px; 
+  margin-bottom: 20px; 
+}
+
+.auth-page .extra-links a { 
+  color: #a855f7; 
+  text-decoration: none; 
+}
+
+/* Сохраняем существующие стили для других страниц */
+.form {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.fieldset {
+  border: none;
+  padding: 0;
+  margin-bottom: 15px;
+}
+
+.fieldset input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.fieldset button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+/* Стили для отображения результатов анализа */
+.change-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #f3f4f6;
+  transition: all 0.2s ease;
+}
+
+.change-item:hover {
+  background-color: #fafafa;
+}
+
+.change-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.change-name {
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  font-size: 14px;
+}
+
+.change-date {
+  color: #6b7280;
+  font-size: 12px;
+  margin: 0;
+}
+
+.change-values {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.current-val {
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.prev-val {
+  color: #6b7280;
+  font-size: 12px;
+  margin: 0;
+}
+
+.badge-down {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  background-color: #f3f4f6;
+  color: #6b7280;
+}
+
+.badge-down.badge-good {
+  background-color: #dcfce7;
+  color: #16a34a;
+}
+
+.badge-down svg {
+  width: 12px;
+  height: 12px;
+}
+
+.good-trend {
+  border-left: 3px solid #10b981;
+}
+
+.details-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 16px 0;
+}
+
+/* Убираем ограничение высоты для контейнера результатов */
+#trendChangesList {
+  max-height: none !important;
+  height: auto !important;
+  overflow: visible !important;
+}

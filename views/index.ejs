@@ -1,0 +1,480 @@
+<html lang="en">
+<%- include('partials/head.ejs')%>
+    <title>Landing Page</title>
+
+    <body>
+        <%- include('partials/header-main.ejs')%>
+            <div class="main-index">
+                <div class="main-left">
+                    <img src="img/index-img.png" alt="">
+                </div>
+                <div class="main-right">
+                    <h1>Smarter AI<br>Healthcare Starts<br><span class="gradient">With Meditrace</span></h1>
+                    <p>Meditrace automatically aggregates and analyzes your medical records from clinics like OLYMP and
+                        INVITRO, giving you complete control over your health data with AI-powered insights.</p>
+                    <a href="/regester" class="btn">Start Free Trial <svg width="20" height="20" viewBox="0 0 20 20"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg></a>
+                </div>
+            </div>
+            <div class="how-it-works">
+                <div class="block-header-text">
+                    <h2>How Meditrace Works</h2>
+                    <p>Get started in minutes with our simple three-step process</p>
+                </div>
+                <div class="card-container">
+                    <div class="card">
+                        <p>01</p>
+                        <img src="img/icon/Container.png" alt="">
+                        <h3>Download your analysis</h3>
+                        <p>Export your lab reports from clinics like OLYMP or INVITRO and upload them to Meditrace in
+                            seconds.</p>
+                    </div>
+                    <div class="card">
+                        <p>02</p>
+                        <img src="img/icon/Container2.png" alt="">
+                        <h3>Automatic Aggregation</h3>
+                        <p>Our AI-powered system automatically collects, organizes, and digitizes all your medical
+                            records in real-time.</p>
+                    </div>
+                    <div class="card">
+                        <p>03</p>
+                        <img src="img/icon/Container3.png" alt="">
+                        <h3>Get Insights</h3>
+                        <p>View comprehensive health analytics, track trends over time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="features">
+                <div class="block-header-text">
+                    <h2>Powerful Features for Modern Healthcare</h2>
+                    <p>Everything you need to take control of your health data</p>
+                </div>
+                <div class="card-container-features">
+                    <div class="card">
+                        <div class="container-base">
+                            <img src="img/icon/Features1.png" alt="">
+                        </div>
+                        <h3>AI-Powered OCR</h3>
+                        <p>Advanced optical character recognition technology automatically extracts and digitizes data
+                            from paper records, lab results, and prescriptions with 99.5% accuracy.</p>
+                    </div>
+                    <div class="card">
+                        <div class="container-base">
+                            <img src="img/icon/Features2.png" alt="">
+                        </div>
+                        <h3>Health Trend Tracking</h3>
+                        <p>Intelligent analytics engine monitors your health metrics over time, identifies patterns, and
+                            alerts you to important changes in your medical data.</p>
+                    </div>
+                    <div class="card">
+                        <div class="container-base">
+                            <img src="img/icon/Features3.png" alt="">
+                        </div>
+                        <h3>Secure Dashboard</h3>
+                        <p>Enterprise-grade security protects your sensitive health information with military-level
+                            encryption, giving you complete control over who can access your data.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="analytics-section">
+                <div class="block-header-text">
+                    <h2>Interactive Health Analytics</h2>
+                    <p>Visualize your health trends with powerful, easy-to-understand charts</p>
+                </div>
+                <div class="analytics">
+                    <div class="analytics-card">
+                        <div class="analytics-card-header">
+                            <img src="img/icon/Container4.png" alt="">
+                            <div class="analytics-card-header-text">
+                                <img src="img/icon/Icon.png" alt="">
+                                <p>-2,5%</p>
+                            </div>
+                        </div class="analytics-card-body">
+                        <p>117/77</p>
+                        <p>Blood Pressure</p>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-card-header">
+                            <img src="img/icon/Visualize1.png" alt="">
+                            <div class="analytics-card-header-text">
+                                <img src="img/icon/Icon.png" alt="">
+                                <p>-12.5%</p>
+                            </div>
+                        </div class="analytics-card-body">
+                        <p>175 mg/dL</p>
+                        <p>Cholesterol</p>
+                    </div>
+                    <div class="analytics-card">
+                        <div class="analytics-card-header">
+                            <img src="img/icon/Visualize3.png" alt="">
+                            <div class="analytics-card-header-text">
+                                <img src="img/icon/Icon.png" alt="">
+                                <p>Normal</p>
+                            </div>
+                        </div class="analytics-card-body">
+                        <p>89 mg/dL</p>
+                        <p>Glucose</p>
+                    </div>
+                </div>
+                <div class="analytics-trends">
+                    <div class="analytics-trends-card">
+                        <h3>Health Trends (Last 6 Months)</h3>
+                        <div class="analytics-trends-buttons">
+                            <button onclick="switchChart('bloodPressure')">Blood Pressure</button>
+                            <button onclick="switchChart('cholesterol')">Cholesterol</button>
+                            <button onclick="switchChart('glucose')">Glucose</button>
+                        </div>
+                    </div>
+
+                    <svg width="100%" height="400" viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Y-axis labels -->
+                        <text x="40" y="280" font-size="14" text-anchor="end">0</text>
+                        <text x="40" y="210" font-size="14" text-anchor="end">35</text>
+                        <text x="40" y="140" font-size="14" text-anchor="end">70</text>
+                        <text x="40" y="70" font-size="14" text-anchor="end">105</text>
+                        <text x="40" y="10" font-size="14" text-anchor="end">140</text>
+
+                        <!-- Grid lines and Y-axis -->
+                        <line x1="50" y1="280" x2="980" y2="280" stroke="#e0e0e0" stroke-width="1" />
+                        <line x1="50" y1="210" x2="980" y2="210" stroke="#e0e0e0" stroke-width="1" />
+                        <line x1="50" y1="140" x2="980" y2="140" stroke="#e0e0e0" stroke-width="1" />
+                        <line x1="50" y1="70" x2="980" y2="70" stroke="#e0e0e0" stroke-width="1" />
+                        <line x1="50" y1="0" x2="980" y2="0" stroke="#e0e0e0" stroke-width="1" />
+                        <line x1="50" y1="0" x2="50" y2="280" stroke="#333" stroke-width="2" />
+
+                        <!-- Blood Pressure lines -->
+                        <g id="bloodPressure" style="display: block;">
+                            <polyline points="150,56 300,62 450,70 600,63 750,56 900,63" stroke="#9361FF"
+                                stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+                            <polyline points="150,156 300,168 450,180 600,168 750,156 900,171" stroke="#D8589C"
+                                stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+                        </g>
+
+                        <!-- Cholesterol lines -->
+                        <g id="cholesterol" style="display: none;">
+                            <polyline points="150,80 300,85 450,90 600,75 750,70 900,78" stroke="#9361FF"
+                                stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+                            <polyline points="150,140 300,135 450,145 600,130 750,125 900,138" stroke="#D8589C"
+                                stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+                        </g>
+
+                        <!-- Glucose lines -->
+                        <g id="glucose" style="display: none;">
+                            <polyline points="150,120 300,115 450,110 600,125 750,130 900,118" stroke="#9361FF"
+                                stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+                            <polyline points="150,180 300,175 450,170 600,185 750,190 900,178" stroke="#D8589C"
+                                stroke-width="3" fill="none" stroke-linejoin="round" stroke-linecap="round" />
+                        </g>
+
+                        <!-- X-axis labels -->
+                        <text x="150" y="300" font-size="14" text-anchor="middle">Jan</text>
+                        <text x="300" y="300" font-size="14" text-anchor="middle">Feb</text>
+                        <text x="450" y="300" font-size="14" text-anchor="middle">Mar</text>
+                        <text x="600" y="300" font-size="14" text-anchor="middle">Apr</text>
+                        <text x="750" y="300" font-size="14" text-anchor="middle">May</text>
+                        <text x="900" y="300" font-size="14" text-anchor="middle">Jun</text>
+                    </svg>
+                    <div class="legend">
+                        <div class="legend-item systolic">
+                            <span class="icon"></span>
+                            <span class="text">Systolic</span>
+                        </div>
+                        <div class="legend-item diastolic">
+                            <span class="icon"></span>
+                            <span class="text">Diastolic</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="block-header-text">
+                    <h2>Benefits for Everyone</h2>
+                    <p>Meditrace empowers both patients and healthcare providers</p>
+                </div>
+                <div class="benefits-container">
+                    <div class="benefits-card">
+                        <div class="benefits-card-header">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" color="#fff">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
+                                    fill="currentColor" />
+                            </svg>
+                            <p>For Patients</p>
+                        </div>
+                        <h3>Take Control of Your Health</h3>
+                        <div class="benefits-card-body">
+                            <div class="container-base">
+                                <img src="img/icon/Icon1.png" alt="">
+                            </div>
+                            <div class="benefits-card-body-text">
+                                <h4>Complete Health Records</h4>
+                                <p>Access all your medical data in one secure place, including lab results,
+                                    prescriptions, and doctor’s notes.</p>
+                            </div>
+                        </div>
+                        <div class="benefits-card-body">
+                            <div class="container-base">
+                                <img src="img/icon/Icon2.png" alt="">
+                            </div>
+                            <div class="benefits-card-body-text">
+                                <h4>Save Time</h4>
+                                <p>No more searching through papers or calling multiple clinics. Everything is instantly
+                                    available.</p>
+                            </div>
+                        </div>
+                        <div class="benefits-card-body">
+                            <div class="container-base">
+                                <img src="img/icon/Icon3.png" alt="">
+                            </div>
+                            <div class="benefits-card-body-text">
+                                <h4>Smart Reminders</h4>
+                                <p>Never miss an appointment or medication with intelligent notifications and alerts.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="benefits-card">
+                        <div class="benefits-card-header">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" color="#fff">
+                                <path
+                                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
+                                    fill="currentColor" />
+                            </svg>
+                            <p>For Doctors</p>
+                        </div>
+                        <h3>Provide Better Care</h3>
+                        <div class="benefits-card-body">
+                            <div class="container-base">
+                                <img src="img/icon/Icon4.png" alt="">
+                            </div>
+                            <div class="benefits-card-body-text">
+                                <h4>Comprehensive Patient View</h4>
+                                <p>See complete patient history across all healthcare providers for better-informed
+                                    decisions.</p>
+                            </div>
+                        </div>
+                        <div class="benefits-card-body">
+                            <div class="container-base">
+                                <img src="img/icon/Icon5.png" alt="">
+                            </div>
+                            <div class="benefits-card-body-text">
+                                <h4>Seamless Collaboration</h4>
+                                <p>Share medical records securely with specialists and coordinate care more effectively
+                                    in real-time.</p>
+                            </div>
+                        </div>
+                        <div class="benefits-card-body">
+                            <div class="container-base">
+                                <img src="img/icon/Icon6.png" alt="">
+                            </div>
+                            <div class="benefits-card-body-text">
+                                <h4>Better Outcomes</h4>
+                                <p>AI-powered insights help identify patterns and potential health risks earlier.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pricing-section">
+                    <div class="block-header-text">
+                        <h2>Simple, Transparent Pricing</h2>
+                        <p>Choose the plan that's right for you. All plans include a 30-day free trial.</p>
+                    </div>
+                    <div class="pricing-container">
+                        <div class="pricing-card">
+                            <h3>Personal</h3>
+                            <p>Perfect for individuals managing their own health records</p>
+                            <p class="price">$0/month</p>
+                            <a href="/regester" class="btn">Get Started Free</a>
+                            <ul>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Up to 3 healthcare providers</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> 100 MB storage</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Basic health analytics</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Mobile app access</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Email support</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Data export</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> AI-powered insights</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Priority support</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Custom integrations</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Family sharing</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">
+                                <h3>Pro</h3>
+                                <p>Most Popular</p>
+                            </div>
+                            <p>For power users who want advanced features and insights</p>
+                            <p class="price">$9.99/month</p>
+                            <a href="/regester" class="btn">Start Free Trial</a>
+                            <ul>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Up to 3 healthcare providers</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> 100 MB storage</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Basic health analytics</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Mobile app access</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Email support</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Data export</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> AI-powered insights</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Priority support</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Custom integrations</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Family sharing</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card">
+                            <h3>Family</h3>
+                            <p>Complete health management for your entire family management</p>
+                            <p class="price">$19.99/month</p>
+                            <a href="/regester" class="btn">Start Free Trial</a>
+                            <ul>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Up to 3 healthcare providers</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> 100 MB storage</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Basic health analytics</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Mobile app access</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Email support</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Data export</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> AI-powered insights</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Priority support</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Custom integrations</li>
+                                <li><svg class="checkmark" viewBox="0 0 24 24">
+                                        <path fill="green"
+                                            d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg> Family sharing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="ready-block">
+                    <h2>Ready to Take Control of <br> Your Health Data?</h2>
+                    <p>Join thousands of patients and healthcare providers who trust <br> Meditrace to manage their
+                        medical records securely and efficiently.</p>
+                    <div class="ready-block-benefits-container">
+                        <div class="ready-block-benefits">
+                            <svg class="checkmark" viewBox="0 0 24 24">
+                                <path fill="#7BF1A8" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                            </svg>
+                            <p>Free 30-day trial</p>
+                        </div>
+                        <div class="ready-block-benefits">
+                            <svg class="checkmark" viewBox="0 0 24 24">
+                                <path fill="#7BF1A8" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                            </svg>
+                            <p>No credit card required</p>
+                        </div>
+                        <div class="ready-block-benefits">
+                            <svg class="checkmark" viewBox="0 0 24 24">
+                                <path fill="#7BF1A8" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                            </svg>
+                            <p>Cancel anytime</p>
+                        </div>
+                        <div class="ready-block-benefits">
+                            <svg class="checkmark" viewBox="0 0 24 24">
+                                <path fill="#7BF1A8" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                            </svg>
+                            <p>Instant setup</p>
+                        </div>
+                    </div>
+                    <a href="/regester" class="btn">Start Free Trial <svg width="20" height="20" viewBox="0 0 20 20"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M4 10H16M16 10L11 5M16 10L11 15" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg></a>
+                </div>
+
+                <footer>
+                    <%- include('partials/footer.ejs')%>
+                </footer>
+                <%- include('partials/scripts.ejs')%>
+    </body>
+
+</html>

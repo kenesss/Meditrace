@@ -1,0 +1,92 @@
+<html lang="en">
+    <%- include('partials/head.ejs')%>
+    <title>Document</title>
+<body>
+    <%- include('partials/header.ejs')%>
+    <div class="main">
+        <div class="main-left">
+            <div class="left-text">
+                <h1>Блоги по программированию</h1>
+                <p>Популярные и лучшие публикации по программированию для начинающих
+                    и профессиональных программистов и IT-специалистов.</p>
+            </div>
+            <%
+                blog.forEach(item => {
+            %> 
+            <div class="block">
+                <div class = "block-img">
+                    <img src="<%=item.image%>" alt="">
+                </div>
+                <div class="left-subtext">
+                    <a href="/details/<%=item._id%>">
+                        <h2><%=item.name%></h2>
+                    </a>
+                    <a href="/details/<%=item._id%>">
+                        <p><%=item.description%></p>
+                    </a>
+                </div>
+                <div class="left-icons">
+                    <div class="icon-line">
+                        <img src="img/icon/date.png" alt="">
+                        <p>26.06.2020</p>
+                    </div>
+                    <div class="icon-line">
+                        <img src="img/icon/eye.png" alt="">
+                        <p>21</p>
+                    </div>
+                    <div class="icon-line">
+                        <a href="/details/<%=item._id%>">
+                            <img src="img/icon/message.png" alt="">
+                            <p>4</p>
+                        </a>
+                    </div>
+                    <div class="icon-line">
+                        <img src="img/icon/dmessage.png" alt="">
+                        <p><%=item.genre.name%></p>
+                    </div>
+                    <div class="icon-line">
+                        <a href="/profile">
+                            <img src="img/icon/Vector.png" alt="">
+                        </a>
+                        <p><%=item.author.full_name%></p>
+                    </div>
+                </div>
+            </div>
+            <%
+                })
+            %>
+            <div class="pages">
+                    <%
+                        let localsString = '';
+                        if(locals.genre){
+                            localsString = `genre=${locals.genre}&`
+                        }
+                        if(locals.search){
+                            localsString = `search=${locals.search}&`
+                        }
+                        for(let i = 0;i < pages; i++){
+                    %>
+                          <a href="?<%=localsString%>page=<%=i%>"><%=i + 1%></a>  
+                    <%
+                        }
+                    %>
+            </div>
+        </div>
+        <div class="main-right">
+            <h1>Категории</h1>
+            <div class="right-categories">
+                <% genres.forEach(genre => {
+                    %>
+                        <ul>
+                            <li>
+                                <a href="?genre=<%=genre.key%>"><%=genre.name%></a>
+                            </li>
+                        </ul>
+                    <%
+                })%>
+            </div>
+        </div>
+    </div>
+    <%- include('partials/scripts.ejs')%>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <%- include('partials/head.ejs')%>
+    <title>Sign Up - Meditrace</title>
+</head>
+<body class="auth-page">
+    <div class="page-wrapper">
+        <div class="info-section">
+            <div class="logo">Meditrace</div>
+            <h1 class="main-title">Your Health<br>Records,<br><span class="gradient-text">Always Accessible</span></h1>
+            <p class="description">Securely access your complete medical history from OLYMP, INVITRO, and all your healthcare providers in one place.</p>
+            <ul class="features">
+                <li>HIPAA Compliant & Secure</li>
+                <li>AI-Powered Health Insights</li>
+                <li>Access Anywhere, Anytime</li>
+            </ul>
+        </div>
+
+        <div class="form-section">
+            <div class="form-card">
+                <h2>Create Account</h2>
+                <p>Start managing your health records today</p>
+                
+                <form action="/api/signup" method="POST">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-user input-icon"></i>
+                            <input type="text" name="full_name" placeholder="John Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fa-regular fa-envelope input-icon"></i>
+                            <input type="email" name="email" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-lock input-icon"></i>
+                            <input type="password" name="password" placeholder="••••••••" required>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="re_password" id="re_password">
+
+                    <button type="submit" class="btn-primary" onclick="document.getElementById('re_password').value = document.getElementsByName('password')[0].value;">Create Account</button>
+                </form>
+
+                <div class="form-footer">
+                    Already have an account? <a href="/login">Sign in</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
