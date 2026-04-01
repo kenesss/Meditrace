@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/decodeblog").then(() => {
+mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log("Connected to MongoDB");
   })
   .catch((e) => {

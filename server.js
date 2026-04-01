@@ -43,7 +43,7 @@ app.use(express.json());
 app.use(
   session({
     name: "decodeblog.session",
-    secret: "keyboard cat",
+    secret: process.env.SESSION_SECRET,
     maxAge: 1000 * 60 * 60 * 7,
     resave: false,
     store: mongooseStore.create({

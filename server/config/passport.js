@@ -30,8 +30,8 @@ passport.use(
 passport.use(
   new GitHubStrategy(
     {
-      clientID: "Ov23lipYfq1MCgduNdHP",
-      clientSecret: "b508cb4ea3c70977ecbe51e90601da9ca3ec5cf4",
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
       callbackURL: "http://localhost:8000/api/auth/github",
       scope: ["user", "email"],
     },
