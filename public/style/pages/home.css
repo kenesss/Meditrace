@@ -686,3 +686,7 @@
 .card-container-features .card:nth-child(3) .container-base {
     background: linear-gradient(135deg, #9810FA 0%, #8200DB 100%);
 }
+.recent-analyses-head{
+    display: flex;
+    justify-content: space-between;
+}

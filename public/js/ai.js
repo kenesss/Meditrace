@@ -42,3 +42,19 @@ function appendMessage(role, text, id = null) {
     // Плавная прокрутка вниз
     container.scrollTop = container.scrollHeight;
 }
+
+document.querySelectorAll('.quick-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const input = document.getElementById('user-input');
+        const form = document.getElementById('chat-form');
+        
+        // 1. Подставляем текст кнопки в инпут
+        input.value = this.textContent;
+        
+        // 2. Опционально: имитируем отправку формы
+        form.dispatchEvent(new Event('submit'));
+        
+        // 3. Можно скрыть блок с вопросами после выбора
+        // this.parentElement.style.display = 'none';
+    });
+});

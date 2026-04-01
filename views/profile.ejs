@@ -14,247 +14,209 @@
                         like almonds, spinach, and dark chocolate.</p>
                 </div>
             </div>
+            <main class="chat-container">
+                <div class="ai-chat-main">
+                    <div class="chat-header">
+                        <h2>Meditrace AI Assistant</h2>
+                        <p>Ваш персональный помощник по здоровью</p>
+                    </div>
+
+                    <div id="chat-messages" class="chat-messages-area">
+                        <div class="message ai-message">
+                            Здравствуйте! Я готов проанализировать ваши показатели или ответить на вопросы о здоровье.
+                            Чем могу помочь?
+                        </div>
+                    </div>
+                    <div class="quick-questions">
+                        <button type="button" class="quick-btn">Объясни мои результаты простыми словами</button>
+                        <button type="button" class="quick-btn">Как мне улучшить показатели через образ жизни?</button>
+                        <button type="button" class="quick-btn">Как расшифровать ЭКГ?</button>
+                    </div>
+
+                    <form id="chat-form" class="chat-input-container">
+                        <input type="text" id="user-input" placeholder="Напишите ваш вопрос здесь..." required
+                            autocomplete="off">
+                        <button type="submit">
+                            <span>Отправить</span>
+                        </button>
+                    </form>
+                </div>
+            </main>
+
             <% if(analyses && analyses.length> 0){ %>
                 <div class="analytics-section">
                     <div class="analytics">
-                        <div class="analytics-card">
-                            <div class="analytics-card-header">
-                                <img src="/public/img/icon/Container4.png" alt="">
-                                <div class="analytics-card-header-text">
-                                    <img src="/public/img/icon/Icon.png" alt="">
-                                    <p>-2,5%</p>
+                        <% const latest=analyses[0]; %>
+                            <% latest.indicators.slice(0, 3).forEach((ind, index)=> { %>
+                                <div class="analytics-card">
+                                    <div class="analytics-card-header">
+                                        <img src="/public/img/icon/Visualize<%= index+1 %>.png"
+                                            onerror="this.src='/public/img/icon/Container4.png'" alt="">
+                                        <div class="analytics-card-header-text">
+                                            <img src="/public/img/icon/Icon.png" alt="">
+                                            <p>Normal</p>
+                                        </div>
+                                    </div>
+                                    <div class="analytics-card-body">
+                                        <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">
+                                            <%= ind.val %>
+                                        </p>
+                                        <p>
+                                            <%= ind.name %>
+                                        </p>
+                                    </div>
                                 </div>
-                            </div class="analytics-card-body">
-                            <% const latestReport=analyses[0]; %>
-                                <p>
-                                    <%= latestReport.indicators[1].val %>
-                                </p>
-                                <p>
-                                    <%= latestReport.indicators[1].name %>:
-                                </p>
-                        </div>
-                        <div class="analytics-card">
-                            <div class="analytics-card-header">
-                                <img src="/public/img/icon/Visualize1.png" alt="">
-                                <div class="analytics-card-header-text">
-                                    <img src="/public/img/icon/Icon.png" alt="">
-                                    <p>-12.5%</p>
-                                </div>
-                            </div class="analytics-card-body">
-                            <p>175 mg/dL</p>
-                            <p>Cholesterol</p>
-                        </div>
-                        <div class="analytics-card">
-                            <div class="analytics-card-header">
-                                <img src="/public/img/icon/Visualize3.png" alt="">
-                                <div class="analytics-card-header-text">
-                                    <img src="/public/img/icon/Icon.png" alt="">
-                                    <p>Normal</p>
-                                </div>
-                            </div class="analytics-card-body">
-                            <p>89 mg/dL</p>
-                            <p>Glucose</p>
+                                <% }) %>
+                    </div>
+                </div>
+
+                <div class="all-indicators-section" style="margin: 30px 9%;">
+                    <div
+                        style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 8px 30px rgba(0,0,0,0.05);">
+                        <h2 style="margin-bottom: 20px; color: #172b4d; font-size: 1.25rem;">Полные результаты анализа
+                        </h2>
+
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; min-width: 500px;">
+                                <thead>
+                                    <tr style="border-bottom: 2px solid #f4f5f7; text-align: left;">
+                                        <th style="padding: 12px; color: #7a869a; font-weight: 600;">Показатель</th>
+                                        <th style="padding: 12px; color: #7a869a; font-weight: 600;">Значение</th>
+                                        <th style="padding: 12px; color: #7a869a; font-weight: 600;">Ед. изм.</th>
+                                        <th style="padding: 12px; color: #7a869a; font-weight: 600;">Статус</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% latest.indicators.forEach((ind)=> { %>
+                                        <tr style="border-bottom: 1px solid #f4f5f7; transition: background 0.2s;"
+                                            onmouseover="this.style.background='#f8fafc'"
+                                            onmouseout="this.style.background='transparent'">
+
+                                            <td style="padding: 15px 12px; color: #172b4d; font-weight: 500;">
+                                                <%= ind.name %>
+                                            </td>
+
+                                            <td
+                                                style="padding: 15px 12px; color: #2563eb; font-weight: bold; font-size: 1.1rem;">
+                                                <%= ind.val %>
+                                            </td>
+
+                                            <td style="padding: 15px 12px; color: #7a869a; font-size: 0.9rem;">
+                                                <%= ind.unit || '—' %>
+                                            </td>
+
+                                            <td style="padding: 15px 12px;">
+                                                <span
+                                                    style="background: #e6f9f0; color: #00ab66; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">
+                                                    Normal
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
-                <% if (analyses && analyses.length> 0) {
-                    const latest = analyses[0];
-                    const previous = analyses.length > 1 ? analyses[1] : null;
-                    %>
-                    <div class="trend-analysis-card" style="margin-bottom: 30px;">
-                        <div class="trend-info">
-                            <div class="icon-box-vibe pink-bg">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h3>Health Trend Analysis</h3>
-                                <p>
-                                    <% if (previous) { %>
-                                        Comparing <%= analyses.length %> blood tests from
-                                            <%= new Date(analyses[analyses.length-1].testDate).toLocaleDateString() %>
-                                                to
-                                                <%= new Date(latest.testDate).toLocaleDateString() %>
-                                                    <% } else { %>
-                                                        First analysis uploaded on <%= new
-                                                            Date(latest.testDate).toLocaleDateString() %>
-                                                            <% } %>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="latest-test">
-                            <small>Latest Test</small>
-                            <strong>
-                                <%= new Date(latest.testDate).toLocaleString('en', { month: 'long' , year: 'numeric' })
-                                    %>
-                            </strong>
-                        </div>
+
+                <div id="analyses-data-store" data-analyses='<%- JSON.stringify(analyses) %>' style="display: none;">
+                </div>
+
+                <div class="recent-analyses" style="margin-top: 40px;">
+                    <div class="recent-analyses-head">
+                        <h2>My Uploaded Reports</h2>
+                        <a href="/pdf-upload-page/<%= user._id %>"
+                            style="display: flex; align-items: center; gap: 8px; background: linear-gradient(90deg, #AD46FF 0%, #E60076 100%);
+; color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: 0.3s; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);"
+                            onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-2px)'"
+                            onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)'">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add New Analysis
+                        </a>
                     </div>
+                    <div class="analyses-list-container" style="margin-top: 20px;">
+                        <% if (analyses && analyses.length> 0) { %>
+                            <% analyses.forEach(report=> { %>
+                                <div class="analysis-report-item"
+                                    style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
 
-                    <div class="results-section" id="resultsSection">
-
-                        <div class="card chart-card">
-                            <h3 class="card-title">Biomarker Trends Over Time</h3>
-                            <div class="chart-wrapper" style="height: 250px; position: relative;">
-                                <canvas id="resultsChart"></canvas>
-                            </div>
-                        </div>
-
-                        <div class="card details-card">
-                            <h3 class="card-title">Detailed Results</h3>
-
-                            <div id="testInfo" class="mb-6 p-4 bg-gray-50 rounded-lg"
-                                style="background: #f9fafb; padding: 15px; border-radius: 10px; margin-bottom: 20px;">
-                                <h4 class="font-semibold text-gray-900" style="margin: 0; color: #111827;">
-                                    <%= latest.testType %>
-                                </h4>
-                                <p class="text-sm text-gray-600"
-                                    style="margin: 5px 0 0; color: #6b7280; font-size: 14px;">
-                                    Report: <%= latest.fileName %>
-                                </p>
-                            </div>
-
-                            <div class="details-list" id="resultsGrid">
-                                <% latest.indicators.forEach(function(item) { // Логика сравнения с предыдущим анализом
-                                    let changeHtml='' ; if (previous) { const prevItem=previous.indicators.find(i=>
-                                    i.name === item.name);
-                                    if (prevItem) {
-                                    const diff = (item.val - prevItem.val).toFixed(2);
-                                    const isUp = diff > 0;
-                                    const color = isUp ? '#10b981' : '#ef4444'; // Green or Red
-                                    changeHtml = `<span
-                                        style="">${isUp ? '↑' : '↓'}
-                                        ${Math.abs(diff)}</span>`;
-                                    }
-                                    }
-                                    %>
-                                    <div class="result-row"
-                                        style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f3f4f6;">
-                                        <div class="res-name">
-                                            <span style="font-weight: 500; color: #374151;">
-                                                <%= item.name %>
-                                            </span>
-                                        </div>
-                                        <div class="res-value" style="text-align: right;">
-                                            <strong style="color: #111827;">
-                                                <%= item.val %>
-                                            </strong>
-                                            <span style="font-size: 12px; color: #9ca3af; margin-left: 4px;">
-                                                <%= item.unit %>
-                                            </span>
-                                            <%- changeHtml %>
+                                    <div style="display: flex; align-items: center; gap: 15px;">
+                                        <img src="/public/img/icon/Icon11.png" alt="PDF" style="width: 40px;">
+                                        <div>
+                                            <p style="margin: 0; font-weight: bold; color: #172b4d; font-size: 16px;">
+                                                <%= report.fileName %>
+                                            </p>
+                                            <p style="margin: 5px 0 0; color: #7a869a; font-size: 13px;">
+                                                Добавлен: <%= new Date(report.createdAt).toLocaleDateString() %>
+                                                    | <%= report.indicators.length %> показателей
+                                            </p>
                                         </div>
                                     </div>
-                                    <% }); %>
-                            </div>
+
+                                    <div class="actions">
+                                        <button onclick="deleteAnalysis('<%= report._id %>')"
+                                            style="background: #fff0f0; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; color: #eb5757; font-weight: 500; transition: 0.3s;"
+                                            onmouseover="this.style.background='#ffdada'"
+                                            onmouseout="this.style.background='#fff0f0'">
+                                            Удалить
+                                        </button>
+                                    </div>
+                                </div>
+                                <% }); %>
+                                    <% } %>
+                    </div>
+                </div>
+
+                <% }else{ %>
+                    <div class="recent-analyses">
+                        <h2>Recent Analyses</h2>
+                        <div class="recent-analyses-cards"
+                            onclick="window.location.href='/pdf-upload-page/<%= user._id %>'" style="cursor: pointer;">
+                            <img src="/public/img/icon/Icon11.png" alt="">
+                            <p>No analyses uploaded yet</p>
+                            <p>Upload your first medical analysis. to get started</p>
                         </div>
                     </div>
-
-                    <% } else { %>
-                        <div class="trend-analysis-card" style="text-align: center; padding: 40px;">
-                            <h3>No data available</h3>
-                            <p>Please upload your first report to see trends.</p>
+                    <div class="recent-analyses">
+                        <h2>AI Analysis & Recommendations</h2>
+                        <div class="recent-analyses-cards" onclick="window.location.href='/ai/<%= user._id %>'"
+                            style="cursor: pointer;">
+                            <img src="/public/img/icon/Icon12.png" alt="">
+                            <p>Select an analysis to view details</p>
                         </div>
-                        <% } %>
-                            <div class="recent-analyses" style="margin-top: 40px;">
-                                <h2>My Uploaded Reports</h2>
-
-                                <div class="analyses-list-container" style="margin-top: 20px;">
-                                    <% if (analyses && analyses.length> 0) { %>
-                                        <% analyses.forEach(report=> { %>
-                                            <div class="analysis-report-item"
-                                                style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-
-                                                <div style="display: flex; align-items: center; gap: 15px;">
-                                                    <img src="/public/img/icon/Icon11.png" alt="PDF"
-                                                        style="width: 40px;">
-                                                    <div>
-                                                        <p
-                                                            style="margin: 0; font-weight: bold; color: #172b4d; font-size: 16px;">
-                                                            <%= report.fileName %>
-                                                        </p>
-                                                        <p style="margin: 5px 0 0; color: #7a869a; font-size: 13px;">
-                                                            Добавлен: <%= new
-                                                                Date(report.createdAt).toLocaleDateString() %> | <%=
-                                                                    report.indicators.length %> показателей
-                                                        </p>
-                                                    </div>
-                                                </div>
-
-                                                <div class="actions">
-                                                    <button onclick="deleteAnalysis('<%= report._id %>')"
-                                                        style="background: #fff0f0; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; color: #eb5757; font-weight: 500; transition: 0.3s;"
-                                                        onmouseover="this.style.background='#ffdada'"
-                                                        onmouseout="this.style.background='#fff0f0'">
-                                                        Удалить
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <% }); %>
-                                                <a href="/pdf-upload-page/<%= user._id %>"
-                                                    style="display: flex; align-items: center; gap: 8px; background: #2563eb; color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: 0.3s; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);"
-                                                    onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-2px)'"
-                                                    onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)'">
-                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                                                        stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                                                        stroke-linejoin="round">
-                                                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                                                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                                                    </svg>
-                                                    Add New Analysis
-                                                </a>
-                                                <% } %>
-                                </div>
-                            </div>
-
-                            <% }else{ %>
-                                <div class="recent-analyses">
-                                    <h2>Recent Analyses</h2>
-                                    <div class="recent-analyses-cards"
-                                        onclick="window.location.href='/pdf-upload-page/<%= user._id %>'"
-                                        style="cursor: pointer;">
-                                        <img src="/public/img/icon/Icon11.png" alt="">
-                                        <p>No analyses uploaded yet</p>
-                                        <p>Upload your first medical analysis. to get started</p>
-                                    </div>
-                                </div>
-                                <div class="recent-analyses">
-                                    <h2>AI Analysis & Recommendations</h2>
-                                    <div class="recent-analyses-cards"
-                                        onclick="window.location.href='/ai/<%= user._id %>'" style="cursor: pointer;">
-                                        <img src="/public/img/icon/Icon12.png" alt="">
-                                        <p>Select an analysis to view details</p>
-                                    </div>
-                                </div>
-                                <div class="no-data-section">
+                    </div>
+                    <!-- <div class="no-data-section">
                                     <h2>No data available</h2>
                                     <p>Please upload a PDF report to see your analytics.</p>
                                     <div class="upload-btn">
                                         <a href="/pdf-upload-page">+</a>
                                     </div>
-                                </div>
-                                <% } %>
-                                    <footer>
-                                        <%- include('partials/footer.ejs')%>
-                                    </footer>
-                                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                                </div> -->
+                    <% } %>
+                        <footer>
+                            <%- include('partials/footer.ejs')%>
+                        </footer>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-                                    <script src="/js/profile-charts.js"></script>
+                        <script src="/js/profile-charts.js"></script>
 
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', () => {
-                                            const dataContainer = document.getElementById('analyses-data-store');
-                                            if (dataContainer) {
-                                                // Забираем строку и превращаем обратно в объект
-                                                const rawData = dataContainer.getAttribute('data-analyses');
-                                                const analysesData = JSON.parse(rawData);
+                        <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                const dataContainer = document.getElementById('analyses-data-store');
+                                if (dataContainer) {
+                                    // Забираем строку и превращаем обратно в объект
+                                    const rawData = dataContainer.getAttribute('data-analyses');
+                                    const analysesData = JSON.parse(rawData);
 
-                                                initProfileDashboard(analysesData);
-                                            }
-                                        });
-                                    </script>
-                                    <%- include('partials/scripts.ejs')%>
+                                    initProfileDashboard(analysesData);
+                                }
+                            });
+                        </script>
+                        <%- include('partials/scripts.ejs')%>
     </body>
 
 </html>

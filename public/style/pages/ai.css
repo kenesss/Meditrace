@@ -1,6 +1,6 @@
 /* Основной контейнер */
 .chat-container {
-    max-width: 900px;
+    max-width: 1370px;
     margin: 20px auto;
     padding: 0 15px;
     display: flex;
@@ -15,7 +15,8 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     display: flex;
     flex-direction: column;
-    height: 600px; /* Фиксированная высота для скролла */
+    height: 600px;
+    /* Фиксированная высота для скролла */
     overflow: hidden;
     border: 1px solid #e0e0e0;
 }
@@ -28,8 +29,17 @@
     text-align: center;
 }
 
-.chat-header h2 { margin: 0; color: #333; font-size: 1.5rem; }
-.chat-header p { margin: 5px 0 0; color: #777; font-size: 0.9rem; }
+.chat-header h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+}
+
+.chat-header p {
+    margin: 5px 0 0;
+    color: #777;
+    font-size: 0.9rem;
+}
 
 /* Область сообщений */
 .chat-messages-area {
@@ -83,10 +93,12 @@
     transition: 0.3s;
 }
 
-#user-input:focus { border-color: #4A90E2; }
+#user-input:focus {
+    border-color: #4A90E2;
+}
 
 .chat-input-container button {
-    background: #4A90E2;
+    background: linear-gradient(90deg, #AD46FF 0%, #E60076 100%);
     color: white;
     border: none;
     padding: 0 25px;
@@ -96,4 +108,30 @@
     transition: 0.3s;
 }
 
-.chat-input-container button:hover { background: #357ABD; }
+.chat-input-container button:hover {
+    background: linear-gradient(90deg, #AD46FF 100%, #E60076 0%);
+}
+
+.quick-questions {
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+    /* Чтобы кнопки переносились на мобильных */
+}
+
+.quick-btn {
+    background: #f0f2f5;
+    border: 2px solid #AD46FF;
+    border-radius: 18px;
+    padding: 8px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quick-btn:hover {
+    background: #e4e7ed;
+    border-color: #409eff;
+    color: #409eff;
+}

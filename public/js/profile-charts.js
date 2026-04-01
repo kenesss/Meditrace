@@ -67,3 +67,116 @@ async function deleteAnalysis(id) {
         if (res.ok) window.location.reload();
     }
 }
+
+/**
+ * Meditrace - Визуализация медицинских показателей
+ */
+document.addEventListener('DOMContentLoaded', () => {
+    const data = window.USER_ANALYSES_DATA;
+    const canvas = document.getElementById('healthChart');
+    const selector = document.getElementById('indicatorSelector');
+
+    // Если данных нет или элемент не найден — выходим
+    if (!data || data.length === 0 || !canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let healthChart = null;
+
+    // 1. Извлекаем все доступные названия показателей из всех отчетов
+    const indicatorNames = new Set();
+    data.forEach(report => {
+        if (report.indicators) {
+            report.indicators.forEach(ind => indicatorNames.add(ind.name));
+        }
+    });
+
+    // 2. Заполняем выпадающий список (Select)
+    indicatorNames.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        selector.appendChild(option);
+    });
+
+    // 3. Функция для парсинга значений (из "5,4 ммоль/л" делает 5.4)
+    const parseValue = (valStr) => {
+        if (!valStr) return 0;
+        const cleaned = valStr.toString().replace(',', '.').replace(/[^\d.]/g, '');
+        return parseFloat(cleaned) || 0;
+    };
+
+    // 4. Главная функция отрисовки
+    const updateChart = (selectedName) => {
+        // Собираем точки: дата + значение
+        const chartPoints = data
+            .map(report => {
+                const indicator = report.indicators.find(i => i.name === selectedName);
+                if (!indicator) return null;
+                
+                return {
+                    date: new Date(report.createdAt).toLocaleDateString(),
+                    value: parseValue(indicator.val)
+                };
+            })
+            .filter(point => point !== null)
+            .reverse(); // Хронология от старых к новым
+
+        if (healthChart) healthChart.destroy();
+
+        healthChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartPoints.map(p => p.date),
+                datasets: [{
+                    label: selectedName,
+                    data: chartPoints.map(p => p.value),
+                    borderColor: '#2563eb',
+                    backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4, // Плавные линии
+                    pointBackgroundColor: '#ffffff',
+                    pointBorderColor: '#2563eb',
+                    pointBorderWidth: 2,
+                    pointRadius: 5,
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: '#1e293b',
+                        padding: 12,
+                        cornerRadius: 10
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#64748b', font: { size: 12 } }
+                    },
+                    y: {
+                        beginAtZero: false,
+                        grid: { borderDash: [5, 5], color: '#e2e8f0' },
+                        ticks: { color: '#64748b' }
+                    }
+                }
+            }
+        });
+    };
+
+    // Запускаем график с первым доступным показателем
+    if (indicatorNames.size > 0) {
+        updateChart(Array.from(indicatorNames)[0]);
+    }
+
+    // Слушаем изменения в селекторе
+    selector.addEventListener('change', (e) => {
+        updateChart(e.target.value);
+    });
+});
