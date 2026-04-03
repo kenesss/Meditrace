@@ -5,6 +5,7 @@ const User = require('../auth/User')
 const Blog = require('../Blogs/blog')
 const Comment = require("../Comments/Comments");
 const Analysis = require('../Parser/Analysis');
+const { isAuth } = require('../auth/middlewares');
 
 
 router.get('/', async (req, res) => {
@@ -41,20 +42,20 @@ router.get("/regester", (req, res) => {
   res.render("regester", { user: req.user ? req.user : {} });
 });
 
-router.get("/new", async (req, res) => {
-  const allGenres = await Genres.find()
-  res.render("newBlog", { genres: allGenres, user: req.user ? req.user : {} });
-});
+// router.get("/new", async (req, res) => {
+//   const allGenres = await Genres.find()
+//   res.render("newBlog", { genres: allGenres, user: req.user ? req.user : {} });
+// });
 
-router.get("/edit/:id", async (req, res) => {
-  const allGenres = await Genres.find()
-  const blog = await Blog.findById(req.params.id)
-  res.render("editBlog", { genres: allGenres, user: req.user ? req.user : {}, blog });
-});
+// router.get("/edit/:id", async (req, res) => {
+//   const allGenres = await Genres.find()
+//   const blog = await Blog.findById(req.params.id)
+//   res.render("editBlog", { genres: allGenres, user: req.user ? req.user : {}, blog });
+// });
 
 
 
-router.get("/profile/:id", async (req, res) => {
+router.get("/profile/:id", isAuth, async (req, res) => {
   try {
     const allGenres = await Genres.find();
     const blog = await Blog.find().populate("genre").populate('author');
@@ -85,7 +86,7 @@ router.get("/forgot", (req, res) => {
   res.render("forgot", { user: req.user ? req.user : {} });
 });
 
-router.get("/debug/users", async (req, res) => {
+router.get("/debug/users", isAuth, async (req, res) => {
   try {
     const users = await User.find().select('-password');
     res.json(users);
@@ -98,7 +99,7 @@ router.get("/not-found", (req, res) => {
   res.render("notFound");
 })
 
-router.get("/add-members/:id", async function (req, res) {
+router.get("/add-members/:id", isAuth, async function (req, res) {
   try {
     const allGenres = await Genres.find();
 
@@ -112,7 +113,7 @@ router.get("/add-members/:id", async function (req, res) {
   }
 });
 
-router.get("/setting/:id", async function (req, res) {
+router.get("/setting/:id", isAuth, async function (req, res) {
   const user = await User.findById(req.params.id);
   if (user) {
     res.render("setting", {
@@ -123,7 +124,7 @@ router.get("/setting/:id", async function (req, res) {
     res.redirect("/not-found");
   }
 });
-router.get("/ai/:id", async function (req, res) {
+router.get("/ai/:id", isAuth, async function (req, res) {
   const user = await User.findById(req.params.id);
   if (user) {
     res.render("ai", {
@@ -135,16 +136,16 @@ router.get("/ai/:id", async function (req, res) {
   }
 });
 
-router.get("/details/:id", async (req, res) => {
-  const comments = await Comment.find({ blogId: req.params.id }).populate("authorId");
-  const blog = await Blog.findById(req.params.id).populate("genre").populate("author");
-  const allGenres = await Genres.find();
-  res.render("details", {
-    user: req.user ? req.user : {},
-    blog: blog,
-    genres: allGenres,
-    comments,
-  });
-});
+// router.get("/details/:id", isAuth, async (req, res) => {
+//   const comments = await Comment.find({ blogId: req.params.id }).populate("authorId");
+//   const blog = await Blog.findById(req.params.id).populate("genre").populate("author");
+//   const allGenres = await Genres.find();
+//   res.render("details", {
+//     user: req.user ? req.user : {},
+//     blog: blog,
+//     genres: allGenres,
+//     comments,
+//   });
+// });
 
 module.exports = router
