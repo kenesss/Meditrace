@@ -6,6 +6,7 @@ const Blog = require('../Blogs/blog')
 const Comment = require("../Comments/Comments");
 const Analysis = require('../Parser/Analysis');
 const FamilyMember = require('../family/FamilyMember');
+const HealthGoal = require('../goals/HealthGoal');
 const { isAuth } = require('../auth/middlewares');
 
 
@@ -108,6 +109,51 @@ router.get("/profile/:id", isAuth, async (req, res) => {
         });
       });
 
+      const goals = await HealthGoal.find({
+        userId: req.params.id,
+        memberId: memberId || null,
+      }).sort({ createdAt: -1 });
+
+      const goalsWithProgress = goals.map(goal => {
+        const latestAnalysis = analyses[0];
+        const ind = latestAnalysis?.indicators?.find(
+          i => i.name.toLowerCase() === goal.indicatorName.toLowerCase()
+        );
+        const currentVal = ind ? ind.val : null;
+        let progress = null;
+        let achieved = false;
+        if (currentVal !== null) {
+          if (goal.direction === 'below') {
+            achieved = currentVal <= goal.targetValue;
+            progress = achieved ? 100 : Math.max(0, Math.min(99,
+              Math.round((1 - (currentVal - goal.targetValue) / (currentVal + 0.001)) * 100)
+            ));
+          } else {
+            achieved = currentVal >= goal.targetValue;
+            progress = achieved ? 100 : Math.max(0, Math.min(99,
+              Math.round((currentVal / goal.targetValue) * 100)
+            ));
+          }
+        }
+        return { ...goal.toObject(), currentVal, progress, achieved };
+      });
+
+      const SIX_MONTHS_MS = 6 * 30 * 24 * 60 * 60 * 1000;
+      let reminderBanner = null;
+      if (analyses.length > 0) {
+        const lastDate = new Date(analyses[0].testDate);
+        const msSinceLast = Date.now() - lastDate.getTime();
+        const monthsSinceLast = Math.floor(msSinceLast / (30 * 24 * 60 * 60 * 1000));
+        if (msSinceLast > SIX_MONTHS_MS) {
+          reminderBanner = {
+            months: monthsSinceLast,
+            lastDate: lastDate.toLocaleDateString('ru-RU'),
+          };
+        }
+      } else {
+        reminderBanner = { months: null, lastDate: null };
+      }
+
       // Передаем переменную analyses в шаблон
       res.render("profile", {
         user: user,
@@ -118,6 +164,8 @@ router.get("/profile/:id", isAuth, async (req, res) => {
         familyMembers: familyMembers,
         activeMember: activeMember,
         activeMemberId: memberId,
+        goals: goalsWithProgress,
+        reminderBanner: reminderBanner,
       });
     } else {
       res.redirect("/not-found");

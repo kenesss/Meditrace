@@ -3,6 +3,7 @@ const router = express.Router();
 const { aiLimiter } = require('../../server');
 const { OpenAI } = require('openai');
 const Analysis = require('../Parser/Analysis');
+const HealthGoal = require('../goals/HealthGoal');
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
@@ -39,6 +40,16 @@ router.post('/api/ai/chat', aiLimiter, async (req, res) => {
             console.log("⚠️ User ID не определен, ИИ работает без контекста анализов");
         }
 
+        let goalsContext = '';
+        if (userId) {
+            const userGoals = await HealthGoal.find({ userId, memberId: null });
+            if (userGoals.length > 0) {
+                goalsContext = '\n\nЦели здоровья пользователя:\n' + userGoals.map(g =>
+                    `- ${g.indicatorName}: ${g.direction === 'below' ? 'снизить до' : 'повысить до'} ${g.targetValue} ${g.unit}${g.note ? ' (' + g.note + ')' : ''}`
+                ).join('\n');
+            }
+        }
+
         // 2. Инициализируем историю, если её нет
         if (!req.session.chatHistory) {
             req.session.chatHistory = [];
@@ -49,7 +60,7 @@ router.post('/api/ai/chat', aiLimiter, async (req, res) => {
         const systemPrompt = {
             role: "system",
             content: `Ты — медицинский ассистент Meditrace. Твои знания базируются на следующих данных пользователя:
-            ${medicalContext}
+            ${medicalContext}${goalsContext}
             Инструкции: Будь профессионален. Если есть отклонения от нормы, укажи на них. Всегда советуй обратиться к врачу.`
         };
 

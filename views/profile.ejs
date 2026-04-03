@@ -4,6 +4,43 @@
 
     <body>
         <%- include('partials/header.ejs')%>
+        <% if (typeof reminderBanner !== 'undefined' && reminderBanner) { %>
+          <div style="
+            margin: 16px 9% 0;
+            background: linear-gradient(90deg, #fff7ed, #fef3c7);
+            border: 1px solid #fcd34d;
+            border-radius: 14px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+          ">
+            <div style="display:flex;align-items:center;gap:14px;">
+              <span style="font-size:24px;">⏰</span>
+              <div>
+                <% if (reminderBanner.lastDate) { %>
+                  <p style="margin:0;font-weight:600;color:#92400e;font-size:15px;">
+                    Последний анализ — <%= reminderBanner.lastDate %>
+                    (<%= reminderBanner.months %> мес. назад)
+                  </p>
+                  <p style="margin:4px 0 0;color:#b45309;font-size:13px;">
+                    Рекомендуется сдавать анализы каждые 6 месяцев. Пора обновить результаты.
+                  </p>
+                <% } else { %>
+                  <p style="margin:0;font-weight:600;color:#92400e;font-size:15px;">У вас ещё нет анализов</p>
+                  <p style="margin:4px 0 0;color:#b45309;font-size:13px;">
+                    Загрузите первый PDF-отчёт, чтобы начать отслеживание здоровья.
+                  </p>
+                <% } %>
+              </div>
+            </div>
+            <a href="/pdf-upload-page/<%= user._id %>"
+              style="white-space:nowrap;background:#f59e0b;color:white;padding:10px 18px;border-radius:10px;text-decoration:none;font-weight:600;font-size:13px;">
+              Загрузить анализ
+            </a>
+          </div>
+        <% } %>
             <div class="AI-insights">
                 <div class="container-base">
                     <img src="/public/img/icon/Icon10.png" alt="">
@@ -140,6 +177,117 @@
                             Add New Analysis
                         </a>
                     </div>
+
+                    <div class="goals-section" style="margin: 30px 9%;">
+                      <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 8px 30px rgba(0,0,0,0.05);">
+
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                          <h2 style="color:#172b4d;font-size:1.25rem;margin:0;">Цели здоровья</h2>
+                          <button onclick="openGoalModal()"
+                            style="background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;padding:10px 20px;border-radius:12px;font-weight:600;cursor:pointer;">
+                            + Добавить цель
+                          </button>
+                        </div>
+
+                        <div id="goals-list">
+                          <% if (typeof goals !== 'undefined' && goals.length > 0) { %>
+                            <% goals.forEach(function(g) { %>
+                              <div style="padding:16px;border-radius:12px;border:1px solid #f4f5f7;margin-bottom:12px;">
+                                <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+                                  <div>
+                                    <p style="margin:0;font-weight:600;color:#172b4d;font-size:15px;"><%= g.indicatorName %></p>
+                                    <p style="margin:4px 0 0;color:#7a869a;font-size:13px;">
+                                      <%= g.direction === 'below' ? 'Снизить до' : 'Повысить до' %>
+                                      <strong><%= g.targetValue %> <%= g.unit %></strong>
+                                      <% if (g.currentVal !== null) { %>
+                                        · Сейчас: <strong style="color:<%= g.achieved ? '#16a34a' : '#dc2626' %>"><%= g.currentVal %></strong>
+                                      <% } else { %>
+                                        · Нет данных
+                                      <% } %>
+                                    </p>
+                                    <% if (g.note) { %><p style="margin:4px 0 0;color:#9ca3af;font-size:12px;"><%= g.note %></p><% } %>
+                                  </div>
+                                  <div style="display:flex;align-items:center;gap:10px;">
+                                    <% if (g.achieved) { %>
+                                      <span style="background:#f0fdf4;color:#16a34a;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;">Достигнуто</span>
+                                    <% } %>
+                                    <button onclick="deleteGoal('<%= g._id %>')"
+                                      style="background:#fff0f0;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;color:#eb5757;font-size:13px;font-weight:500;">
+                                      Удалить
+                                    </button>
+                                  </div>
+                                </div>
+                                <% if (g.progress !== null) { %>
+                                  <div style="background:#f4f5f7;border-radius:8px;height:8px;overflow:hidden;">
+                                    <div style="height:100%;width:<%= g.progress %>%;background:<%= g.achieved ? '#16a34a' : 'linear-gradient(90deg,#AD46FF,#E60076)' %>;border-radius:8px;transition:width 0.5s;"></div>
+                                  </div>
+                                  <p style="margin:4px 0 0;color:#7a869a;font-size:12px;text-align:right;"><%= g.progress %>%</p>
+                                <% } %>
+                              </div>
+                            <% }); %>
+                          <% } else { %>
+                            <div style="text-align:center;padding:30px;color:#9ca3af;">
+                              <p style="font-size:15px;">Целей пока нет</p>
+                              <p style="font-size:13px;">Добавь цель — ИИ будет отслеживать твой прогресс</p>
+                            </div>
+                          <% } %>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <!-- Модалка добавления цели -->
+                    <div id="goalModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;align-items:center;justify-content:center;">
+                      <div style="background:white;border-radius:20px;padding:30px;width:90%;max-width:440px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                          <h3 style="margin:0;color:#172b4d;">Новая цель</h3>
+                          <button onclick="closeGoalModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#7a869a;">✕</button>
+                        </div>
+                        <div style="display:flex;flex-direction:column;gap:14px;">
+                          <div>
+                            <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Показатель</label>
+                            <input id="goal-indicator" list="indicators-list" placeholder="напр. Холестерин"
+                              style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+                            <datalist id="indicators-list">
+                              <option value="Гемоглобин"><option value="Холестерин"><option value="Глюкоза">
+                              <option value="Тестостерон"><option value="Кортизол"><option value="Лейкоциты">
+                              <option value="Эритроциты"><option value="Тромбоциты"><option value="СОЭ">
+                              <option value="Витамин D"><option value="Инсулин"><option value="Тиреотропин">
+                              <option value="АЛТ"><option value="АСТ"><option value="Креатинин">
+                            </datalist>
+                          </div>
+                          <div style="display:flex;gap:10px;">
+                            <div style="flex:1;">
+                              <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Направление</label>
+                              <select id="goal-direction" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;">
+                                <option value="below">Снизить до</option>
+                                <option value="above">Повысить до</option>
+                              </select>
+                            </div>
+                            <div style="flex:1;">
+                              <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Целевое значение</label>
+                              <input id="goal-target" type="number" step="0.01" placeholder="5.0"
+                                style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+                            </div>
+                          </div>
+                          <div>
+                            <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Единица измерения</label>
+                            <input id="goal-unit" placeholder="ммоль/л"
+                              style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+                          </div>
+                          <div>
+                            <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Заметка (необязательно)</label>
+                            <input id="goal-note" placeholder="напр. рекомендация врача"
+                              style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+                          </div>
+                          <button onclick="saveGoal()"
+                            style="background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;padding:14px;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;margin-top:6px;">
+                            Сохранить цель
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
                     <% if (analyses && analyses.length >= 2) { %>
                     <div id="compare-section" style="background:white;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05)">
                         <h3 style="margin:0 0 16px;color:#172b4d;font-size:1rem;font-weight:600">Сравнить два анализа</h3>
@@ -218,6 +366,42 @@
 
                         <script src="/js/profile-charts.js"></script>
                         <script src="/js/compare.js"></script>
+
+                        <script>
+                        function openGoalModal() {
+                          document.getElementById('goalModal').style.display = 'flex';
+                        }
+                        function closeGoalModal() {
+                          document.getElementById('goalModal').style.display = 'none';
+                        }
+                        async function saveGoal() {
+                          const indicator = document.getElementById('goal-indicator').value.trim();
+                          const direction = document.getElementById('goal-direction').value;
+                          const target = document.getElementById('goal-target').value;
+                          const unit = document.getElementById('goal-unit').value.trim();
+                          const note = document.getElementById('goal-note').value.trim();
+                          if (!indicator || !target) { alert('Заполните показатель и целевое значение'); return; }
+                          const params = new URLSearchParams(window.location.search);
+                          const member = params.get('member');
+                          const body = { indicatorName: indicator, targetValue: target, direction, unit, note };
+                          if (member) body.memberId = member;
+                          const res = await fetch('/api/goals', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(body),
+                          });
+                          const data = await res.json();
+                          if (data.success) { closeGoalModal(); location.reload(); }
+                          else alert('Ошибка: ' + data.error);
+                        }
+                        async function deleteGoal(id) {
+                          if (!confirm('Удалить цель?')) return;
+                          const res = await fetch('/api/goals/' + id, { method: 'DELETE' });
+                          const data = await res.json();
+                          if (data.success) location.reload();
+                          else alert('Ошибка: ' + data.error);
+                        }
+                        </script>
 
                         <script>
                             document.addEventListener('DOMContentLoaded', () => {
