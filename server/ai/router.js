@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const { aiLimiter } = require('../../server');
 const { OpenAI } = require('openai');
-const Analysis = require('../Parser/Analysis'); 
+const Analysis = require('../Parser/Analysis');
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
 });
 
-router.post('/api/ai/chat', async (req, res) => {
+router.post('/api/ai/chat', aiLimiter, async (req, res) => {
     try {
         const { message } = req.body;
         // Пробуем все варианты получения ID пользователя
@@ -18,14 +19,19 @@ router.post('/api/ai/chat', async (req, res) => {
         // 1. Ищем последние анализы в базе
         let medicalContext = "Данные анализов не найдены в базе.";
         if (userId) {
-            const lastAnalysis = await Analysis.findOne({ userId }).sort({ testDate: -1 });
-            
-            if (lastAnalysis && lastAnalysis.indicators.length > 0) {
-                medicalContext = "Результаты последних анализов пользователя:\n";
-                lastAnalysis.indicators.forEach(ind => {
-                    medicalContext += `- ${ind.name}: ${ind.val} ${ind.unit} (Норма: ${ind.reference || 'не указана'})\n`;
-                });
-                console.log(`✅ Контекст для ИИ сформирован (${lastAnalysis.indicators.length} показателей)`);
+            // СТАЛО — несколько анализов с динамикой:
+            const recentAnalyses = await Analysis.find({ userId })
+                .sort({ testDate: -1 })
+                .limit(3);
+
+            if (recentAnalyses.length > 0) {
+                medicalContext = recentAnalyses.map((a, i) =>
+                    `Анализ ${i + 1} от ${a.testDate.toLocaleDateString('ru-RU')}:\n` +
+                    a.indicators.map(ind =>
+                        `  - ${ind.name}: ${ind.val} ${ind.unit} (Норма: ${ind.reference || 'не указана'})`
+                    ).join('\n')
+                ).join('\n\n');
+                console.log(`✅ Контекст для ИИ сформирован (${recentAnalyses.length} анализов)`);
             } else {
                 console.log("⚠️ Анализы для этого userId не найдены в БД");
             }
@@ -40,11 +46,11 @@ router.post('/api/ai/chat', async (req, res) => {
 
         // 3. ФОРМИРУЕМ ПАКЕТ СООБЩЕНИЙ ДЛЯ OPENAI
         // Мы всегда ставим свежий системный промпт первым
-        const systemPrompt = { 
-            role: "system", 
+        const systemPrompt = {
+            role: "system",
             content: `Ты — медицинский ассистент Meditrace. Твои знания базируются на следующих данных пользователя:
             ${medicalContext}
-            Инструкции: Будь профессионален. Если есть отклонения от нормы, укажи на них. Всегда советуй обратиться к врачу.` 
+            Инструкции: Будь профессионален. Если есть отклонения от нормы, укажи на них. Всегда советуй обратиться к врачу.`
         };
 
         // Собираем историю: Системный промпт + последние сообщения из сессии
@@ -52,7 +58,7 @@ router.post('/api/ai/chat', async (req, res) => {
             systemPrompt,
             ...req.session.chatHistory.slice(-10) // Берем последние 10 сообщений для памяти
         ];
-        
+
         // Добавляем текущее сообщение пользователя
         messagesToAI.push({ role: "user", content: message });
 

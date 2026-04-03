@@ -5,6 +5,8 @@ const UserSchema = new mongoose.Schema({
   full_name: String,
   password: String,
   githubId: String,
+  resetToken: String,
+  resetTokenExpiry: Date,
 });
 
 module.exports = mongoose.model('user', UserSchema)

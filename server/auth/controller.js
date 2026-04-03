@@ -1,37 +1,28 @@
 const User = require('./User')
 const bcrypt = require('bcrypt')
+const crypto = require('crypto')
+const { validationResult } = require('express-validator')
 
 const signUp = async (req, res) => {
-  // Проверка на пустые поля
-  if (
-    req.body.email.length <= 0 ||
-    req.body.full_name.length <= 0 ||
-    req.body.password.length <= 0 ||
-    req.body.re_password.length <= 0
-  ) {
-    return res.redirect('/regester?error=1');  // Ошибка при пустых полях
-  }
-
-  // Проверка совпадения паролей
-  if (req.body.password !== req.body.re_password) {
-    return res.redirect('/regester?error=2');  // Ошибка при несовпадении паролей
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.redirect('/regester?error=1')
   }
 
   // Проверка, существует ли уже пользователь с таким email
   const findUser = await User.findOne({ email: req.body.email });
   if (findUser) {
-    return res.redirect('/regester?error=3');  // Ошибка, если пользователь уже существует
+    return res.redirect('/regester?error=3');
   }
 
   // Хеширование пароля и сохранение нового пользователя
   bcrypt.genSalt(10, (err, salt) => {
-    if (err) return console.log(err);  // Обработка ошибки при создании соли
+    if (err) return console.log(err);
 
     bcrypt.hash(req.body.password, salt, async (err, hash) => {
-      if (err) return console.log(err);  // Обработка ошибки при хешировании пароля
+      if (err) return console.log(err);
 
       try {
-        // Создание нового пользователя и сохранение
         const newUser = new User({
           email: req.body.email,
           full_name: req.body.full_name,
@@ -39,8 +30,7 @@ const signUp = async (req, res) => {
         });
 
         await newUser.save();
-        
-        // Автоматический вход после регистрации
+
         req.login(newUser, (err) => {
           if (err) {
             console.log(err);
@@ -49,8 +39,8 @@ const signUp = async (req, res) => {
           res.redirect(`/profile/${newUser._id}`);
         });
       } catch (err) {
-        console.log(err);  // Обработка ошибки при сохранении пользователя
-        res.redirect('/regester?error=4');  // Ошибка при сохранении
+        console.log(err);
+        res.redirect('/regester?error=4');
       }
     });
   });
@@ -69,19 +59,42 @@ const singOut = (req, res) => {
   res.redirect("/");
 };
 
-const resetPassword = async (req, res) => {
-  const { email, password, re_password } = req.body;
-
-  if (!email || !password || !re_password) {
-    return res.redirect('/forgot?error=1');
-  }
-
-  if (password !== re_password) {
-    return res.redirect('/forgot?error=2');
+const requestPasswordReset = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.redirect('/forgot?error=1')
   }
 
   try {
-    const user = await User.findOne({ email });
+    const email = String(req.body.email || '').trim()
+    const user = await User.findOne({ email })
+    if (user) {
+      const token = crypto.randomBytes(32).toString('hex')
+      user.resetToken = token
+      user.resetTokenExpiry = new Date(Date.now() + 3600000)
+      await user.save()
+      console.log('[Password reset token]', token)
+    }
+    return res.redirect('/forgot?sent=1')
+  } catch (err) {
+    console.log(err)
+    return res.redirect('/forgot?error=4')
+  }
+}
+
+const resetPassword = async (req, res) => {
+  const errors = validationResult(req)
+  if (!errors.isEmpty()) {
+    return res.redirect('/forgot?error=1')
+  }
+
+  const { token, password } = req.body;
+
+  try {
+    const user = await User.findOne({
+      resetToken: token,
+      resetTokenExpiry: { $gt: new Date() },
+    })
     if (!user) {
       return res.redirect('/forgot?error=3');
     }
@@ -93,8 +106,10 @@ const resetPassword = async (req, res) => {
         if (err) return console.log(err);
 
         try {
-          user.password = hash;
-          await user.save();
+          await User.findByIdAndUpdate(user._id, {
+            $set: { password: hash },
+            $unset: { resetToken: 1, resetTokenExpiry: 1 },
+          });
           res.redirect('/login?success=1');
         } catch (err) {
           console.log(err);
@@ -112,5 +127,6 @@ module.exports = {
   signUp,
   signIn,
   singOut,
+  requestPasswordReset,
   resetPassword,
 };

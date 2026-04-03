@@ -19,9 +19,14 @@
         <div class="form-section">
             <div class="form-card">
                 <h2>Forgot password</h2>
-                <p>Change your password</p>
-                
-                <form action="/reset-direct" method="POST">
+                <p>Request a reset link, then set a new password with the token.</p>
+
+                <% if (query && query.sent === '1') { %>
+                <p style="color:#16a34a; margin-bottom:12px;">If an account exists for that email, a reset token was issued — check the server console (dev).</p>
+                <% } %>
+
+                <h3 style="font-size:1rem; margin:20px 0 8px;">1. Request token</h3>
+                <form action="/api/forgot" method="POST">
                     <div class="input-group">
                         <label>Email Address</label>
                         <div class="input-wrapper">
@@ -29,7 +34,18 @@
                             <input type="email" name="email" placeholder="you@example.com" required>
                         </div>
                     </div>
+                    <button type="submit" class="btn-primary">Send reset token</button>
+                </form>
 
+                <h3 style="font-size:1rem; margin:24px 0 8px;">2. New password</h3>
+                <form action="/api/reset-password" method="POST">
+                    <div class="input-group">
+                        <label>Reset token (from email in production; dev: server console)</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-key input-icon"></i>
+                            <input type="text" name="token" placeholder="Paste token" required autocomplete="off">
+                        </div>
+                    </div>
                     <div class="input-group">
                         <label>Enter new password</label>
                         <div class="input-wrapper">
@@ -37,7 +53,6 @@
                             <input type="password" name="password" placeholder="••••••••" required>
                         </div>
                     </div>
-
                     <div class="input-group">
                         <label>Confirm new password</label>
                         <div class="input-wrapper">
@@ -45,7 +60,6 @@
                             <input type="password" name="re_password" placeholder="••••••••" required>
                         </div>
                     </div>
-
                     <button type="submit" class="btn-primary">Change Password</button>
                 </form>
 

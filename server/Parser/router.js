@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const { uploadLimiter } = require('../../server');
 const path = require('path');
 const fs = require('fs');
 const router = express.Router();
@@ -28,7 +29,7 @@ const upload = multer({
 });
 
 // Маршрут для загрузки и обработки PDF
-router.post('/upload', (req, res) => {
+router.post('/upload', uploadLimiter, (req, res) => {
     upload.single('reportPdf')(req, res, function (err) {
         if (err instanceof multer.MulterError) {
             console.error('Multer error:', err);
@@ -58,103 +59,107 @@ async function handlePdfUpload(req, res) {
 
         const pdfParser = new PDFParser(null, 1);
         const tempPath = path.join(__dirname, '../../temp_' + Date.now() + '.pdf');
-        fs.writeFileSync(tempPath, req.file.buffer);
 
-        await new Promise((resolve, reject) => {
-            pdfParser.on("pdfParser_dataError", errData => reject(new Error(errData.parserError)));
-            pdfParser.on("pdfParser_dataReady", () => resolve());
-            pdfParser.loadPDF(tempPath);
-        });
+        try {
+            fs.writeFileSync(tempPath, req.file.buffer);
 
-        const rawText = pdfParser.getRawTextContent();
-        fs.unlinkSync(tempPath);
+            await new Promise((resolve, reject) => {
+                pdfParser.on("pdfParser_dataError", errData => reject(new Error(errData.parserError)));
+                pdfParser.on("pdfParser_dataReady", () => resolve());
+                pdfParser.loadPDF(tempPath);
+            });
 
-        const lines = rawText.split('\n')
-            .map(line => line.trim())
-            .filter(line => line.length > 0 && !line.includes("---Page") && !line.match(/^\d+$/));
+            const rawText = pdfParser.getRawTextContent();
 
-        const targetAnalyses = [
-            'Тестостерон', 'Кортизол', 'Гемоглобин', 'Холестерин', 'Глюкоза', 'Лейкоциты',
-            'Эритроциты', 'Тромбоциты', 'Гематокрит', 'MCV', 'MCH', 'MCHC', 'RDW',
-            'Нейтрофилы', 'Лимфоциты', 'Моноциты', 'Эозинофилы', 'Базофилы',
-            'СОЭ', 'СРБ', 'Креатинин', 'Мочевина', 'Мочевая кислота',
-            'Билирубин общий', 'Билирубин прямой', 'АЛТ', 'АСТ', 'ЩФ', 'ГГТ',
-            'Белок общий', 'Альбумин', 'Калий', 'Натрий', 'Хлор', 'Железо',
-            'Тиреотропин', 'Витамин D', 'Инсулин', 'Гликированный гемоглобин'
-        ];
+            const lines = rawText.split('\n')
+                .map(line => line.trim())
+                .filter(line => line.length > 0 && !line.includes("---Page") && !line.match(/^\d+$/));
 
-        const regex = /^(.*?)\s+(\d+[.,]?\d*)\s+(%|г\/л|млн\/мкл|фл|пг|г\/дл|тыс\/мкл|мм\/ч|нмоль\/л|ммоль\/л|мкмоль\/л|мкг\/л|мг\/дл|нг\/мл|мед\/л|ед\/л|ме\/л)(?:\s+(.*))?$/i;
+            const targetAnalyses = [
+                'Тестостерон', 'Кортизол', 'Гемоглобин', 'Холестерин', 'Глюкоза', 'Лейкоциты',
+                'Эритроциты', 'Тромбоциты', 'Гематокрит', 'MCV', 'MCH', 'MCHC', 'RDW',
+                'Нейтрофилы', 'Лимфоциты', 'Моноциты', 'Эозинофилы', 'Базофилы',
+                'СОЭ', 'СРБ', 'Креатинин', 'Мочевина', 'Мочевая кислота',
+                'Билирубин общий', 'Билирубин прямой', 'АЛТ', 'АСТ', 'ЩФ', 'ГГТ',
+                'Белок общий', 'Альбумин', 'Калий', 'Натрий', 'Хлор', 'Железо',
+                'Тиреотропин', 'Витамин D', 'Инсулин', 'Гликированный гемоглобин'
+            ];
 
-        let allParsedData = [];
-        let skipNext = false;
+            const regex = /^(.*?)\s+(\d+[.,]?\d*)\s+(%|г\/л|млн\/мкл|фл|пг|г\/дл|тыс\/мкл|мм\/ч|нмоль\/л|ммоль\/л|мкмоль\/л|мкг\/л|мг\/дл|нг\/мл|мед\/л|ед\/л|ме\/л)(?:\s+(.*))?$/i;
 
-        for (let i = 0; i < lines.length; i++) {
-            if (skipNext) { skipNext = false; continue; }
+            let allParsedData = [];
+            let skipNext = false;
 
-            let cleanLine = lines[i].replace(/ᴺᴬ|NA/g, '').trim();
-            cleanLine = cleanLine.replace(/\)(\d+[.,]?\d*)/g, ') $1');
-            cleanLine = cleanLine.replace(/\s{2,}/g, ' ');
+            for (let i = 0; i < lines.length; i++) {
+                if (skipNext) { skipNext = false; continue; }
 
-            let match = cleanLine.match(regex);
+                let cleanLine = lines[i].replace(/ᴺᴬ|NA/g, '').trim();
+                cleanLine = cleanLine.replace(/\)(\d+[.,]?\d*)/g, ') $1');
+                cleanLine = cleanLine.replace(/\s{2,}/g, ' ');
 
-            if (!match && i < lines.length - 1) {
-                let nextLine = lines[i + 1].replace(/ᴺᴬ|NA/g, '').trim();
-                let combined = (cleanLine + " " + nextLine).replace(/\s{2,}/g, ' ');
-                match = combined.match(regex);
-                if (match) skipNext = true;
-            }
+                let match = cleanLine.match(regex);
 
-            if (match) {
-                let [_, name, value, unit, range] = match;
-                let cleanName = name.replace(/^\(Комментарий\)\s*/i, '').trim()
-                    .replace(/^[^\wа-яА-ЯёЁ]+|[^\wа-яА-ЯёЁ]+$/g, '');
+                if (!match && i < lines.length - 1) {
+                    let nextLine = lines[i + 1].replace(/ᴺᴬ|NA/g, '').trim();
+                    let combined = (cleanLine + " " + nextLine).replace(/\s{2,}/g, ' ');
+                    match = combined.match(regex);
+                    if (match) skipNext = true;
+                }
 
-                if (name.toLowerCase().includes('соэ')) cleanName = 'СОЭ';
+                if (match) {
+                    let [_, name, value, unit, range] = match;
+                    let cleanName = name.replace(/^\(Комментарий\)\s*/i, '').trim()
+                        .replace(/^[^\wа-яА-ЯёЁ]+|[^\wа-яА-ЯёЁ]+$/g, '');
 
-                if (cleanName.length > 1 && !cleanName.includes('ISSAM')) {
-                    allParsedData.push({
-                        name: cleanName,
-                        val: parseFloat(value.replace(',', '.')),
-                        unit: unit.trim(),
-                        reference: range ? range.trim() : ''
-                    });
+                    if (name.toLowerCase().includes('соэ')) cleanName = 'СОЭ';
+
+                    if (cleanName.length > 1 && !cleanName.includes('ISSAM')) {
+                        allParsedData.push({
+                            name: cleanName,
+                            val: parseFloat(value.replace(',', '.')),
+                            unit: unit.trim(),
+                            reference: range ? range.trim() : ''
+                        });
+                    }
                 }
             }
-        }
 
-        const normalize = (str) => str.toLowerCase().replace(/м/g, 'm').replace(/с/g, 'c').replace(/н/g, 'h').replace(/о/g, 'o');
+            const normalize = (str) => str.toLowerCase().replace(/м/g, 'm').replace(/с/g, 'c').replace(/н/g, 'h').replace(/о/g, 'o');
 
-        let results = targetAnalyses.map(target => {
-            const found = allParsedData.find(item => {
-                const iName = normalize(item.name);
-                const tName = normalize(target);
-                if (tName === 'гемоглобин' && iName.includes('гликирован')) return false;
-                return iName.includes(tName);
-            });
-            return found ? { name: target, val: found.val, unit: found.unit, reference: found.reference } : null;
-        }).filter(item => item !== null);
+            let results = targetAnalyses.map(target => {
+                const found = allParsedData.find(item => {
+                    const iName = normalize(item.name);
+                    const tName = normalize(target);
+                    if (tName === 'гемоглобин' && iName.includes('гликирован')) return false;
+                    return iName.includes(tName);
+                });
+                return found ? { name: target, val: found.val, unit: found.unit, reference: found.reference } : null;
+            }).filter(item => item !== null);
 
-        // --- СОХРАНЕНИЕ В БАЗУ ДАННЫХ ---
-        if (userId && results.length > 0) {
-            const newAnalysis = new Analysis({
-                userId: userId,
-                testDate: req.body.testDate || new Date(),
+            // --- СОХРАНЕНИЕ В БАЗУ ДАННЫХ ---
+            if (userId && results.length > 0) {
+                const newAnalysis = new Analysis({
+                    userId: userId,
+                    testDate: req.body.testDate || new Date(),
+                    testType: req.body.testType || "Invitro Report",
+                    fileName: req.file.originalname,
+                    indicators: results
+                });
+                await newAnalysis.save();
+                console.log(`✅ Анализ сохранен в БД для пользователя: ${userId}`);
+            } else {
+                console.log("⚠️ Анализ не сохранен: либо нет userId, либо пустые результаты");
+            }
+
+            res.json({
+                success: true,
+                date: req.body.testDate || new Date().toISOString().split('T')[0],
                 testType: req.body.testType || "Invitro Report",
-                fileName: req.file.originalname,
-                indicators: results
+                results: results
             });
-            await newAnalysis.save();
-            console.log(`✅ Анализ сохранен в БД для пользователя: ${userId}`);
-        } else {
-            console.log("⚠️ Анализ не сохранен: либо нет userId, либо пустые результаты");
+        } finally {
+            if (fs.existsSync(tempPath)) fs.unlinkSync(tempPath);
         }
-
-        res.json({
-            success: true,
-            date: req.body.testDate || new Date().toISOString().split('T')[0],
-            testType: req.body.testType || "Invitro Report",
-            results: results
-        });
 
     } catch (error) {
         console.error("Критическая ошибка:", error);
@@ -195,6 +200,26 @@ router.delete('/delete-analysis/:id', async (req, res) => {
 
     } catch (error) {
         console.error("Ошибка при удалении анализа:", error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+router.get('/analyses/history', async (req, res) => {
+    try {
+        const userId = req.user ? req.user._id : req.session.userId;
+
+        if (!userId) {
+            return res.status(401).json({ success: false, error: "Необходима авторизация" });
+        }
+
+        const analyses = await Analysis.find({ userId })
+            .sort({ testDate: -1 })
+            .limit(5);
+
+        res.json({ success: true, analyses });
+
+    } catch (error) {
+        console.error("Ошибка при получении истории:", error);
         res.status(500).json({ success: false, error: error.message });
     }
 });

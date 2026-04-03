@@ -63,7 +63,40 @@ router.get("/profile/:id", isAuth, async (req, res) => {
 
     if (user) {
       // КЛЮЧЕВОЙ МОМЕНТ: Ищем анализы пользователя в БД
-      const analyses = await Analysis.find({ userId: req.params.id }).sort({ testDate: -1 });
+      const analyses = await Analysis.find({ userId: req.params.id }).sort({ testDate: -1 }).lean();
+
+      function getStatus(val, reference) {
+        const noData = { label: 'Нет данных', color: '#6b7280', bg: '#f9fafb' };
+        if (reference == null || String(reference).trim() === '') {
+          return noData;
+        }
+        const parts = String(reference).trim().split('-');
+        if (parts.length !== 2) {
+          return noData;
+        }
+        const min = parseFloat(parts[0]);
+        const max = parseFloat(parts[1]);
+        if (Number.isNaN(min) || Number.isNaN(max)) {
+          return noData;
+        }
+        const numVal = typeof val === 'number' ? val : parseFloat(val);
+        if (Number.isNaN(numVal)) {
+          return noData;
+        }
+        if (numVal < min) {
+          return { label: 'Ниже нормы', color: '#2563eb', bg: '#eff6ff' };
+        }
+        if (numVal > max) {
+          return { label: 'Выше нормы', color: '#dc2626', bg: '#fef2f2' };
+        }
+        return { label: 'В норме', color: '#16a34a', bg: '#f0fdf4' };
+      }
+
+      analyses.forEach(a => {
+        a.indicators.forEach(ind => {
+          ind.status = getStatus(ind.val, ind.reference);
+        });
+      });
 
       // Передаем переменную analyses в шаблон
       res.render("profile", {
@@ -83,7 +116,7 @@ router.get("/profile/:id", isAuth, async (req, res) => {
 });
 
 router.get("/forgot", (req, res) => {
-  res.render("forgot", { user: req.user ? req.user : {} });
+  res.render("forgot", { user: req.user ? req.user : {}, query: req.query });
 });
 
 router.get("/debug/users", isAuth, async (req, res) => {

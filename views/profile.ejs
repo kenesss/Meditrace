@@ -54,7 +54,9 @@
                                             onerror="this.src='/public/img/icon/Container4.png'" alt="">
                                         <div class="analytics-card-header-text">
                                             <img src="/public/img/icon/Icon.png" alt="">
-                                            <p>Normal</p>
+                                            <p style="color: <%= ind.status.color %>; font-weight: 600;">
+                                                <%= ind.status.label %>
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="analytics-card-body">
@@ -107,8 +109,8 @@
 
                                             <td style="padding: 15px 12px;">
                                                 <span
-                                                    style="background: #e6f9f0; color: #00ab66; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">
-                                                    Normal
+                                                    style="background: <%= ind.status.bg %>; color: <%= ind.status.color %>; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">
+                                                    <%= ind.status.label %>
                                                 </span>
                                             </td>
                                         </tr>

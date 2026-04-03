@@ -36,13 +36,21 @@ passport.use(
       scope: ["user", "email"],
     },
     async function (accessToken, refreshToken, profile, cb) {
-      const user = await User.find({ githubId: profile.id });
-      const newUser = await new User({
-        githubId: profile.id,
-        full_name: profile.displayName,
-        email: profile.emails[0].value,
-      }).save();
-      return cb(null, newUser);
+      try {
+        const existingUser = await User.findOne({ githubId: profile.id });
+        if (existingUser) {
+          return cb(null, existingUser);
+        }
+        const newUser = new User({
+          githubId: profile.id,
+          full_name: profile.displayName,
+          email: profile.emails[0].value,
+        });
+        await newUser.save();
+        return cb(null, newUser);
+      } catch (err) {
+        return cb(err);
+      }
     }
   )
 );
