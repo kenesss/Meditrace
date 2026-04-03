@@ -34,25 +34,41 @@
                     <div class="profile-dropdown" id="profileDropdown">
                         <div class="dropdown-header">SWITCH PROFILE</div>
 
-                        <div class="dropdown-user active">
-                            <div class="user-avatar" style="background: linear-gradient(135deg, #6366f1, #a855f7);">Y
+                        <div class="dropdown-user active" onclick="switchProfile(null)" style="cursor:pointer">
+                            <div class="user-avatar" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+                                <%= user.full_name ? user.full_name[0].toUpperCase() : 'U' %>
                             </div>
                             <div class="user-info">
-                                <span class="user-name">You</span>
-                                <span class="user-role">Admin</span>
+                                <span class="user-name"><%= user.full_name %></span>
+                                <span class="user-role">Владелец</span>
                             </div>
-                            <div class="status-icon">✔</div>
+                            <div class="status-icon <%= (typeof activeMemberId === 'undefined' || !activeMemberId) ? '' : 'unchecked' %>">✔</div>
                         </div>
 
-                        <div class="dropdown-user">
-                            <div class="user-avatar" style="background: linear-gradient(135deg, #a855f7, #ec4899);">Z
+                        <% if (typeof familyMembers !== 'undefined') { %>
+                          <% familyMembers.forEach(function(m) { %>
+                            <% const colors = {
+                              purple: 'linear-gradient(135deg,#8B5CF6,#6366F1)',
+                              pink:   'linear-gradient(135deg,#F472B6,#FB923C)',
+                              cyan:   'linear-gradient(135deg,#22D3EE,#818CF8)',
+                              blue:   'linear-gradient(135deg,#3B82F6,#60A5FA)',
+                              green:  'linear-gradient(135deg,#34D399,#6EE7B7)'
+                            }; %>
+                            <div class="dropdown-user"
+                                 onclick="switchProfile('<%= m._id %>')"
+                                 style="cursor:pointer">
+                                <div class="user-avatar"
+                                     style="background:<%= colors[m.themeColor] || colors.purple %>">
+                                    <%= m.full_name[0].toUpperCase() %>
+                                </div>
+                                <div class="user-info">
+                                    <span class="user-name"><%= m.full_name %></span>
+                                    <span class="user-role"><%= m.relationship %></span>
+                                </div>
+                                <div class="status-icon <%= (typeof activeMemberId !== 'undefined' && activeMemberId && activeMemberId.toString() === m._id.toString()) ? '' : 'unchecked' %>">✔</div>
                             </div>
-                            <div class="user-info">
-                                <span class="user-name">Zhibek</span>
-                                <span class="user-role">Sister</span>
-                            </div>
-                            <div class="status-icon unchecked">✔</div>
-                        </div>
+                          <% }); %>
+                        <% } %>
 
                         <div class="dropdown-divider"></div>
 
@@ -94,3 +110,14 @@
             <% } %>
 
 </header>
+<script>
+function switchProfile(memberId) {
+  const url = new URL(window.location.href);
+  if (memberId) {
+    url.searchParams.set('member', memberId);
+  } else {
+    url.searchParams.delete('member');
+  }
+  window.location.href = url.toString();
+}
+</script>

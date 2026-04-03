@@ -7,6 +7,7 @@ const router = express.Router();
 
 // Импорт моделей
 const Analysis = require('./Analysis'); // Путь к созданной модели
+const FamilyMember = require('../family/FamilyMember');
 const Genres = require('../Genres/Genres');
 const User = require('../auth/User');
 const Blog = require('../Blogs/blog');
@@ -56,6 +57,14 @@ async function handlePdfUpload(req, res) {
 
         // Определяем ID пользователя (поддержка Passport.js и ручных сессий)
         const userId = req.user ? req.user._id : req.session.userId;
+
+        let memberId = req.body.memberId || null;
+        if (memberId && userId) {
+            const m = await FamilyMember.findOne({ _id: memberId, ownerId: userId });
+            if (!m) memberId = null;
+        } else {
+            memberId = null;
+        }
 
         const pdfParser = new PDFParser(null, 1);
         const tempPath = path.join(__dirname, '../../temp_' + Date.now() + '.pdf');
@@ -140,6 +149,7 @@ async function handlePdfUpload(req, res) {
             if (userId && results.length > 0) {
                 const newAnalysis = new Analysis({
                     userId: userId,
+                    memberId: memberId,
                     testDate: req.body.testDate || new Date(),
                     testType: req.body.testType || "Invitro Report",
                     fileName: req.file.originalname,
@@ -169,7 +179,14 @@ async function handlePdfUpload(req, res) {
 
 router.get("/pdf-upload-page/:id?", async function (req, res) {
     try {
-        res.render("upload", { user: req.user || {} });
+        const familyMembers = req.user
+            ? await FamilyMember.find({ ownerId: req.user._id }).sort({ createdAt: 1 })
+            : [];
+        res.render("upload", {
+            user: req.user || {},
+            familyMembers: familyMembers,
+            activeMemberId: req.query.member || null,
+        });
     } catch (error) {
         res.status(500).send("Server Error");
     }
@@ -221,6 +238,49 @@ router.get('/analyses/history', async (req, res) => {
     } catch (error) {
         console.error("Ошибка при получении истории:", error);
         res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+router.get('/api/compare-analyses', async (req, res) => {
+    try {
+        const { id1, id2 } = req.query;
+        const userId = req.user ? req.user._id : req.session.userId;
+
+        if (!userId) return res.status(401).json({ success: false, error: 'Не авторизован' });
+        if (!id1 || !id2) return res.status(400).json({ success: false, error: 'Нужно передать id1 и id2' });
+
+        const [a1, a2] = await Promise.all([
+            Analysis.findOne({ _id: id1, userId }),
+            Analysis.findOne({ _id: id2, userId }),
+        ]);
+
+        if (!a1 || !a2) return res.status(404).json({ success: false, error: 'Анализ не найден' });
+
+        // Строим дельту: проходим по всем показателям из обоих анализов
+        const allNames = [...new Set([
+            ...a1.indicators.map(i => i.name),
+            ...a2.indicators.map(i => i.name),
+        ])];
+
+        const delta = allNames.map(name => {
+            const ind1 = a1.indicators.find(i => i.name === name);
+            const ind2 = a2.indicators.find(i => i.name === name);
+            const val1 = ind1 ? ind1.val : null;
+            const val2 = ind2 ? ind2.val : null;
+            const diff = (val1 !== null && val2 !== null) ? parseFloat((val2 - val1).toFixed(3)) : null;
+            const unit = (ind1 || ind2)?.unit || '';
+            const reference = (ind1 || ind2)?.reference || '';
+            return { name, val1, val2, diff, unit, reference };
+        });
+
+        res.json({
+            success: true,
+            report1: { id: a1._id, fileName: a1.fileName, date: a1.testDate },
+            report2: { id: a2._id, fileName: a2.fileName, date: a2.testDate },
+            delta,
+        });
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
     }
 });
 

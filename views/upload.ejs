@@ -4,6 +4,7 @@
 
     <body>
         <%- include('partials/header-upload.ejs')%>
+        <span id="current-user-id" data-id="<%= user._id || '' %>"></span>
             <div class="container-upload">
                 <div class="back-to-dashboard" onclick="window.location.href='/profile/<%= user._id %>'"
                     style="cursor: pointer;">
@@ -64,6 +65,18 @@
                             <label>Test Date</label>
                             <input type="date" id="testDate" name="testDate" required>
                         </div>
+
+                        <% if (typeof familyMembers !== 'undefined' && familyMembers.length > 0) { %>
+                        <div class="input-group">
+                            <label>Для кого анализ?</label>
+                            <select name="memberId" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px;">
+                                <option value="">Для себя</option>
+                                <% familyMembers.forEach(function(m) { %>
+                                    <option value="<%= m._id %>"><%= m.full_name %> (<%= m.relationship %>)</option>
+                                <% }); %>
+                            </select>
+                        </div>
+                        <% } %>
 
                         <div class="input-group">
                             <label>Upload File (PDF)</label>

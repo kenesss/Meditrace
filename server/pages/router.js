@@ -5,6 +5,7 @@ const User = require('../auth/User')
 const Blog = require('../Blogs/blog')
 const Comment = require("../Comments/Comments");
 const Analysis = require('../Parser/Analysis');
+const FamilyMember = require('../family/FamilyMember');
 const { isAuth } = require('../auth/middlewares');
 
 
@@ -62,8 +63,17 @@ router.get("/profile/:id", isAuth, async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
-      // КЛЮЧЕВОЙ МОМЕНТ: Ищем анализы пользователя в БД
-      const analyses = await Analysis.find({ userId: req.params.id }).sort({ testDate: -1 }).lean();
+      const memberId = req.query.member || null;
+      const analysisQuery = memberId
+        ? { userId: req.params.id, memberId: memberId }
+        : { userId: req.params.id, memberId: null };
+      const analyses = await Analysis.find(analysisQuery).sort({ testDate: -1 }).lean();
+
+      const familyMembers = await FamilyMember.find({ ownerId: req.params.id }).sort({ createdAt: 1 });
+
+      const activeMember = memberId
+        ? await FamilyMember.findById(memberId)
+        : null;
 
       function getStatus(val, reference) {
         const noData = { label: 'Нет данных', color: '#6b7280', bg: '#f9fafb' };
@@ -104,7 +114,10 @@ router.get("/profile/:id", isAuth, async (req, res) => {
         genres: allGenres,
         loginUser: req.user,
         blog: blog,
-        analyses: analyses // <-- ОШИБКА БЫЛА ТУТ: эта строка обязательна!
+        analyses: analyses,
+        familyMembers: familyMembers,
+        activeMember: activeMember,
+        activeMemberId: memberId,
       });
     } else {
       res.redirect("/not-found");
@@ -135,10 +148,13 @@ router.get("/not-found", (req, res) => {
 router.get("/add-members/:id", isAuth, async function (req, res) {
   try {
     const allGenres = await Genres.find();
+    const familyMembers = await FamilyMember.find({ ownerId: req.user._id });
 
     res.render("addMembers", {
       user: req.user ? req.user : {},
-      genres: allGenres 
+      genres: allGenres,
+      familyMembers: familyMembers,
+      activeMemberId: req.query.member || null,
     });
   } catch (error) {
     console.error(error);
@@ -149,9 +165,12 @@ router.get("/add-members/:id", isAuth, async function (req, res) {
 router.get("/setting/:id", isAuth, async function (req, res) {
   const user = await User.findById(req.params.id);
   if (user) {
+    const familyMembers = await FamilyMember.find({ ownerId: req.user._id }).sort({ createdAt: 1 });
     res.render("setting", {
       user: user,
       loginUser: req.user,
+      familyMembers: familyMembers,
+      activeMemberId: req.query.member || null,
     });
   } else {
     res.redirect("/not-found");
@@ -160,9 +179,12 @@ router.get("/setting/:id", isAuth, async function (req, res) {
 router.get("/ai/:id", isAuth, async function (req, res) {
   const user = await User.findById(req.params.id);
   if (user) {
+    const familyMembers = await FamilyMember.find({ ownerId: req.user._id }).sort({ createdAt: 1 });
     res.render("ai", {
       user: user,
       loginUser: req.user,
+      familyMembers: familyMembers,
+      activeMemberId: req.query.member || null,
     });
   } else {
     res.redirect("/not-found");

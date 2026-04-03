@@ -6,6 +6,11 @@ const AnalysisSchema = new mongoose.Schema({
         ref: 'User', 
         required: true 
     },
+    memberId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'FamilyMember',
+        default: null,
+    },
     testDate: { type: Date, default: Date.now },
     testType: { type: String, default: "Invitro Report" },
     fileName: String,

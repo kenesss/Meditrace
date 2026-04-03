@@ -60,6 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(require("./server/Parser/router"));
+app.use(require('./server/family/router'));
 app.use(require("./server/pages/router"));
 app.use(require("./server/auth/router"));
 app.use(require("./server/ai/router"));

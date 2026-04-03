@@ -19,19 +19,41 @@
                 </div>
             </div>
 
+            <% if (typeof familyMembers !== 'undefined' && familyMembers.length > 0) { %>
+              <div style="margin: 20px 5%;">
+                <% familyMembers.forEach(function(m) { %>
+                  <div style="display:flex;justify-content:space-between;align-items:center;background:white;padding:16px 20px;border-radius:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+                    <div style="display:flex;align-items:center;gap:14px;">
+                      <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#6366F1);display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:18px;">
+                        <%= m.full_name[0].toUpperCase() %>
+                      </div>
+                      <div>
+                        <p style="margin:0;font-weight:bold;color:#172b4d;font-size:16px;"><%= m.full_name %></p>
+                        <p style="margin:4px 0 0;color:#7a869a;font-size:13px;"><%= m.relationship %></p>
+                      </div>
+                    </div>
+                    <button onclick="deleteMember('<%= m._id %>')"
+                      style="background:#fff0f0;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;color:#eb5757;font-weight:500;">
+                      Удалить
+                    </button>
+                  </div>
+                <% }); %>
+              </div>
+            <% } else { %>
             <div class="no-family-members">
                 <img src="/public/img/icon/Icon14.png" alt="">
                 <h3>No family members added yet</h3>
                 <p>Add family members to manage their health records in one place</p>
                 <button class="member-btn" type="button" onclick="openAddMemberModal()">+ Add Your First Family Member</button>
             </div>
+            <% } %>
             <div id="addMemberModal" class="modal-overlay" onclick="if(event.target===this) closeAddMemberModal()">
                 <div class="modal" role="dialog" aria-modal="true">
                     <div class="modal-header">
                         <h3>Add Family Member</h3>
                         <button class="modal-close" type="button" onclick="closeAddMemberModal()">✕</button>
                     </div>
-                    <form class="modal-form" id="addMemberForm" action="/add-members/<%= user._id %>" method="POST">
+                    <form class="modal-form" id="addMemberForm">
                         <div class="form-group">
                             <label>Full Name *</label>
                             <input type="text" name="full_name" placeholder="e.g., Aliya Smith" required>
@@ -43,8 +65,8 @@
                         </div>
                         
                         <div class="form-group">
-                            <label>Email address *</label>
-                            <input type="email" name="relationship" placeholder="example@gmil.com" required>
+                            <label>Email address (optional)</label>
+                            <input type="email" name="email" placeholder="example@email.com">
                         </div>
 
                         <div class="form-group">
@@ -67,13 +89,46 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="submit-btn">Add Family Member</button>
+                        <button type="button" onclick="submitMember()" class="submit-btn">Add Family Member</button>
                     </form>
                 </div>
             </div>
             <footer>
                 <%- include('partials/footer.ejs')%>
             </footer>
+            <script>
+            async function submitMember() {
+              const form = document.getElementById('addMemberForm');
+              const data = {
+                full_name: form.querySelector('[name="full_name"]').value,
+                relationship: form.querySelector('[name="relationship"]').value,
+                themeColor: form.querySelector('[name="theme_color"]:checked')?.value || 'purple',
+              };
+              if (!data.full_name || !data.relationship) {
+                alert('Заполните имя и роль');
+                return;
+              }
+              const res = await fetch('/api/family', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data),
+              });
+              const result = await res.json();
+              if (result.success) {
+                closeAddMemberModal();
+                location.reload();
+              } else {
+                alert('Ошибка: ' + result.error);
+              }
+            }
+            async function deleteMember(id) {
+              if (!confirm('Удалить члена семьи?')) return;
+              const res = await fetch('/api/family/' + id, { method: 'DELETE' });
+              const data = await res.json();
+              if (data.success) location.reload();
+              else alert('Ошибка: ' + data.error);
+            }
+            </script>
             <%- include('partials/scripts.ejs')%>
     </body>
 
