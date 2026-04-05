@@ -1,6 +1,6 @@
 document.getElementById('chat-form').addEventListener('submit', async (e) => {
     e.preventDefault();
-    
+
     const input = document.getElementById('user-input');
     const container = document.getElementById('chat-messages');
     const text = input.value.trim();
@@ -11,9 +11,12 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
     appendMessage('user', text);
     input.value = '';
 
-    // 2. Показываем "загрузку"
-    const loadingId = 'loading-' + Date.now();
-    appendMessage('ai', 'Печатает...', loadingId);
+    // 2. Создаём пустой блок для ответа AI — будем заполнять по частям
+    const aiMsgDiv = document.createElement('div');
+    aiMsgDiv.className = 'message ai-message';
+    aiMsgDiv.innerText = 'Печатает...';
+    container.appendChild(aiMsgDiv);
+    container.scrollTop = container.scrollHeight;
 
     try {
         const response = await fetch('/api/ai/chat', {
@@ -21,13 +24,44 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: text })
         });
-        
-        const data = await response.json();
-        
-        // 3. Заменяем загрузку на реальный ответ
-        document.getElementById(loadingId).innerText = data.reply;
+
+        // 3. Читаем стрим по частям
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let fullText = '';
+        let isFirst = true;
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value, { stream: true });
+            const lines = chunk.split('\n');
+
+            for (const line of lines) {
+                if (!line.startsWith('data: ')) continue;
+                const data = line.slice(6).trim();
+                if (data === '[DONE]') break;
+
+                try {
+                    const parsed = JSON.parse(data);
+                    if (parsed.text) {
+                        if (isFirst) {
+                            aiMsgDiv.innerText = '';  // убираем "Печатает..."
+                            isFirst = false;
+                        }
+                        fullText += parsed.text;
+                        aiMsgDiv.innerText = fullText;
+                        container.scrollTop = container.scrollHeight;
+                    }
+                } catch (e) {
+                    // неполный chunk, пропускаем
+                }
+            }
+        }
+
     } catch (err) {
-        document.getElementById(loadingId).innerText = "Ошибка связи с сервером.";
+        aiMsgDiv.innerText = 'Ошибка связи с сервером.';
     }
 });
 
@@ -38,8 +72,6 @@ function appendMessage(role, text, id = null) {
     if (id) msgDiv.id = id;
     msgDiv.innerText = text;
     container.appendChild(msgDiv);
-    
-    // Плавная прокрутка вниз
     container.scrollTop = container.scrollHeight;
 }
 
@@ -47,14 +79,7 @@ document.querySelectorAll('.quick-btn').forEach(button => {
     button.addEventListener('click', function() {
         const input = document.getElementById('user-input');
         const form = document.getElementById('chat-form');
-        
-        // 1. Подставляем текст кнопки в инпут
         input.value = this.textContent;
-        
-        // 2. Опционально: имитируем отправку формы
         form.dispatchEvent(new Event('submit'));
-        
-        // 3. Можно скрыть блок с вопросами после выбора
-        // this.parentElement.style.display = 'none';
     });
 });

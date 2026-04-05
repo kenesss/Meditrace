@@ -107,55 +107,64 @@ document.getElementById('analysisForm').addEventListener('submit', async functio
     }
 });
 
-function displayResults(data) {
-    // Показываем Health Trend Analysis блок
+async function displayResults(data) {
+    // Показываем блок
     document.getElementById('healthTrendSection').style.display = 'flex';
+
+    // Получаем реальную историю с сервера
+    let historyAnalyses = [];
+    try {
+        const historyRes = await fetch('/analyses/history');
+        const historyData = await historyRes.json();
+        if (historyData.success) {
+            historyAnalyses = historyData.analyses; // массив анализов, новейший первый
+        }
+    } catch (e) {
+        console.warn('Не удалось загрузить историю анализов:', e);
+    }
 
     // Заполняем список изменений
     const changesList = document.getElementById('trendChangesList');
     changesList.innerHTML = '';
 
-    data.results.forEach((result, index) => {
+    data.results.forEach((result) => {
         const changeItem = document.createElement('div');
 
-        // Генерируем случайные предыдущие значения для демонстрации
-        const prevValue = result.val * (0.9 + Math.random() * 0.2);
-        const changePercent = ((result.val - prevValue) / prevValue * 100).toFixed(1);
-        const isGoodTrend = result.name === 'Cholesterol'; // Пример: холестерин улучшился
+        // Ищем предыдущее значение этого показателя в истории
+        let prevValue = null;
+        if (historyAnalyses.length > 1) {
+            // historyAnalyses[0] — это текущий (только что загруженный), берём [1]
+            const prevAnalysis = historyAnalyses[1];
+            const prevIndicator = prevAnalysis.indicators.find(ind => ind.name === result.name);
+            if (prevIndicator) prevValue = prevIndicator.val;
+        }
 
-        changeItem.className = `change-item ${isGoodTrend ? 'good-trend' : ''}`;
+        const hasPrev = prevValue !== null;
+        const changePercent = hasPrev
+            ? ((result.val - prevValue) / prevValue * 100).toFixed(1)
+            : null;
+
+        changeItem.className = 'change-item';
         changeItem.innerHTML = `
-                    <div class="change-info">
-                        <svg width="20" height="20" fill="none" stroke="${isGoodTrend ? '#10b981' : '#9ca3af'}" stroke-width="2" viewBox="0 0 24 24">
-                            ${isGoodTrend ?
-                '<path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>' :
-                '<path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"></path>'
-            }
-                        </svg>
-                        <div>
-                            <p class="change-name">${result.name}</p>
-                            <p class="change-date">07/24 → 12/24</p>
-                        </div>
-                    </div>
-                    <div class="change-values">
-                        <p class="current-val">${result.val.toFixed(1)} ${result.unit} 
-                            <span class="badge-down ${isGoodTrend ? 'badge-good' : ''}">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                                </svg> 
-                                ${Math.abs(changePercent)}%
-                            </span>
-                        </p>
-                        <p class="prev-val">Previous: ${prevValue.toFixed(1)} ${result.unit}</p>
-                    </div>
-                `;
+            <div class="change-info">   
+                <div>
+                    <p class="change-name">${result.name}</p>
+                    <p class="change-date">${hasPrev ? 'Предыдущий → Текущий' : 'Первый анализ'}</p>
+                </div>
+            </div>
+            <div class="change-values">
+                <p class="current-val">${result.val.toFixed(1)} ${result.unit}
+                    ${hasPrev ? `<span class="badge-down">${changePercent > 0 ? '+' : ''}${changePercent}%</span>` : ''}
+                </p>
+                ${hasPrev ? `<p class="prev-val">Предыдущее: ${prevValue.toFixed(1)} ${result.unit}</p>` : '<p class="prev-val">Нет предыдущих данных</p>'}
+            </div>
+        `;
         changesList.appendChild(changeItem);
     });
 
-    // Строим график трендов
-    buildTrendChart(data.results);
+    // Строим график с реальными данными
+    buildTrendChart(data.results, historyAnalyses);
 
-    // Прокручиваем к результатам
     document.getElementById('healthTrendSection').scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -167,47 +176,58 @@ function getStatus(result) {
     return { text: 'Требует внимания', class: 'warning' };
 }
 
-function buildTrendChart(results) {
+function buildTrendChart(results, historyAnalyses = []) {
     // Уничтожаем старый график
     if (currentChart) currentChart.destroy();
 
     const ctx = document.getElementById('trendChart').getContext('2d');
-
-    // Используем реальные данные из PDF
     const colors = ['#ec4899', '#14b8a6', '#8b5cf6', '#f59e0b', '#3b82f6', '#ef4444'];
     const datasets = [];
+
+    // Формируем метки дат из реальной истории (от старых к новым)
+    const labels = historyAnalyses.length > 1
+        ? [...historyAnalyses].reverse().map(a =>
+            new Date(a.testDate).toLocaleDateString('ru-RU', { month: 'short', day: 'numeric' })
+          )
+        : ['Предыдущий', 'Текущий'];
 
     results.forEach((item, index) => {
         if (index >= 6) return; // Максимум 6 показателей
 
-        // Используем реальные данные из PDF
-        const currentValue = item.val;
-
-        // Создаем исторические данные для демонстрации тренда
-        // В реальном приложении здесь будут данные из базы данных
-        const prevValue = currentValue * (0.85 + Math.random() * 0.3); // ±15% вариация
+        let dataPoints;
+        if (historyAnalyses.length > 1) {
+            // Реальные данные из истории (разворачиваем от старых к новым)
+            dataPoints = [...historyAnalyses].reverse().map(analysis => {
+                const ind = analysis.indicators.find(i => i.name === item.name);
+                return ind ? ind.val : null;
+            });
+        } else {
+            // Нет истории — только текущая точка
+            dataPoints = [null, item.val];
+        }
 
         datasets.push({
             label: item.name,
-            data: [prevValue, currentValue],
+            data: dataPoints,
             borderColor: colors[index % colors.length],
             backgroundColor: index < 2 ? colors[index % colors.length] + '20' : 'transparent',
             borderWidth: 2,
-            fill: index < 2, // Только первые два с заливкой
-            tension: 0,
-            pointRadius: 0
+            fill: index < 2,
+            tension: 0.3,
+            spanGaps: true,
+            pointRadius: 4
         });
     });
 
-    // Определяем максимальное значение для шкалы Y на основе реальных данных
-    const maxValue = Math.max(...datasets.map(d => Math.max(...d.data)));
-    const yAxisMax = Math.ceil(maxValue * 1.2 / 50) * 50; // Округляем вверх до ближайших 50
+    // Определяем максимальное значение для шкалы Y
+    const allValues = datasets.flatMap(d => d.data.filter(v => v !== null));
+    const maxValue = allValues.length > 0 ? Math.max(...allValues) : 100;
+    const yAxisMax = Math.ceil(maxValue * 1.2 / 50) * 50;
 
-    // Настройки графика с реальными данными
     currentChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ['Previous', 'Current'], // Более понятные метки
+            labels: labels,
             datasets: datasets
         },
         options: {
@@ -228,7 +248,7 @@ function buildTrendChart(results) {
                     callbacks: {
                         label: function (context) {
                             const label = context.dataset.label || '';
-                            const value = context.parsed.y.toFixed(1);
+                            const value = context.parsed.y !== null ? context.parsed.y.toFixed(1) : '—';
                             const unit = results[context.datasetIndex]?.unit || '';
                             return `${label}: ${value} ${unit}`;
                         }
