@@ -8,10 +8,7 @@ const router = express.Router();
 // Импорт моделей
 const Analysis = require('./Analysis'); // Путь к созданной модели
 const FamilyMember = require('../family/FamilyMember');
-const Genres = require('../Genres/Genres');
 const User = require('../auth/User');
-const Blog = require('../Blogs/blog');
-const Comment = require("../Comments/Comments");
 
 const PDFParser = require("pdf2json");
 
