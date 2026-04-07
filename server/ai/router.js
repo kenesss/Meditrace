@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { aiLimiter } = require('../../server');
+const { aiLimiter } = require('../config/limiters');
 const { OpenAI } = require('openai');
 const Analysis = require('../Parser/Analysis');
 const HealthGoal = require('../goals/HealthGoal');

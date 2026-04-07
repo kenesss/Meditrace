@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const { uploadLimiter } = require('../../server');
+const { uploadLimiter } = require('../config/limiters');
 const path = require('path');
 const fs = require('fs');
 const router = express.Router();
