@@ -94,4 +94,17 @@ router.post('/api/ai/chat', aiLimiter, async (req, res) => {
     }
 });
 
+console.log('AI запрос получен:', message);
+
+const completion = await openai.chat.completions.create({...messagesToAI, model: "gpt-4o", temperature: 0.7});
+const aiReply = completion.choices[0].message.content;
+
+// 5. Сохраняем в историю сессии только диалог (без системного промпта, так как он динамический)
+req.session.chatHistory.push({ role: "user", content: message });
+req.session.chatHistory.push({ role: "assistant", content: aiReply });
+
+res.json({ reply: aiReply });
+
+console.log('AI ответил');
+
 module.exports = router;
