@@ -10,7 +10,8 @@ function closeAddMemberModal() {
     document.getElementById('addMemberModal').style.display = 'none';
 }
 
-document.getElementById('addMemberForm').addEventListener('submit', function(e) {
+const addMemberFormEl = document.getElementById('addMemberForm');
+if (addMemberFormEl) addMemberFormEl.addEventListener('submit', function(e) {
     const err = document.getElementById('modalError');
     
     const fullName = this.querySelector('input[name="full_name"]').value;

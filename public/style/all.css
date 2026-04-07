@@ -5,18 +5,11 @@
 @import url(components/form.css);
 @import url(vendor/same.css);
 @import url(pages/home.css);
-@import url(pages/profile.css);
-@import url(pages/detail.css);
 @import url(pages/upload.css);
 @import url(pages/analyze.css);
 @import url(pages/addMembers.css);
-@import url(pages/modal-pages.css);
 @import url(pages/setting.css);
 @import url(pages/ai.css);
-
-
-
-
 @import url(components/comments.css);
 
 

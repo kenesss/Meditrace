@@ -1,5 +1,3 @@
-let currentChart = null;
-
 // Валидация даты и файла
 document.getElementById('analysisForm').addEventListener('submit', function (e) {
     const dateInput = document.getElementById('testDate').value;
