@@ -1,67 +1,85 @@
-<html lang="en">
+<html lang="ru" class="auth-login-html">
 <head>
     <%- include('partials/head.ejs')%>
-    <title>Sign In - Meditrace</title>
+    <title>Вход — Meditrace</title>
 </head>
-<body class="auth-page">
-    <div class="page-wrapper">
-        <div class="info-section">
-            <div class="logo">Meditrace</div>
-            <h1 class="main-title">Your Health<br>Records,<br><span class="gradient-text">Always Accessible</span></h1>
-            <p class="description">Securely access your complete medical history from OLYMP, INVITRO, and all your healthcare providers in one place.</p>
-            <ul class="features">
-                <li>HIPAA Compliant & Secure</li>
-                <li>AI-Powered Health Insights</li>
-                <li>Access Anywhere, Anytime</li>
+<body class="auth-page auth-login">
+    <div class="bg-shape shape-blue shape-top-right"></div>
+    <div class="bg-shape shape-gray shape-bottom-left"></div>
+
+    <main class="auth-login__container">
+        <section class="auth-login__info">
+            <h1 class="auth-login__logo">Meditrace</h1>
+
+            <h2 class="auth-login__heading">
+                Ваши медицинские<br>
+                данные,<br>
+                <span class="text-blue">Всегда доступны</span>
+            </h2>
+
+            <p class="auth-login__description">
+                Безопасный доступ ко всей вашей медицинской истории из OLYMP, INVITRO и всех ваших медицинских учреждений в одном месте.
+            </p>
+
+            <ul class="auth-login__features">
+                <li>Соответствие стандартам HIPAA и безопасность</li>
+                <li>AI-инсайты о здоровье</li>
+                <li>Доступ в любое время и в любом месте</li>
             </ul>
-        </div>
+        </section>
 
-        <div class="form-section">
-            <div class="form-card">
-                <h2>Welcome Back</h2>
-                <p>Sign in to access your health dashboard</p>
-                <% if (typeof query !== 'undefined' && query.error) { %>
-                    <div style="background:#fef2f2; border:1px solid #fecaca; color:#dc2626; border-radius:10px; padding:12px 16px; font-size:14px; margin-bottom:16px;">
-                        Неверный email или пароль. Попробуйте снова.
-                    </div>
-                <% } %>
+        <section class="auth-login__form">
+            <div class="auth-login__card">
+                <h3 class="auth-login__title">С возвращением!</h3>
+                <p class="auth-login__subtitle">Войдите, чтобы получить доступ к вашей панели здоровья</p>
+
                 <form action="/api/signin" method="POST">
-                    <div class="input-group">
-                        <label>Email Address</label>
-                        <div class="input-wrapper">
-                            <i class="fa-regular fa-envelope input-icon"></i>
-                            <input type="email" name="email" placeholder="you@example.com" required>
+                    <div class="auth-login__group">
+                        <label for="email">Адрес электронной почты</label>
+                        <div class="auth-login__input has-left-icon">
+                            <i class="fa-regular fa-envelope icon-left" aria-hidden="true"></i>
+                            <input type="email" id="email" name="email" placeholder="you@example.com" required>
                         </div>
                     </div>
 
-                    <div class="input-group">
-                        <label>Password</label>
-                        <div class="input-wrapper">
-                            <i class="fa-solid fa-lock input-icon"></i>
-                            <input type="password" name="password" placeholder="••••••••" required>
+                    <div class="auth-login__group">
+                        <label for="password">Пароль</label>
+                        <div class="auth-login__input has-left-icon has-right-icon">
+                            <i class="fa-solid fa-lock icon-left" aria-hidden="true"></i>
+                            <input type="password" id="password" name="password" placeholder="••••••••" required>
+                            <i class="fa-regular fa-eye icon-right js-password-toggle" role="button" tabindex="0" aria-label="Показать пароль"></i>
                         </div>
                     </div>
 
-                    <div class="extra-links">
-                        <label><input type="checkbox" name="remember"> Remember me</label>
-                        <a href="/forgot">Forgot password?</a>
+                    <div class="auth-login__meta">
+                        <label class="auth-login__remember">
+                            <input type="checkbox" name="remember">
+                            <span>Запомнить меня</span>
+                        </label>
+                        <a href="/forgot" class="forgot-password">Забыли пароль?</a>
                     </div>
 
-                    <button type="submit" class="btn-primary">Sign In</button>
+                    <button type="submit" class="auth-login__submit">Войти</button>
                 </form>
 
-                <div class="form-footer">
-                    Don't have an account? <a href="/regester">Sign up</a>
+                <div class="auth-login__footer">
+                    <span>Нет аккаунта?</span>
+                    <a href="/regester" class="login-link">Зарегистрироваться</a>
                 </div>
-                
-                <div style="text-align: center; margin-top: 20px; padding-top: 20px; border-top: 1px solid #e5e7eb;">
-                    <p style="font-size: 14px; color: #666; margin-bottom: 10px;">Or sign in with</p>
-                    <a href="/api/auth/github" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #24292e; color: white; text-decoration: none; border-radius: 8px; font-size: 14px;">
-                        <i class="fab fa-github"></i> GitHub
+
+                <% if (githubAuthEnabled) { %>
+                <div class="auth-login__divider">
+                    <p class="auth-login__divider-text">Или войдите с помощью</p>
+                    <a href="/api/auth/github" class="auth-login__oauth">
+                        <i class="fab fa-github" aria-hidden="true"></i>
+                        <span>GitHub</span>
                     </a>
                 </div>
+                <% } %>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
+
+    <script src="/js/password-toggle.js" defer></script>
 </body>
 </html>

@@ -1,70 +1,70 @@
-<html lang="en">
+<html lang="ru">
 <head>
     <%- include('partials/head.ejs')%>
-    <title>Forgot Password - Meditrace</title>
+    <title>Восстановление пароля — Meditrace</title>
 </head>
 <body class="auth-page">
     <div class="page-wrapper">
         <div class="info-section">
             <div class="logo">Meditrace</div>
-            <h1 class="main-title">Your Health<br>Records,<br><span class="gradient-text">Always Accessible</span></h1>
-            <p class="description">Securely access your complete medical history from OLYMP, INVITRO, and all your healthcare providers in one place.</p>
+            <h1 class="main-title">Ваши медицинские<br>данные,<br><span class="gradient-text">Всегда доступны</span></h1>
+            <p class="description">Безопасный доступ ко всей вашей медицинской истории из OLYMP, INVITRO и всех ваших медицинских учреждений в одном месте.</p>
             <ul class="features">
-                <li>HIPAA Compliant & Secure</li>
-                <li>AI-Powered Health Insights</li>
-                <li>Access Anywhere, Anytime</li>
+                <li>Соответствие стандартам HIPAA и безопасность</li>
+                <li>AI-инсайты о здоровье</li>
+                <li>Доступ в любое время и в любом месте</li>
             </ul>
         </div>
 
         <div class="form-section">
             <div class="form-card">
-                <h2>Forgot password</h2>
-                <p>Request a reset link, then set a new password with the token.</p>
+                <h2>Забыли пароль</h2>
+                <p>Запросите токен сброса, затем задайте новый пароль с помощью токена.</p>
 
                 <% if (query && query.sent === '1') { %>
-                <p style="color:#16a34a; margin-bottom:12px;">If an account exists for that email, a reset token was issued — check the server console (dev).</p>
+                <p style="color:#16a34a; margin-bottom:12px;">Если аккаунт с таким email существует, токен сброса был создан — проверьте консоль сервера (в режиме разработки).</p>
                 <% } %>
 
-                <h3 style="font-size:1rem; margin:20px 0 8px;">1. Request token</h3>
+                <h3 style="font-size:1rem; margin:20px 0 8px;">1. Запросить токен</h3>
                 <form action="/api/forgot" method="POST">
                     <div class="input-group">
-                        <label>Email Address</label>
+                        <label>Адрес электронной почты</label>
                         <div class="input-wrapper">
                             <i class="fa-regular fa-envelope input-icon"></i>
                             <input type="email" name="email" placeholder="you@example.com" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary">Send reset token</button>
+                    <button type="submit" class="btn-primary">Отправить токен сброса</button>
                 </form>
 
-                <h3 style="font-size:1rem; margin:24px 0 8px;">2. New password</h3>
+                <h3 style="font-size:1rem; margin:24px 0 8px;">2. Новый пароль</h3>
                 <form action="/api/reset-password" method="POST">
                     <div class="input-group">
-                        <label>Reset token (from email in production; dev: server console)</label>
+                        <label>Токен сброса (в продакшене придёт на почту; в разработке — в консоли сервера)</label>
                         <div class="input-wrapper">
                             <i class="fa-solid fa-key input-icon"></i>
-                            <input type="text" name="token" placeholder="Paste token" required autocomplete="off">
+                            <input type="text" name="token" placeholder="Вставьте токен" required autocomplete="off">
                         </div>
                     </div>
                     <div class="input-group">
-                        <label>Enter new password</label>
+                        <label>Введите новый пароль</label>
                         <div class="input-wrapper">
                             <i class="fa-solid fa-lock input-icon"></i>
                             <input type="password" name="password" placeholder="••••••••" required>
                         </div>
                     </div>
                     <div class="input-group">
-                        <label>Confirm new password</label>
+                        <label>Подтвердите новый пароль</label>
                         <div class="input-wrapper">
                             <i class="fa-solid fa-lock input-icon"></i>
                             <input type="password" name="re_password" placeholder="••••••••" required>
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary">Change Password</button>
+                    <button type="submit" class="btn-primary">Сменить пароль</button>
                 </form>
 
                 <div class="form-footer">
-                    Already have an account? <a href="/login">Sign in</a>
+                    Уже есть аккаунт? <a href="/login">Войти</a>
                 </div>
             </div>
         </div>
