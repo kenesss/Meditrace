@@ -7,6 +7,7 @@ const HealthGoal = require('../goals/HealthGoal');
 
 const openai = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
+    timeout: 30000,
 });
 
 router.post('/api/ai/chat', aiLimiter, async (req, res) => {
@@ -79,7 +80,7 @@ router.post('/api/ai/chat', aiLimiter, async (req, res) => {
         res.json({ reply: aiReply });
 
     } catch (error) {
-        console.error('OpenAI Error:', error);
+        console.error('OpenAI Error full:', error.message, error.status, error.code);
         res.status(500).json({ reply: "Произошла ошибка в работе мозга ИИ." });
     }
 });
