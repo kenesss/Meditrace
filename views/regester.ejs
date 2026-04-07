@@ -20,7 +20,17 @@
             <div class="form-card">
                 <h2>Create Account</h2>
                 <p>Start managing your health records today</p>
-                
+                <% if (typeof query !== 'undefined' && query.error) { %>
+                    <div class="auth-error">
+                        <% if (query.error === '1') { %>
+                            Проверьте поля: имя минимум 2 символа, корректный email, пароль минимум 6 символов
+                        <% } else if (query.error === '3') { %>
+                            Пользователь с таким email уже существует.
+                        <% } else { %>
+                            Что-то пошло не так. Попробуйте снова.
+                        <% } %>
+                    </div>
+                <% } %>
                 <form action="/api/signup" method="POST">
                     <div class="input-group">
                         <label>Full Name</label>

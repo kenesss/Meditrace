@@ -16,7 +16,7 @@ router.get("/login", (req, res) => {
 });
 
 router.get("/regester", (req, res) => {
-  res.render("regester", { user: req.user ? req.user : {} });
+  res.render("regester", { user: req.user ? req.user : {}, query: req.query });
 });
 
 
