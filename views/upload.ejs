@@ -3,7 +3,7 @@
     <title>Upload Analysis - Meditrace</title>
 
     <body>
-        <%- include('partials/header-upload.ejs')%>
+        <%- include('partials/header.ejs')%>
         <span id="current-user-id" data-id="<%= user._id || '' %>"></span>
             <div class="container-upload">
                 <div class="back-to-dashboard" onclick="window.location.href='/profile/<%= user._id %>'"
