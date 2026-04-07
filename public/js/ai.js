@@ -39,3 +39,4 @@ document.querySelectorAll('.quick-btn').forEach(button => {
         form.dispatchEvent(new Event('submit'));
     });
 });
+});
