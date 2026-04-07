@@ -175,6 +175,7 @@ router.get("/setting/:id", isAuth, async function (req, res) {
       loginUser: req.user,
       familyMembers: familyMembers,
       activeMemberId: req.query.member || null,
+      query: req.query,
     });
   } else {
     res.redirect("/not-found");
