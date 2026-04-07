@@ -33,7 +33,8 @@ app.use(session({
   store: mongooseStore.create({ mongoUrl: process.env.MONGO_URL }),
 }));
 
-app.use(passport.i.use(passport.session());
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(require("./server/Parser/router"));
 app.use(require('./server/family/router'));
