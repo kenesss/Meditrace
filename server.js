@@ -30,7 +30,11 @@ app.use(session({
   secret: process.env.SESSION_SECRET,
   saveUninitialized: false,
   resave: false,
-  store: mongooseStore.create({ mongoUrl: process.env.MONGO_URL }),
+  store: mongooseStore.create({
+      mongoUrl: process.env.MONGO_URL,
+      touchAfter: 24 * 3600,
+      ttl: 14 * 24 * 60 * 60,
+  }),
 }));
 
 app.use(passport.initialize());
