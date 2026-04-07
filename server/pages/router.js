@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 })
 
 router.get("/login", (req, res) => {
-  res.render("login", { user: req.user ? req.user : {} });
+  res.render("login", { user: req.user ? req.user : {}, query: req.query });
 });
 
 router.get("/regester", (req, res) => {
