@@ -1,5 +1,3 @@
-let currentChart = null;
-
 function initProfileDashboard(analyses) {
     renderResultsList(analyses[0], analyses[1] || null);
     buildHistoryChart(analyses);

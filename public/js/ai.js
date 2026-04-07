@@ -1,4 +1,5 @@
-document.getElementById('chat-form').addEventListener('submit', async (e) => {
+const chatFormEl = document.getElementById('chat-form');
+if (chatFormEl) chatFormEl.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const input = document.getElementById('user-input');
@@ -7,19 +8,31 @@ document.getElementById('chat-form').addEventListener('submit', async (e) => {
 
     if (!text) return;
 
-    // 1. Добавляем сообщение пользователя
     appendMessage('user', text);
     input.value = '';
 
-    // 2. Создаём пустой блок для ответа AI — будем заполнять по частям
     const aiMsgDiv = document.createElement('div');
     aiMsgDiv.className = 'message ai-message';
     aiMsgDiv.innerText = 'Печатает...';
     container.appendChild(aiMsgDiv);
     container.scrollTop = container.scrollHeight;
 
-    const data = await response.json();
-    aiMsgDiv.innerText = data.reply || 'Не удалось получить ответ.';
+    try {
+        const response = await fetch('/api/ai/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text })
+        });
+
+        const data = await response.json();
+
+        aiMsgDiv.innerText = data.reply || 'Не удалось получить ответ.';
+        container.scrollTop = container.scrollHeight;
+
+    } catch (err) {
+        aiMsgDiv.innerText = 'Ошибка связи с сервером.';
+    }
+});
 
 function appendMessage(role, text, id = null) {
     const container = document.getElementById('chat-messages');
@@ -38,5 +51,4 @@ document.querySelectorAll('.quick-btn').forEach(button => {
         input.value = this.textContent;
         form.dispatchEvent(new Event('submit'));
     });
-});
 });
