@@ -9,20 +9,13 @@
 }
 
 .menu-item {
-    display: flex;
+    text-decoration: none; /* Убираем подчеркивание */
+    display: flex;         /* Выравниваем иконку и текст в ряд */
     align-items: center;
-    gap: 14px;
-    padding: 14px 16px;
-    border-radius: 14px;
-    background: #f4f6f8;
     cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    color: #1a1a1a;
+    color: inherit;        /* Чтобы ссылка не стала синей */
     border: none;
-    width: 100%;
-    text-align: left;
-    transition: background 0.15s;
+    background: none;
 }
 
 .menu-item:hover {
