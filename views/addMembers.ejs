@@ -1,132 +1,148 @@
-<%- include('partials/header.ejs') %>
+<html lang="en">
 
-<div class="meditrace-wrapper">
-    <%- include('partials/menu.ejs') %>
+<head>
+  <%- include('partials/head.ejs')%>
+    <title>Document</title>
+</head>
 
-    <main class="meditrace-main">
-        <section class="mt-page-header">
+<body>
+  <%- include('partials/header.ejs') %>
+
+    <div class="meditrace-wrapper">
+      <%- include('partials/menu.ejs') %>
+
+        <main class="meditrace-main">
+          <section class="mt-page-header">
             <h1>Моя семья</h1>
             <p>Управляйте медицинскими данными членов семьи</p>
-        </section>
+          </section>
 
-        <div class="mt-family-layout">
+          <div class="mt-family-layout">
             <div class="mt-family-container">
-                <div class="mt-members-grid">
-                    <% if (typeof familyMembers !== 'undefined' && familyMembers.length > 0) { %>
-                        <% familyMembers.forEach(function(m) { %>
-                            <div class="mt-member-card">
-                                <div class="mt-member-info">
-                                    <div class="mt-avatar" style="background: linear-gradient(135deg, #8B5CF6, #6366F1);">
-                                        <%= m.full_name[0].toUpperCase() %>
-                                    </div>
-                                    <div class="mt-details">
-                                        <p class="mt-name"><%= m.full_name %></p>
-                                        <p class="mt-role">Статус : <%= m.relationship %></p>
-                                        <p class="mt-birthdate">📅 21.04.2010</p> </div>
-                                </div>
-                                <div class="mt-card-divider"></div>
-                                <button class="mt-delete-btn" onclick="deleteMember('<%= m._id %>')">
-                                    <span class="trash-icon">🗑</span> Удалить
-                                </button>
-                            </div>
-                        <% }); %>
-                    <% } %>
-                </div>
+              <div class="mt-members-grid">
+                <% if (typeof familyMembers !=='undefined' && familyMembers.length> 0) { %>
+                  <% familyMembers.forEach(function(m) { %>
+                    <div class="mt-member-card">
+                      <div class="mt-member-info">
+                        <div class="mt-avatar" style="background: linear-gradient(135deg, #8B5CF6, #6366F1);">
+                          <%= m.full_name[0].toUpperCase() %>
+                        </div>
+                        <div class="mt-details">
+                          <p class="mt-name">
+                            <%= m.full_name %>
+                          </p>
+                          <p class="mt-role">Статус : <%= m.relationship %>
+                          </p>
+                          <p class="mt-birthdate">📅 21.04.2010</p>
+                        </div>
+                      </div>
+                      <div class="mt-card-divider"></div>
+                      <button class="mt-delete-btn" onclick="deleteMember('<%= m._id %>')">
+                        <span class="trash-icon">🗑</span> Удалить
+                      </button>
+                    </div>
+                    <% }); %>
+                      <% } %>
+              </div>
 
-                <button class="mt-add-member-btn" onclick="openAddMemberModal()">
-                    <span class="plus-icon">+ 👥</span> Добавить члена семьи
-                </button>
+              <button class="mt-add-member-btn" onclick="openAddMemberModal()">
+                <span class="plus-icon">+ 👥</span> Добавить члена семьи
+              </button>
             </div>
 
             <aside class="mt-ai-sidebar">
-                <div class="mt-ai-card">
-                    <div class="mt-ai-header">
-                        <span class="mt-ai-bot-icon">🤖</span>
-                        <div>
-                            <div class="mt-ai-title">AI - анализ</div>
-                            <div class="mt-ai-date">Последний анализ от 1 апреля 2026</div>
-                        </div>
-                    </div>
-                    
-                    <div class="mt-ai-status primary">
-                        <span class="mt-status-check">✓</span>
-                        <div>
-                            <strong>Общее состояние</strong>
-                            <p>Большинство показателей в норме.</p>
-                        </div>
-                    </div>
-
-                    <div class="mt-ai-status secondary">
-                        <span class="mt-status-chart">📈</span>
-                        <div>
-                            <strong>Динамика</strong>
-                            <p>Гемоглобин растет, а холестерин снижается.</p>
-                        </div>
-                    </div>
-
-                    <button class="mt-ai-button">Открыть AI - ассистента</button>
+              <div class="mt-ai-card">
+                <div class="mt-ai-header">
+                  <span class="mt-ai-bot-icon">🤖</span>
+                  <div>
+                    <div class="mt-ai-title">AI - анализ</div>
+                    <div class="mt-ai-date">Последний анализ от 1 апреля 2026</div>
+                  </div>
                 </div>
-            </aside>
-        </div>
-    </main>
-</div>
 
-<div id="addMemberModal" class="mt-modal-overlay" onclick="if(event.target===this) closeAddMemberModal()">
-    <div class="mt-modal">
+                <div class="mt-ai-status primary">
+                  <span class="mt-status-check">✓</span>
+                  <div>
+                    <strong>Общее состояние</strong>
+                    <p>Большинство показателей в норме.</p>
+                  </div>
+                </div>
+
+                <div class="mt-ai-status secondary">
+                  <span class="mt-status-chart">📈</span>
+                  <div>
+                    <strong>Динамика</strong>
+                    <p>Гемоглобин растет, а холестерин снижается.</p>
+                  </div>
+                </div>
+
+                <button class="mt-ai-button">Открыть AI - ассистента</button>
+              </div>
+            </aside>
+          </div>
+        </main>
+    </div>
+
+    <div id="addMemberModal" class="mt-modal-overlay" onclick="if(event.target===this) closeAddMemberModal()">
+      <div class="mt-modal">
         <div class="mt-modal-header">
-            <h3>Добавить члена семьи</h3>
-            <button class="mt-modal-close" onclick="closeAddMemberModal()">✕</button>
+          <h3>Добавить члена семьи</h3>
+          <button class="mt-modal-close" onclick="closeAddMemberModal()">✕</button>
         </div>
         <form id="addMemberForm" class="mt-modal-form">
-            <div class="mt-form-group">
-                <label>ФИО *</label>
-                <input type="text" name="full_name" placeholder="Например: Алия Смагулова" required>
+          <div class="mt-form-group">
+            <label>ФИО *</label>
+            <input type="text" name="full_name" placeholder="Например: Алия Смагулова" required>
+          </div>
+          <div class="mt-form-group">
+            <label>Кем приходится *</label>
+            <input type="text" name="relationship" placeholder="Например: Сын, Супруга" required>
+          </div>
+          <div class="mt-form-group">
+            <label>Цвет профиля</label>
+            <div class="mt-color-picker">
+              <input type="radio" name="theme_color" value="purple" id="c1" checked>
+              <label for="c1" style="background: #8B5CF6;"></label>
+              <input type="radio" name="theme_color" value="blue" id="c2">
+              <label for="c2" style="background: #3B82F6;"></label>
             </div>
-            <div class="mt-form-group">
-                <label>Кем приходится *</label>
-                <input type="text" name="relationship" placeholder="Например: Сын, Супруга" required>
-            </div>
-            <div class="mt-form-group">
-                <label>Цвет профиля</label>
-                <div class="mt-color-picker">
-                    <input type="radio" name="theme_color" value="purple" id="c1" checked>
-                    <label for="c1" style="background: #8B5CF6;"></label>
-                    <input type="radio" name="theme_color" value="blue" id="c2">
-                    <label for="c2" style="background: #3B82F6;"></label>
-                </div>
-            </div>
-            <button type="button" onclick="submitMember()" class="mt-submit-btn">Сохранить</button>
+          </div>
+          <button type="button" onclick="submitMember()" class="mt-submit-btn">Сохранить</button>
         </form>
+      </div>
     </div>
-</div>
 
-<script>
-    // Логика остается прежней
-    async function submitMember() {
+    <script>
+      // Логика остается прежней
+      async function submitMember() {
         const form = document.getElementById('addMemberForm');
         const data = {
-            full_name: form.querySelector('[name="full_name"]').value,
-            relationship: form.querySelector('[name="relationship"]').value,
-            themeColor: form.querySelector('[name="theme_color"]:checked')?.value || 'purple',
+          full_name: form.querySelector('[name="full_name"]').value,
+          relationship: form.querySelector('[name="relationship"]').value,
+          themeColor: form.querySelector('[name="theme_color"]:checked')?.value || 'purple',
         };
         if (!data.full_name || !data.relationship) return alert('Заполните поля');
 
         const res = await fetch('/api/family', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
         });
         const result = await res.json();
         if (result.success) location.reload();
-    }
+      }
 
-    async function deleteMember(id) {
+      async function deleteMember(id) {
         if (!confirm('Удалить члена семьи?')) return;
         const res = await fetch('/api/family/' + id, { method: 'DELETE' });
         const data = await res.json();
         if (data.success) location.reload();
-    }
+      }
 
-    function openAddMemberModal() { document.getElementById('addMemberModal').style.display = 'flex'; }
-    function closeAddMemberModal() { document.getElementById('addMemberModal').style.display = 'none'; }
-</script>
+      function openAddMemberModal() { document.getElementById('addMemberModal').style.display = 'flex'; }
+      function closeAddMemberModal() { document.getElementById('addMemberModal').style.display = 'none'; }
+    </script>
+    <%- include('partials/scripts.ejs')%>
+</body>
+
+</html>
