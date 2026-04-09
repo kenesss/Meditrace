@@ -1,87 +1,97 @@
-<%- include('partials/header.ejs') %>
+<html lang="en">
+<%- include('partials/head.ejs')%>
+    <title>Profile - Meditrace</title>
 
-<div class="meditrace-wrapper">
-    <%- include('partials/menu.ejs') %>
+    <body>
+        <%- include('partials/header.ejs') %>
 
-    <main class="meditrace-main">
-        <section class="mt-greeting">
-            <h1>Добро пожаловать, Ainur!</h1>
-            <p>Вот обзор вашего здоровья</p>
-        </section>
+            <div class="meditrace-wrapper">
+                <%- include('partials/menu.ejs') %>
 
-        <div class="mt-grid">
-            <div class="mt-stats-grid">
-                <div class="mt-stat-card">
-                    <div class="mt-icon-box">📋</div>
-                    <div class="mt-stat-value">04</div>
-                    <div class="mt-stat-label">Всего<br>анализов</div>
-                </div>
-                <div class="mt-stat-card">
-                    <div class="mt-icon-box">👤</div>
-                    <div class="mt-stat-value">70%</div>
-                    <div class="mt-stat-label">Профиль<br>здоровья</div>
-                </div>
-                <div class="mt-stat-card">
-                    <div class="mt-icon-box">👥</div>
-                    <div class="mt-stat-value">01</div>
-                    <div class="mt-stat-label">Члена<br>семьи</div>
-                </div>
-                <div class="mt-stat-card">
-                    <div class="mt-icon-box">🚩</div>
-                    <div class="mt-stat-value">02</div>
-                    <div class="mt-stat-label">Активных<br>целей</div>
-                </div>
+                    <main class="meditrace-main">
+                        <section class="mt-greeting">
+                            <h1>Добро пожаловать, Ainur!</h1>
+                            <p>Вот обзор вашего здоровья</p>
+                        </section>
+
+                        <div class="mt-grid">
+                            <div class="mt-stats-grid">
+                                <div class="mt-stat-card">
+                                    <div class="mt-icon-box">📋</div>
+                                    <div class="mt-stat-value">04</div>
+                                    <div class="mt-stat-label">Всего<br>анализов</div>
+                                </div>
+                                <div class="mt-stat-card">
+                                    <div class="mt-icon-box">👤</div>
+                                    <div class="mt-stat-value">70%</div>
+                                    <div class="mt-stat-label">Профиль<br>здоровья</div>
+                                </div>
+                                <div class="mt-stat-card">
+                                    <div class="mt-icon-box">👥</div>
+                                    <div class="mt-stat-value">01</div>
+                                    <div class="mt-stat-label">Члена<br>семьи</div>
+                                </div>
+                                <div class="mt-stat-card">
+                                    <div class="mt-icon-box">🚩</div>
+                                    <div class="mt-stat-value">02</div>
+                                    <div class="mt-stat-label">Активных<br>целей</div>
+                                </div>
+                            </div>
+
+                            <aside class="mt-ai-card">
+                                <div class="mt-ai-header">
+                                    <span class="mt-ai-bot-icon">🤖</span>
+                                    <div>
+                                        <div class="mt-ai-title">AI - анализ</div>
+                                        <div class="mt-ai-date">Последний анализ от 1 апреля 2026</div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-ai-status primary">
+                                    <span class="mt-status-check">✓</span>
+                                    <div>
+                                        <strong>Общее состояние</strong>
+                                        <p>Большинство показателей в норме.</p>
+                                    </div>
+                                </div>
+
+                                <div class="mt-ai-status secondary">
+                                    <span class="mt-status-chart">📈</span>
+                                    <div>
+                                        <strong>Динамика</strong>
+                                        <p>Гемоглобин растет, а холестерин снижается.</p>
+                                    </div>
+                                </div>
+
+                                <button class="mt-ai-button">Открыть AI - ассистента</button>
+                            </aside>
+                        </div>
+
+                        <section class="mt-chart-container">
+                            <div class="mt-chart-card">
+                                <h2>Динамика показателей</h2>
+                                <div class="mt-visual-chart">
+                                    <div class="mt-y-axis">
+                                        <span>140</span><span>105</span><span>70</span><span>35</span><span>0</span>
+                                    </div>
+                                    <div class="mt-chart-lines">
+                                        <div class="mt-line-systolic"></div>
+                                        <div class="mt-line-diastolic"></div>
+                                    </div>
+                                </div>
+                                <div class="mt-x-axis">
+                                    <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
+                                </div>
+                                <div class="mt-legend">
+                                    <span class="mt-leg-item"><i class="mt-dot blue"></i> Systolic</span>
+                                    <span class="mt-leg-item"><i class="mt-dot gray"></i> Diastolic</span>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
             </div>
+            </script>
+            <%- include('partials/scripts.ejs')%>
+    </body>
 
-            <aside class="mt-ai-card">
-                <div class="mt-ai-header">
-                    <span class="mt-ai-bot-icon">🤖</span>
-                    <div>
-                        <div class="mt-ai-title">AI - анализ</div>
-                        <div class="mt-ai-date">Последний анализ от 1 апреля 2026</div>
-                    </div>
-                </div>
-                
-                <div class="mt-ai-status primary">
-                    <span class="mt-status-check">✓</span>
-                    <div>
-                        <strong>Общее состояние</strong>
-                        <p>Большинство показателей в норме.</p>
-                    </div>
-                </div>
-
-                <div class="mt-ai-status secondary">
-                    <span class="mt-status-chart">📈</span>
-                    <div>
-                        <strong>Динамика</strong>
-                        <p>Гемоглобин растет, а холестерин снижается.</p>
-                    </div>
-                </div>
-
-                <button class="mt-ai-button">Открыть AI - ассистента</button>
-            </aside>
-        </div>
-
-        <section class="mt-chart-container">
-            <div class="mt-chart-card">
-                <h2>Динамика показателей</h2>
-                <div class="mt-visual-chart">
-                    <div class="mt-y-axis">
-                        <span>140</span><span>105</span><span>70</span><span>35</span><span>0</span>
-                    </div>
-                    <div class="mt-chart-lines">
-                        <div class="mt-line-systolic"></div>
-                        <div class="mt-line-diastolic"></div>
-                    </div>
-                </div>
-                <div class="mt-x-axis">
-                    <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span>
-                </div>
-                <div class="mt-legend">
-                    <span class="mt-leg-item"><i class="mt-dot blue"></i> Systolic</span>
-                    <span class="mt-leg-item"><i class="mt-dot gray"></i> Diastolic</span>
-                </div>
-            </div>
-        </section>
-    </main>
-</div>
+</html>
