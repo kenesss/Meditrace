@@ -1,0 +1,105 @@
+<div id="ai-chat-bubble" onclick="toggleAiChat()">
+  <svg id="bubble-icon-open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+  <svg id="bubble-icon-close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+    <line x1="18" y1="6" x2="6" y2="18"/>
+    <line x1="6" y1="6" x2="18" y2="18"/>
+  </svg>
+</div>
+
+<div id="ai-chat-window">
+  <div class="ai-chat-header">
+    <div class="ai-chat-header-avatar">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M12 16v-4M12 8h.01"/>
+      </svg>
+    </div>
+    <div>
+      <p class="ai-chat-header-title">Meditrace AI</p>
+      <p class="ai-chat-header-subtitle">Персональный помощник</p>
+    </div>
+  </div>
+
+  <div id="ai-chat-messages">
+    <div class="ai-chat-message">
+      Здравствуйте! Я готов проанализировать ваши показатели или ответить на вопросы о здоровье. Чем могу помочь?
+    </div>
+  </div>
+
+  <div class="ai-chat-quick-questions">
+    <button type="button" class="ai-chat-quick-btn" onclick="sendQuickQuestion(this)">
+      Объясни мои результаты
+    </button>
+    <button type="button" class="ai-chat-quick-btn" onclick="sendQuickQuestion(this)">
+      Как улучшить показатели?
+    </button>
+    <button type="button" class="ai-chat-quick-btn" onclick="sendQuickQuestion(this)">
+      Как расшифровать ЭКГ?
+    </button>
+  </div>
+
+  <form class="ai-chat-form" onsubmit="sendAiMessage(event)">
+    <input id="ai-chat-input" type="text" placeholder="Напишите вопрос..." autocomplete="off">
+    <button type="submit" class="ai-chat-submit-btn">↑</button>
+  </form>
+</div>
+
+<script>
+  function toggleAiChat() {
+    const win = document.getElementById('ai-chat-window');
+    const iconOpen = document.getElementById('bubble-icon-open');
+    const iconClose = document.getElementById('bubble-icon-close');
+    const isOpen = win.style.display === 'flex';
+    win.style.display = isOpen ? 'none' : 'flex';
+    iconOpen.style.display = isOpen ? 'block' : 'none';
+    iconClose.style.display = isOpen ? 'none' : 'block';
+  }
+
+  function sendQuickQuestion(btn) {
+    const text = btn.innerText.trim();
+    document.getElementById('ai-chat-input').value = text;
+    sendAiMessage(null, text);
+  }
+
+  async function sendAiMessage(event, overrideText) {
+    if (event) event.preventDefault();
+    const input = document.getElementById('ai-chat-input');
+    const text = overrideText || input.value.trim();
+    if (!text) return;
+    input.value = '';
+
+    appendMessage(text, 'user');
+    const typing = appendMessage('...', 'ai', true);
+
+    try {
+      const res = await fetch('/api/ai/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text }),
+      });
+      const data = await res.json();
+      typing.remove();
+      appendMessage(data.reply || 'Не удалось получить ответ.', 'ai');
+    } catch (e) {
+      typing.remove();
+      appendMessage('Ошибка соединения. Попробуйте ещё раз.', 'ai');
+    }
+  }
+
+  function appendMessage(text, role, isTyping = false) {
+    const container = document.getElementById('ai-chat-messages');
+    const div = document.createElement('div');
+    div.classList.add('ai-chat-message');
+    if (role === 'user') div.classList.add('user');
+    if (isTyping) div.classList.add('typing');
+    div.innerText = text;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+    return div;
+  }
+</script>

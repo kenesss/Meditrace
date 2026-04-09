@@ -353,4 +353,15 @@ router.get("/all-analyses/:id", isAuth, async function (req, res) {
   }
 });
 
+router.post("/api/ai/chat", isAuth, async (req, res) => {
+  try {
+    const { message } = req.body;
+    // здесь ваш вызов к AI (OpenAI, Claude и т.д.)
+    // пример заглушки:
+    res.json({ reply: "Это тестовый ответ на: " + message });
+  } catch (error) {
+    res.status(500).json({ reply: "Ошибка сервера" });
+  }
+});
+
 module.exports = router
