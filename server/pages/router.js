@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
   res.render("index", { user: req.user ? req.user : {} });
 })
 
+
 router.get("/login", (req, res) => {
   res.render("login", {
     user: req.user ? req.user : {},
