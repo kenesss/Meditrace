@@ -1,69 +1,80 @@
-.menu {
-    width: 360px;
-    background: #fff;
-    border-radius: 20px;
-    padding: 20px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+  .menu {
+      width: 360px;
+      background: #fff;
+      border-radius: 20px;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+  }
 
-.menu-item {
-    text-decoration: none; /* Убираем подчеркивание */
-    display: flex;         /* Выравниваем иконку и текст в ряд */
-    align-items: center;
-    cursor: pointer;
-    color: inherit;        /* Чтобы ссылка не стала синей */
-    border: none;
-    background: none;
-}
+  .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      background: #f4f6f8;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      color: #1a1a1a;
+      border: none;
+      width: 100%;
+      text-align: left;
+      transition: background 0.15s;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      align-items: center;
+  }
 
-.menu-item:hover {
-    background: #e8ecf0;
-}
+  .menu-item:hover {
+      background: #e8ecf0;
+  }
 
-.menu-item.active {
-    background: #1B88E0;
-    color: #fff;
-}
+  .menu-item.active {
+      background: #1B88E0;
+      color: #fff;
+  }
 
-.menu-item.active svg {
-    fill: #fff;
-}
+  .menu-item.active svg {
+      fill: #fff;
+  }
 
-.menu-item svg {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-    fill: #1a1a1a;
-}
+  .menu-item svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      fill: #1a1a1a;
+  }
 
-.logout {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 16px;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: 500;
-    color: #666;
-    background: none;
-    border: none;
-    width: 100%;
-    text-align: left;
-    margin-top: 8px;
-}
+  .logout {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 500;
+      color: #666;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      margin-top: 8px;
+  }
 
-.logout:hover {
-    color: #1a1a1a;
-}
+  .logout:hover {
+      color: #1a1a1a;
+  }
 
-.logout svg {
-    width: 20px;
-    height: 20px;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
+  .logout svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+  }
