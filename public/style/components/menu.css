@@ -1,26 +1,21 @@
   .menu {
-      width: 360px;
-      background: #fff;
+      width: 23%;
       border-radius: 20px;
       padding: 20px 16px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 20px;
   }
 
   .menu-item {
       display: flex;
-      align-items: center;
       gap: 14px;
       padding: 14px 16px;
       border-radius: 14px;
       background: #f4f6f8;
-      cursor: pointer;
       font-size: 15px;
       font-weight: 500;
-      color: #1a1a1a;
       border: none;
-      width: 100%;
       text-align: left;
       transition: background 0.15s;
       text-decoration: none;
