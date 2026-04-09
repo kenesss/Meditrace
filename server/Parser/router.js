@@ -183,6 +183,7 @@ router.get("/pdf-upload-page/:id?", async function (req, res) {
             user: req.user || {},
             familyMembers: familyMembers,
             activeMemberId: req.query.member || null,
+            activePage: 'analyses',
         });
     } catch (error) {
         res.status(500).send("Server Error");
