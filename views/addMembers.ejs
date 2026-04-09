@@ -1,135 +1,132 @@
-<html lang="en">
-<%- include('partials/head.ejs')%>
-    <title>Document</title>
+<%- include('partials/header.ejs') %>
 
-    <body>
-        <%- include('partials/header.ejs')%>
-            <div class="add-members-container">
-                <div class="back-to-dashboard" onclick="window.location.href='/profile/<%= user._id %>'"
-                    style="cursor: pointer;">
-                    <img src="/public/img/icon/Icon13.png" alt="">
-                    <p>Back to Dashboard</p>
-                </div>
-                <div class="add-members-content">
-                    <div class="family-members-info">
-                        <h2>Family Members</h2>
-                        <p>Manage health records for entire family</p>
-                    </div>
-                    <button class="member-btn" type="button" onclick="openAddMemberModal()">+ Add Family Members</button>
-                </div>
-            </div>
+<div class="meditrace-wrapper">
+    <%- include('partials/menu.ejs') %>
 
-            <% if (typeof familyMembers !== 'undefined' && familyMembers.length > 0) { %>
-              <div style="margin: 20px 5%;">
-                <% familyMembers.forEach(function(m) { %>
-                  <div style="display:flex;justify-content:space-between;align-items:center;background:white;padding:16px 20px;border-radius:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
-                    <div style="display:flex;align-items:center;gap:14px;">
-                      <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#8B5CF6,#6366F1);display:flex;align-items:center;justify-content:center;color:white;font-weight:bold;font-size:18px;">
-                        <%= m.full_name[0].toUpperCase() %>
-                      </div>
-                      <div>
-                        <p style="margin:0;font-weight:bold;color:#172b4d;font-size:16px;"><%= m.full_name %></p>
-                        <p style="margin:4px 0 0;color:#7a869a;font-size:13px;"><%= m.relationship %></p>
-                      </div>
-                    </div>
-                    <button onclick="deleteMember('<%= m._id %>')"
-                      style="background:#fff0f0;border:none;padding:8px 14px;border-radius:8px;cursor:pointer;color:#eb5757;font-weight:500;">
-                      Удалить
-                    </button>
-                  </div>
-                <% }); %>
-              </div>
-            <% } else { %>
-            <div class="no-family-members">
-                <img src="/public/img/icon/Icon14.png" alt="">
-                <h3>No family members added yet</h3>
-                <p>Add family members to manage their health records in one place</p>
-                <button class="member-btn" type="button" onclick="openAddMemberModal()">+ Add Your First Family Member</button>
-            </div>
-            <% } %>
-            <div id="addMemberModal" class="modal-overlay" onclick="if(event.target===this) closeAddMemberModal()">
-                <div class="modal" role="dialog" aria-modal="true">
-                    <div class="modal-header">
-                        <h3>Add Family Member</h3>
-                        <button class="modal-close" type="button" onclick="closeAddMemberModal()">✕</button>
-                    </div>
-                    <form class="modal-form" id="addMemberForm">
-                        <div class="form-group">
-                            <label>Full Name *</label>
-                            <input type="text" name="full_name" placeholder="e.g., Aliya Smith" required>
-                        </div>
+    <main class="meditrace-main">
+        <section class="mt-page-header">
+            <h1>Моя семья</h1>
+            <p>Управляйте медицинскими данными членов семьи</p>
+        </section>
 
-                        <div class="form-group">
-                            <label>Relationship *</label>
-                            <input type="text" name="relationship" placeholder="e.g., Mother, Son" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Email address (optional)</label>
-                            <input type="email" name="email" placeholder="example@email.com">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Profile Theme Color</label>
-                            <div class="color-picker">
-                                <input type="radio" name="theme_color" value="purple" id="c1" checked>
-                                <label for="c1" style="background: linear-gradient(135deg, #8B5CF6, #6366F1);"></label>
-
-                                <input type="radio" name="theme_color" value="pink" id="c2">
-                                <label for="c2" style="background: linear-gradient(135deg, #F472B6, #FB923C);"></label>
-
-                                <input type="radio" name="theme_color" value="cyan" id="c3">
-                                <label for="c3" style="background: linear-gradient(135deg, #22D3EE, #818CF8);"></label>
-
-                                <input type="radio" name="theme_color" value="blue" id="c4">
-                                <label for="c4" style="background: linear-gradient(135deg, #3B82F6, #60A5FA);"></label>
-
-                                <input type="radio" name="theme_color" value="green" id="c5">
-                                <label for="c5" style="background: linear-gradient(135deg, #34D399, #6EE7B7);"></label>
+        <div class="mt-family-layout">
+            <div class="mt-family-container">
+                <div class="mt-members-grid">
+                    <% if (typeof familyMembers !== 'undefined' && familyMembers.length > 0) { %>
+                        <% familyMembers.forEach(function(m) { %>
+                            <div class="mt-member-card">
+                                <div class="mt-member-info">
+                                    <div class="mt-avatar" style="background: linear-gradient(135deg, #8B5CF6, #6366F1);">
+                                        <%= m.full_name[0].toUpperCase() %>
+                                    </div>
+                                    <div class="mt-details">
+                                        <p class="mt-name"><%= m.full_name %></p>
+                                        <p class="mt-role">Статус : <%= m.relationship %></p>
+                                        <p class="mt-birthdate">📅 21.04.2010</p> </div>
+                                </div>
+                                <div class="mt-card-divider"></div>
+                                <button class="mt-delete-btn" onclick="deleteMember('<%= m._id %>')">
+                                    <span class="trash-icon">🗑</span> Удалить
+                                </button>
                             </div>
-                        </div>
+                        <% }); %>
+                    <% } %>
+                </div>
 
-                        <button type="button" onclick="submitMember()" class="submit-btn">Add Family Member</button>
-                    </form>
+                <button class="mt-add-member-btn" onclick="openAddMemberModal()">
+                    <span class="plus-icon">+ 👥</span> Добавить члена семьи
+                </button>
+            </div>
+
+            <aside class="mt-ai-sidebar">
+                <div class="mt-ai-card">
+                    <div class="mt-ai-header">
+                        <span class="mt-ai-bot-icon">🤖</span>
+                        <div>
+                            <div class="mt-ai-title">AI - анализ</div>
+                            <div class="mt-ai-date">Последний анализ от 1 апреля 2026</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-ai-status primary">
+                        <span class="mt-status-check">✓</span>
+                        <div>
+                            <strong>Общее состояние</strong>
+                            <p>Большинство показателей в норме.</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-ai-status secondary">
+                        <span class="mt-status-chart">📈</span>
+                        <div>
+                            <strong>Динамика</strong>
+                            <p>Гемоглобин растет, а холестерин снижается.</p>
+                        </div>
+                    </div>
+
+                    <button class="mt-ai-button">Открыть AI - ассистента</button>
+                </div>
+            </aside>
+        </div>
+    </main>
+</div>
+
+<div id="addMemberModal" class="mt-modal-overlay" onclick="if(event.target===this) closeAddMemberModal()">
+    <div class="mt-modal">
+        <div class="mt-modal-header">
+            <h3>Добавить члена семьи</h3>
+            <button class="mt-modal-close" onclick="closeAddMemberModal()">✕</button>
+        </div>
+        <form id="addMemberForm" class="mt-modal-form">
+            <div class="mt-form-group">
+                <label>ФИО *</label>
+                <input type="text" name="full_name" placeholder="Например: Алия Смагулова" required>
+            </div>
+            <div class="mt-form-group">
+                <label>Кем приходится *</label>
+                <input type="text" name="relationship" placeholder="Например: Сын, Супруга" required>
+            </div>
+            <div class="mt-form-group">
+                <label>Цвет профиля</label>
+                <div class="mt-color-picker">
+                    <input type="radio" name="theme_color" value="purple" id="c1" checked>
+                    <label for="c1" style="background: #8B5CF6;"></label>
+                    <input type="radio" name="theme_color" value="blue" id="c2">
+                    <label for="c2" style="background: #3B82F6;"></label>
                 </div>
             </div>
-            <footer>
-                <%- include('partials/footer.ejs')%>
-            </footer>
-            <script>
-            async function submitMember() {
-              const form = document.getElementById('addMemberForm');
-              const data = {
-                full_name: form.querySelector('[name="full_name"]').value,
-                relationship: form.querySelector('[name="relationship"]').value,
-                themeColor: form.querySelector('[name="theme_color"]:checked')?.value || 'purple',
-              };
-              if (!data.full_name || !data.relationship) {
-                alert('Заполните имя и роль');
-                return;
-              }
-              const res = await fetch('/api/family', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data),
-              });
-              const result = await res.json();
-              if (result.success) {
-                closeAddMemberModal();
-                location.reload();
-              } else {
-                alert('Ошибка: ' + result.error);
-              }
-            }
-            async function deleteMember(id) {
-              if (!confirm('Удалить члена семьи?')) return;
-              const res = await fetch('/api/family/' + id, { method: 'DELETE' });
-              const data = await res.json();
-              if (data.success) location.reload();
-              else alert('Ошибка: ' + data.error);
-            }
-            </script>
-            <%- include('partials/scripts.ejs')%>
-    </body>
+            <button type="button" onclick="submitMember()" class="mt-submit-btn">Сохранить</button>
+        </form>
+    </div>
+</div>
 
-</html>
+<script>
+    // Логика остается прежней
+    async function submitMember() {
+        const form = document.getElementById('addMemberForm');
+        const data = {
+            full_name: form.querySelector('[name="full_name"]').value,
+            relationship: form.querySelector('[name="relationship"]').value,
+            themeColor: form.querySelector('[name="theme_color"]:checked')?.value || 'purple',
+        };
+        if (!data.full_name || !data.relationship) return alert('Заполните поля');
+
+        const res = await fetch('/api/family', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+        const result = await res.json();
+        if (result.success) location.reload();
+    }
+
+    async function deleteMember(id) {
+        if (!confirm('Удалить члена семьи?')) return;
+        const res = await fetch('/api/family/' + id, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) location.reload();
+    }
+
+    function openAddMemberModal() { document.getElementById('addMemberModal').style.display = 'flex'; }
+    function closeAddMemberModal() { document.getElementById('addMemberModal').style.display = 'none'; }
+</script>
