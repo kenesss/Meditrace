@@ -1,16 +1,8 @@
 <header>
-
-    <!-- <form class="head-search">
-        <input type="text" name="search" placeholder="Поиск по блогам">
-        <button class="btn">
-            <img src="/img/icon/search.png" alt="">
-            <p>Найти</p>
-        </button>
-    </form> -->
-
     <% if(user._id && user.full_name.length> 0){
         %>
         <div class="head-container">
+            <a href="/" class="logo">Meditrace</a>
             <div class="head-logo-log">
                 <div class="head-nav-log">
                     <h1>Welcome back, <%=user.full_name%>!</h1>
@@ -78,33 +70,14 @@
                         </a>
                     </div>
                 </div>
-
-                <a href="/setting/<%= user._id %>" class="logout-link">
-                    <img src="/public/img/icon/Settings.png" alt="">
-                    <span>Setting</span>
-                </a>
-                <a href="/api/signout" class="logout-link">
-                    <img src="/img/icon/Icon8.png" alt="">
-                    <span>Logout</span>
-                </a>
             </div>
         </div>
         <% }else{ %>
-            <div class="head-container">
-                <div class="head-logo">
-                    <a href="/">
-                        <h1>Meditrace</h1>
-                    </a>
-                </div>
-                <div class="head-nav">
-                    <a href="/" class="nav-link">How It works</a>
-                    <a href="/" class="nav-link">About</a>
-                    <a href="/" class="nav-link">Pricing</a>
-                    <a href="/" class="nav-link">Contact</a>
-                </div>
-                <div class="head-button">
-                    <a href="/login" class="buttons">Sign In</a>
-                    <a href="/regester" class="buttons">Get Started</a>
+            <div class="landing-top-header">
+                <a href="/" class="logo">Meditrace</a>
+                <div class="auth-actions">
+                    <a href="/login" class="link-login">Войти</a>
+                    <a href="/regester" class="btn btn-register">Регистрация</a>
                 </div>
             </div>
             <% } %>
