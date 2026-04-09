@@ -128,6 +128,7 @@ router.get("/profile/:id", isAuth, async (req, res) => {
         activeMemberId: memberId,
         goals: goalsWithProgress,
         reminderBanner: reminderBanner,
+        activePage: 'home',
       });
     } else {
       res.redirect("/not-found");
@@ -163,6 +164,7 @@ router.get("/add-members/:id", isAuth, async function (req, res) {
       user: req.user ? req.user : {},
       familyMembers: familyMembers,
       activeMemberId: req.query.member || null,
+      activePage: 'members',
     });
   } catch (error) {
     console.error(error);
@@ -180,6 +182,7 @@ router.get("/setting/:id", isAuth, async function (req, res) {
       familyMembers: familyMembers,
       activeMemberId: req.query.member || null,
       query: req.query,
+      activePage: 'settings',
     });
   } else {
     res.redirect("/not-found");
@@ -194,6 +197,7 @@ router.get("/ai/:id", isAuth, async function (req, res) {
       loginUser: req.user,
       familyMembers: familyMembers,
       activeMemberId: req.query.member || null,
+      activePage: 'ai',
     });
   } else {
     res.redirect("/not-found");
@@ -241,6 +245,7 @@ router.get("/comparison/:id", isAuth, async function (req, res) {
       analyses,
       familyMembers,
       activeMemberId: memberId,
+      activePage: 'comparison',
     });
   } catch (error) {
     console.error("Ошибка при загрузке страницы сравнения:", error);
@@ -319,6 +324,7 @@ router.get("/goals/:id", isAuth, async function (req, res) {
       goals: goalsWithProgress,
       familyMembers,
       activeMemberId: memberId,
+      activePage: 'goals', 
     });
   } catch (error) {
     console.error("Ошибка при загрузке страницы целей:", error);
@@ -346,6 +352,7 @@ router.get("/all-analyses/:id", isAuth, async function (req, res) {
       analyses,
       familyMembers,
       activeMemberId: memberId,
+      activePage: 'all-analyses', 
     });
   } catch (error) {
     console.error("Ошибка при загрузке списка анализов:", error);
