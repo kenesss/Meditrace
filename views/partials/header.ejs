@@ -5,8 +5,45 @@
             <a href="/" class="logo">Meditrace</a>
             <div class="head-logo-log">
                 <div class="head-nav-log">
-                    <h1>Добро пожаловать, <%=user.full_name%>!</h1>
-                    <p>Вот обзор вашего здоровья</p>
+                    <h1>
+                        <% if (activePage === 'home') { %>
+                          Добро пожаловать, <%= user.full_name %>!
+                        <% } else if (activePage === 'members') { %>
+                          Моя семья
+                        <% } else if (activePage === 'analyses') { %>
+                          Мои анализы
+                        <% } else if (activePage === 'comparison') { %>
+                          Сравнение анализов
+                        <% } else if (activePage === 'ai') { %>
+                          AI-Ассистент
+                        <% } else if (activePage === 'goals') { %>
+                          Цели здоровья
+                        <% } else if (activePage === 'all-analyses') { %>
+                          Все анализы
+                        <% } else if (activePage === 'settings') { %>
+                          Настройки профиля
+                        <% } else { %>
+                          Добро пожаловать, <%= user.full_name %>!
+                        <% } %>
+                      </h1>
+                      
+                      <p>
+                        <% if (activePage === 'home') { %>
+                          Вот обзор вашего здоровья
+                        <% } else if (activePage === 'members') { %>
+                          Управляйте медицинскими данными членов семьи
+                        <% } else if (activePage === 'analyses') { %>
+                          Загружайте и просматривайте результаты анализов
+                        <% } else if (activePage === 'comparison') { %>
+                          Отслеживайте динамику показателей здоровья
+                        <% } else if (activePage === 'ai') { %>
+                          Анализ результатов и консультации по здоровью
+                        <% } else if (activePage === 'goals') { %>
+                          Ставьте цели и отслеживайте прогресс
+                        <% } else { %>
+                          &nbsp;
+                        <% } %>
+                      </p>
                 </div>
             </div>
             <div class="head-profile">
