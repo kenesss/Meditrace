@@ -200,4 +200,130 @@ router.get("/ai/:id", isAuth, async function (req, res) {
   }
 });
 
+router.get("/comparison/:id", isAuth, async function (req, res) {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.redirect("/not-found");
+
+    const memberId = req.query.member || null;
+    const analysisQuery = memberId
+      ? { userId: req.params.id, memberId: memberId }
+      : { userId: req.params.id, memberId: null };
+
+    const analyses = await Analysis.find(analysisQuery).sort({ testDate: -1 }).lean();
+
+    function getStatus(val, reference) {
+      const noData = { label: 'Нет данных', color: '#6b7280', bg: '#f9fafb' };
+      if (reference == null || String(reference).trim() === '') return noData;
+      const parts = String(reference).trim().split('-');
+      if (parts.length !== 2) return noData;
+      const min = parseFloat(parts[0]);
+      const max = parseFloat(parts[1]);
+      if (Number.isNaN(min) || Number.isNaN(max)) return noData;
+      const numVal = typeof val === 'number' ? val : parseFloat(val);
+      if (Number.isNaN(numVal)) return noData;
+      if (numVal < min) return { label: 'Ниже нормы', color: '#2563eb', bg: '#eff6ff' };
+      if (numVal > max) return { label: 'Выше нормы', color: '#dc2626', bg: '#fef2f2' };
+      return { label: 'В норме', color: '#16a34a', bg: '#f0fdf4' };
+    }
+
+    analyses.forEach(a => {
+      a.indicators.forEach(ind => {
+        ind.status = getStatus(ind.val, ind.reference);
+      });
+    });
+
+    const familyMembers = await FamilyMember.find({ ownerId: req.params.id }).sort({ createdAt: 1 });
+
+    res.render("comparison", {
+      user,
+      loginUser: req.user,
+      analyses,
+      familyMembers,
+      activeMemberId: memberId,
+    });
+  } catch (error) {
+    console.error("Ошибка при загрузке страницы сравнения:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/goals/:id", isAuth, async function (req, res) {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.redirect("/not-found");
+
+    const memberId = req.query.member || null;
+    const analysisQuery = memberId
+      ? { userId: req.params.id, memberId: memberId }
+      : { userId: req.params.id, memberId: null };
+
+    const analyses = await Analysis.find(analysisQuery).sort({ testDate: -1 }).lean();
+
+    function getStatus(val, reference) {
+      const noData = { label: 'Нет данных', color: '#6b7280', bg: '#f9fafb' };
+      if (reference == null || String(reference).trim() === '') return noData;
+      const parts = String(reference).trim().split('-');
+      if (parts.length !== 2) return noData;
+      const min = parseFloat(parts[0]);
+      const max = parseFloat(parts[1]);
+      if (Number.isNaN(min) || Number.isNaN(max)) return noData;
+      const numVal = typeof val === 'number' ? val : parseFloat(val);
+      if (Number.isNaN(numVal)) return noData;
+      if (numVal < min) return { label: 'Ниже нормы', color: '#2563eb', bg: '#eff6ff' };
+      if (numVal > max) return { label: 'Выше нормы', color: '#dc2626', bg: '#fef2f2' };
+      return { label: 'В норме', color: '#16a34a', bg: '#f0fdf4' };
+    }
+
+    analyses.forEach(a => {
+      a.indicators.forEach(ind => {
+        ind.status = getStatus(ind.val, ind.reference);
+      });
+    });
+
+    const goals = await HealthGoal.find({
+      userId: req.params.id,
+      memberId: memberId || null,
+    }).sort({ createdAt: -1 });
+
+    const goalsWithProgress = goals.map(goal => {
+      const latestAnalysis = analyses[0];
+      const ind = latestAnalysis?.indicators?.find(
+        i => i.name.toLowerCase() === goal.indicatorName.toLowerCase()
+      );
+      const currentVal = ind ? ind.val : null;
+      let progress = null;
+      let achieved = false;
+      if (currentVal !== null) {
+        if (goal.direction === 'below') {
+          achieved = currentVal <= goal.targetValue;
+          progress = achieved ? 100 : Math.max(0, Math.min(99,
+            Math.round((1 - (currentVal - goal.targetValue) / (currentVal + 0.001)) * 100)
+          ));
+        } else {
+          achieved = currentVal >= goal.targetValue;
+          progress = achieved ? 100 : Math.max(0, Math.min(99,
+            Math.round((currentVal / goal.targetValue) * 100)
+          ));
+        }
+      }
+      return { ...goal.toObject(), currentVal, progress, achieved };
+    });
+
+    const familyMembers = await FamilyMember.find({ ownerId: req.params.id }).sort({ createdAt: 1 });
+
+    res.render("goals", {
+      user,
+      loginUser: req.user,
+      analyses,
+      goals: goalsWithProgress,
+      familyMembers,
+      activeMemberId: memberId,
+    });
+  } catch (error) {
+    console.error("Ошибка при загрузке страницы целей:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 module.exports = router

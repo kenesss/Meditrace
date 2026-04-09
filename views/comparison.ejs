@@ -1,0 +1,61 @@
+<html lang="en">
+<%- include('partials/head.ejs')%>
+  <title>Compare - Meditrace</title>
+
+  <body>
+    <%- include('partials/header.ejs')%>
+    <%- include('partials/menu.ejs')%>
+
+    <% if(analyses && analyses.length >= 2) { %>
+      <main style="margin: 30px 9%;">
+
+        <div style="background:white;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05)">
+          <h3 style="margin:0 0 16px;color:#172b4d;font-size:1rem;font-weight:600">Сравнить два анализа</h3>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+            <select id="compare-sel-1"
+              style="flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px"></select>
+            <span style="color:#7a869a;font-weight:600">vs</span>
+            <select id="compare-sel-2"
+              style="flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px"></select>
+            <button id="compare-btn"
+              style="padding:10px 24px;background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;border-radius:10px;font-weight:600;cursor:pointer;white-space:nowrap">Сравнить</button>
+          </div>
+        </div>
+
+        <div id="compare-result"
+          style="display:none;background:white;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05)">
+        </div>
+
+      </main>
+    <% } else { %>
+      <main style="margin: 30px 9%; text-align: center; color: #7a869a; padding: 60px 0;">
+        <p style="font-size: 16px;">Для сравнения нужно минимум 2 загруженных анализа.</p>
+        <a href="/pdf-upload-page/<%= user._id %>"
+          style="display:inline-block;margin-top:16px;background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:600;">
+          Загрузить анализ
+        </a>
+      </main>
+    <% } %>
+
+    <div id="analyses-data-store" data-analyses='<%- JSON.stringify(analyses) %>' style="display:none;"></div>
+
+    <footer>
+      <%- include('partials/footer.ejs')%>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/compare.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const dataContainer = document.getElementById('analyses-data-store');
+        if (dataContainer) {
+          const analysesData = JSON.parse(dataContainer.getAttribute('data-analyses'));
+          initCompare(analysesData);
+        }
+      });
+    </script>
+
+    <%- include('partials/scripts.ejs')%>
+  </body>
+</html>

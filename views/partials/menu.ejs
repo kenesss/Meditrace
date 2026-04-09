@@ -17,7 +17,7 @@
     Моя семья
   </a>
 
-  <a href="" class="menu-item" onclick="setActive(this)">
+  <a href="/pdf-upload-page/<%= user._id %>" class="menu-item" onclick="setActive(this)">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <rect x="3" y="3" width="18" height="18" rx="4" />
       <path d="M8 12l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"
@@ -35,7 +35,16 @@
     Сравнение
   </a>
 
-  <a href="" class="menu-item" onclick="setActive(this)">
+  <a href="/ai/:id" class="menu-item" onclick="setActive(this)">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="14" width="4" height="7" rx="1" />
+      <rect x="10" y="9" width="4" height="12" rx="1" />
+      <rect x="17" y="4" width="4" height="17" rx="1" />
+    </svg>
+    AI-Ассистент
+  </a>
+
+  <a href="/goals/:id" class="menu-item" onclick="setActive(this)">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <polygon points="4,4 20,4 20,7 12,14 4,7" />
       <rect x="4" y="14" width="16" height="6" rx="1" />

@@ -1,11 +1,11 @@
 <html lang="en">
 <%- include('partials/head.ejs')%>
-    <title>Profile - Meditrace</title>
+  <title>Profile - Meditrace</title>
 
-    <body>
-        <%- include('partials/header.ejs')%>
-        <%- include('partials/menu.ejs')%>
-        <% if (typeof reminderBanner !== 'undefined' && reminderBanner) { %>
+  <body>
+    <%- include('partials/header.ejs')%>
+      <%- include('partials/menu.ejs')%>
+        <% if (typeof reminderBanner !=='undefined' && reminderBanner) { %>
           <div style="
             margin: 16px 9% 0;
             background: linear-gradient(90deg, #fff7ed, #fef3c7);
@@ -23,17 +23,17 @@
                 <% if (reminderBanner.lastDate) { %>
                   <p style="margin:0;font-weight:600;color:#92400e;font-size:15px;">
                     Последний анализ — <%= reminderBanner.lastDate %>
-                    (<%= reminderBanner.months %> мес. назад)
+                      (<%= reminderBanner.months %> мес. назад)
                   </p>
                   <p style="margin:4px 0 0;color:#b45309;font-size:13px;">
                     Рекомендуется сдавать анализы каждые 6 месяцев. Пора обновить результаты.
                   </p>
-                <% } else { %>
-                  <p style="margin:0;font-weight:600;color:#92400e;font-size:15px;">У вас ещё нет анализов</p>
-                  <p style="margin:4px 0 0;color:#b45309;font-size:13px;">
-                    Загрузите первый PDF-отчёт, чтобы начать отслеживание здоровья.
-                  </p>
-                <% } %>
+                  <% } else { %>
+                    <p style="margin:0;font-weight:600;color:#92400e;font-size:15px;">У вас ещё нет анализов</p>
+                    <p style="margin:4px 0 0;color:#b45309;font-size:13px;">
+                      Загрузите первый PDF-отчёт, чтобы начать отслеживание здоровья.
+                    </p>
+                    <% } %>
               </div>
             </div>
             <a href="/pdf-upload-page/<%= user._id %>"
@@ -41,384 +41,427 @@
               Загрузить анализ
             </a>
           </div>
-        <% } %>
+          <% } %>
             <div class="AI-insights">
-                <div class="container-base">
-                    <img src="/public/img/icon/Icon10.png" alt="">
-                </div>
-                <div class="AI-text">
-                    <h2>Insight of the Day</h2>
-                    <p>Based on your Oct 12 report, increasing Magnesium may improve your sleep scores. Consider foods
-                        like almonds, spinach, and dark chocolate.</p>
-                </div>
+              <div class="container-base">
+                <img src="/public/img/icon/Icon10.png" alt="">
+              </div>
+              <div class="AI-text">
+                <h2>Insight of the Day</h2>
+                <p>Based on your Oct 12 report, increasing Magnesium may improve your sleep scores. Consider foods
+                  like almonds, spinach, and dark chocolate.</p>
+              </div>
             </div>
             <main class="chat-container">
-                <div class="ai-chat-main">
-                    <div class="chat-header">
-                        <h2>Meditrace AI Assistant</h2>
-                        <p>Ваш персональный помощник по здоровью</p>
-                    </div>
-
-                    <div id="chat-messages" class="chat-messages-area">
-                        <div class="message ai-message">
-                            Здравствуйте! Я готов проанализировать ваши показатели или ответить на вопросы о здоровье.
-                            Чем могу помочь?
-                        </div>
-                    </div>
-                    <div class="quick-questions">
-                        <button type="button" class="quick-btn">Объясни мои результаты простыми словами</button>
-                        <button type="button" class="quick-btn">Как мне улучшить показатели через образ жизни?</button>
-                        <button type="button" class="quick-btn">Как расшифровать ЭКГ?</button>
-                    </div>
-
-                    <form id="chat-form" class="chat-input-container">
-                        <input type="text" id="user-input" placeholder="Напишите ваш вопрос здесь..." required
-                            autocomplete="off">
-                        <button type="submit">
-                            <span>Отправить</span>
-                        </button>
-                    </form>
+              <div class="ai-chat-main">
+                <div class="chat-header">
+                  <h2>Meditrace AI Assistant</h2>
+                  <p>Ваш персональный помощник по здоровью</p>
                 </div>
+
+                <div id="chat-messages" class="chat-messages-area">
+                  <div class="message ai-message">
+                    Здравствуйте! Я готов проанализировать ваши показатели или ответить на вопросы о здоровье.
+                    Чем могу помочь?
+                  </div>
+                </div>
+                <div class="quick-questions">
+                  <button type="button" class="quick-btn">Объясни мои результаты простыми словами</button>
+                  <button type="button" class="quick-btn">Как мне улучшить показатели через образ жизни?</button>
+                  <button type="button" class="quick-btn">Как расшифровать ЭКГ?</button>
+                </div>
+
+                <form id="chat-form" class="chat-input-container">
+                  <input type="text" id="user-input" placeholder="Напишите ваш вопрос здесь..." required
+                    autocomplete="off">
+                  <button type="submit">
+                    <span>Отправить</span>
+                  </button>
+                </form>
+              </div>
             </main>
 
             <% if(analyses && analyses.length> 0){ %>
-                <div class="analytics-section">
-                    <div class="analytics">
-                        <% const latest=analyses[0]; %>
-                            <% latest.indicators.slice(0, 3).forEach((ind, index)=> { %>
-                                <div class="analytics-card">
-                                    <div class="analytics-card-header">
-                                        <img src="/public/img/icon/Visualize<%= index+1 %>.png"
-                                            onerror="this.src='/public/img/icon/Container4.png'" alt="">
-                                        <div class="analytics-card-header-text">
-                                            <img src="/public/img/icon/Icon.png" alt="">
-                                            <p style="color: <%= ind.status.color %>; font-weight: 600;">
-                                                <%= ind.status.label %>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="analytics-card-body">
-                                        <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">
-                                            <%= ind.val %>
-                                        </p>
-                                        <p>
-                                            <%= ind.name %>
-                                        </p>
-                                    </div>
-                                </div>
-                                <% }) %>
-                    </div>
-                </div>
-
-                <div class="all-indicators-section" style="margin: 30px 9%;">
-                    <div
-                        style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 8px 30px rgba(0,0,0,0.05);">
-                        <h2 style="margin-bottom: 20px; color: #172b4d; font-size: 1.25rem;">Полные результаты анализа
-                        </h2>
-
-                        <div style="overflow-x: auto;">
-                            <table style="width: 100%; border-collapse: collapse; min-width: 500px;">
-                                <thead>
-                                    <tr style="border-bottom: 2px solid #f4f5f7; text-align: left;">
-                                        <th style="padding: 12px; color: #7a869a; font-weight: 600;">Показатель</th>
-                                        <th style="padding: 12px; color: #7a869a; font-weight: 600;">Значение</th>
-                                        <th style="padding: 12px; color: #7a869a; font-weight: 600;">Ед. изм.</th>
-                                        <th style="padding: 12px; color: #7a869a; font-weight: 600;">Статус</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% latest.indicators.forEach((ind)=> { %>
-                                        <tr style="border-bottom: 1px solid #f4f5f7; transition: background 0.2s;"
-                                            onmouseover="this.style.background='#f8fafc'"
-                                            onmouseout="this.style.background='transparent'">
-
-                                            <td style="padding: 15px 12px; color: #172b4d; font-weight: 500;">
-                                                <%= ind.name %>
-                                            </td>
-
-                                            <td
-                                                style="padding: 15px 12px; color: #2563eb; font-weight: bold; font-size: 1.1rem;">
-                                                <%= ind.val %>
-                                            </td>
-
-                                            <td style="padding: 15px 12px; color: #7a869a; font-size: 0.9rem;">
-                                                <%= ind.unit || '—' %>
-                                            </td>
-
-                                            <td style="padding: 15px 12px;">
-                                                <span
-                                                    style="background: <%= ind.status.bg %>; color: <%= ind.status.color %>; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">
-                                                    <%= ind.status.label %>
-                                                </span>
-                                            </td>
-                                        </tr>
-                                        <% }) %>
-                                </tbody>
-                            </table>
+              <div class="analytics-section">
+                <div class="analytics">
+                  <% const latest=analyses[0]; %>
+                    <% latest.indicators.slice(0, 3).forEach((ind, index)=> { %>
+                      <div class="analytics-card">
+                        <div class="analytics-card-header">
+                          <img src="/public/img/icon/Visualize<%= index+1 %>.png"
+                            onerror="this.src='/public/img/icon/Container4.png'" alt="">
+                          <div class="analytics-card-header-text">
+                            <img src="/public/img/icon/Icon.png" alt="">
+                            <p style="color: <%= ind.status.color %>; font-weight: 600;">
+                              <%= ind.status.label %>
+                            </p>
+                          </div>
                         </div>
-                    </div>
-                </div>
-
-                <div id="analyses-data-store" data-analyses='<%- JSON.stringify(analyses) %>' style="display: none;">
-                </div>
-
-                <div class="goals-section" style="margin: 30px 9%;">
-                    <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 8px 30px rgba(0,0,0,0.05);">
-
-                      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-                        <h2 style="color:#172b4d;font-size:1.25rem;margin:0;">Цели здоровья</h2>
-                        <button onclick="openGoalModal()"
-                          style="background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;padding:10px 20px;border-radius:12px;font-weight:600;cursor:pointer;">
-                          + Добавить цель
-                        </button>
+                        <div class="analytics-card-body">
+                          <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">
+                            <%= ind.val %>
+                          </p>
+                          <p>
+                            <%= ind.name %>
+                          </p>
+                        </div>
                       </div>
+                      <% }) %>
+                </div>
+              </div>
 
-                      <div id="goals-list">
-                        <% if (typeof goals !== 'undefined' && goals.length > 0) { %>
-                          <% goals.forEach(function(g) { %>
-                            <div style="padding:16px;border-radius:12px;border:1px solid #f4f5f7;margin-bottom:12px;">
-                              <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
-                                <div>
-                                  <p style="margin:0;font-weight:600;color:#172b4d;font-size:15px;"><%= g.indicatorName %></p>
-                                  <p style="margin:4px 0 0;color:#7a869a;font-size:13px;">
-                                    <%= g.direction === 'below' ? 'Снизить до' : 'Повысить до' %>
-                                    <strong><%= g.targetValue %> <%= g.unit %></strong>
-                                    <% if (g.currentVal !== null) { %>
-                                      · Сейчас: <strong style="color:<%= g.achieved ? '#16a34a' : '#dc2626' %>"><%= g.currentVal %></strong>
+              <div class="all-indicators-section" style="margin: 30px 9%;">
+                <div
+                  style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 8px 30px rgba(0,0,0,0.05);">
+                  <h2 style="margin-bottom: 20px; color: #172b4d; font-size: 1.25rem;">Полные результаты анализа
+                  </h2>
+
+                  <div style="overflow-x: auto;">
+                    <table style="width: 100%; border-collapse: collapse; min-width: 500px;">
+                      <thead>
+                        <tr style="border-bottom: 2px solid #f4f5f7; text-align: left;">
+                          <th style="padding: 12px; color: #7a869a; font-weight: 600;">Показатель</th>
+                          <th style="padding: 12px; color: #7a869a; font-weight: 600;">Значение</th>
+                          <th style="padding: 12px; color: #7a869a; font-weight: 600;">Ед. изм.</th>
+                          <th style="padding: 12px; color: #7a869a; font-weight: 600;">Статус</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <% latest.indicators.forEach((ind)=> { %>
+                          <tr style="border-bottom: 1px solid #f4f5f7; transition: background 0.2s;"
+                            onmouseover="this.style.background='#f8fafc'"
+                            onmouseout="this.style.background='transparent'">
+
+                            <td style="padding: 15px 12px; color: #172b4d; font-weight: 500;">
+                              <%= ind.name %>
+                            </td>
+
+                            <td style="padding: 15px 12px; color: #2563eb; font-weight: bold; font-size: 1.1rem;">
+                              <%= ind.val %>
+                            </td>
+
+                            <td style="padding: 15px 12px; color: #7a869a; font-size: 0.9rem;">
+                              <%= ind.unit || '—' %>
+                            </td>
+
+                            <td style="padding: 15px 12px;">
+                              <span
+                                style="background: <%= ind.status.bg %>; color: <%= ind.status.color %>; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">
+                                <%= ind.status.label %>
+                              </span>
+                            </td>
+                          </tr>
+                          <% }) %>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div id="analyses-data-store" data-analyses='<%- JSON.stringify(analyses) %>' style="display: none;">
+              </div>
+
+              <div class="goals-section" style="margin: 30px 9%;">
+                <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 8px 30px rgba(0,0,0,0.05);">
+
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                    <h2 style="color:#172b4d;font-size:1.25rem;margin:0;">Цели здоровья</h2>
+                    <button onclick="openGoalModal()"
+                      style="background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;padding:10px 20px;border-radius:12px;font-weight:600;cursor:pointer;">
+                      + Добавить цель
+                    </button>
+                  </div>
+
+                  <div id="goals-list">
+                    <% if (typeof goals !=='undefined' && goals.length> 0) { %>
+                      <% goals.forEach(function(g) { %>
+                        <div style="padding:16px;border-radius:12px;border:1px solid #f4f5f7;margin-bottom:12px;">
+                          <div
+                            style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+                            <div>
+                              <p style="margin:0;font-weight:600;color:#172b4d;font-size:15px;">
+                                <%= g.indicatorName %>
+                              </p>
+                              <p style="margin:4px 0 0;color:#7a869a;font-size:13px;">
+                                <%= g.direction==='below' ? 'Снизить до' : 'Повысить до' %>
+                                  <strong>
+                                    <%= g.targetValue %>
+                                      <%= g.unit %>
+                                  </strong>
+                                  <% if (g.currentVal !==null) { %>
+                                    · Сейчас: <strong style="color:<%= g.achieved ? '#16a34a' : '#dc2626' %>">
+                                      <%= g.currentVal %>
+                                    </strong>
                                     <% } else { %>
                                       · Нет данных
-                                    <% } %>
-                                  </p>
-                                  <% if (g.note) { %><p style="margin:4px 0 0;color:#9ca3af;font-size:12px;"><%= g.note %></p><% } %>
-                                </div>
-                                <div style="display:flex;align-items:center;gap:10px;">
-                                  <% if (g.achieved) { %>
-                                    <span style="background:#f0fdf4;color:#16a34a;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;">Достигнуто</span>
-                                  <% } %>
+                                      <% } %>
+                              </p>
+                              <% if (g.note) { %>
+                                <p style="margin:4px 0 0;color:#9ca3af;font-size:12px;">
+                                  <%= g.note %>
+                                </p>
+                                <% } %>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:10px;">
+                              <% if (g.achieved) { %>
+                                <span
+                                  style="background:#f0fdf4;color:#16a34a;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;">Достигнуто</span>
+                                <% } %>
                                   <button onclick="deleteGoal('<%= g._id %>')"
                                     style="background:#fff0f0;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;color:#eb5757;font-size:13px;font-weight:500;">
                                     Удалить
                                   </button>
-                                </div>
-                              </div>
-                              <% if (g.progress !== null) { %>
-                                <div style="background:#f4f5f7;border-radius:8px;height:8px;overflow:hidden;">
-                                  <div style="height:100%;width:<%= g.progress %>%;background:<%= g.achieved ? '#16a34a' : 'linear-gradient(90deg,#AD46FF,#E60076)' %>;border-radius:8px;transition:width 0.5s;"></div>
-                                </div>
-                                <p style="margin:4px 0 0;color:#7a869a;font-size:12px;text-align:right;"><%= g.progress %>%</p>
-                              <% } %>
                             </div>
-                          <% }); %>
-                        <% } else { %>
-                          <div style="text-align:center;padding:30px;color:#9ca3af;">
-                            <p style="font-size:15px;">Целей пока нет</p>
-                            <p style="font-size:13px;">Добавь цель — ИИ будет отслеживать твой прогресс</p>
                           </div>
-                        <% } %>
-                      </div>
-
-                    </div>
+                          <% if (g.progress !==null) { %>
+                            <div style="background:#f4f5f7;border-radius:8px;height:8px;overflow:hidden;">
+                              <div
+                                style="height:100%;width:<%= g.progress %>%;background:<%= g.achieved ? '#16a34a' : 'linear-gradient(90deg,#AD46FF,#E60076)' %>;border-radius:8px;transition:width 0.5s;">
+                              </div>
+                            </div>
+                            <p style="margin:4px 0 0;color:#7a869a;font-size:12px;text-align:right;">
+                              <%= g.progress %>%
+                            </p>
+                            <% } %>
+                        </div>
+                        <% }); %>
+                          <% } else { %>
+                            <div style="text-align:center;padding:30px;color:#9ca3af;">
+                              <p style="font-size:15px;">Целей пока нет</p>
+                              <p style="font-size:13px;">Добавь цель — ИИ будет отслеживать твой прогресс</p>
+                            </div>
+                            <% } %>
                   </div>
 
-                  <!-- Модалка добавления цели -->
-                  <div id="goalModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;align-items:center;justify-content:center;">
-                    <div style="background:white;border-radius:20px;padding:30px;width:90%;max-width:440px;">
-                      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-                        <h3 style="margin:0;color:#172b4d;">Новая цель</h3>
-                        <button onclick="closeGoalModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:#7a869a;">✕</button>
+                </div>
+              </div>
+
+              <!-- Модалка добавления цели -->
+              <div id="goalModal"
+                style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;align-items:center;justify-content:center;">
+                <div style="background:white;border-radius:20px;padding:30px;width:90%;max-width:440px;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+                    <h3 style="margin:0;color:#172b4d;">Новая цель</h3>
+                    <button onclick="closeGoalModal()"
+                      style="background:none;border:none;font-size:20px;cursor:pointer;color:#7a869a;">✕</button>
+                  </div>
+                  <div style="display:flex;flex-direction:column;gap:14px;">
+                    <div>
+                      <label
+                        style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Показатель</label>
+                      <input id="goal-indicator" list="indicators-list" placeholder="напр. Холестерин"
+                        style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+                      <datalist id="indicators-list">
+                        <option value="Гемоглобин">
+                        <option value="Холестерин">
+                        <option value="Глюкоза">
+                        <option value="Тестостерон">
+                        <option value="Кортизол">
+                        <option value="Лейкоциты">
+                        <option value="Эритроциты">
+                        <option value="Тромбоциты">
+                        <option value="СОЭ">
+                        <option value="Витамин D">
+                        <option value="Инсулин">
+                        <option value="Тиреотропин">
+                        <option value="АЛТ">
+                        <option value="АСТ">
+                        <option value="Креатинин">
+                      </datalist>
+                    </div>
+                    <div style="display:flex;gap:10px;">
+                      <div style="flex:1;">
+                        <label
+                          style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Направление</label>
+                        <select id="goal-direction"
+                          style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;">
+                          <option value="below">Снизить до</option>
+                          <option value="above">Повысить до</option>
+                        </select>
                       </div>
-                      <div style="display:flex;flex-direction:column;gap:14px;">
-                        <div>
-                          <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Показатель</label>
-                          <input id="goal-indicator" list="indicators-list" placeholder="напр. Холестерин"
-                            style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
-                          <datalist id="indicators-list">
-                            <option value="Гемоглобин"><option value="Холестерин"><option value="Глюкоза">
-                            <option value="Тестостерон"><option value="Кортизол"><option value="Лейкоциты">
-                            <option value="Эритроциты"><option value="Тромбоциты"><option value="СОЭ">
-                            <option value="Витамин D"><option value="Инсулин"><option value="Тиреотропин">
-                            <option value="АЛТ"><option value="АСТ"><option value="Креатинин">
-                          </datalist>
-                        </div>
-                        <div style="display:flex;gap:10px;">
-                          <div style="flex:1;">
-                            <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Направление</label>
-                            <select id="goal-direction" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;">
-                              <option value="below">Снизить до</option>
-                              <option value="above">Повысить до</option>
-                            </select>
-                          </div>
-                          <div style="flex:1;">
-                            <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Целевое значение</label>
-                            <input id="goal-target" type="number" step="0.01" placeholder="5.0"
-                              style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
-                          </div>
-                        </div>
-                        <div>
-                          <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Единица измерения</label>
-                          <input id="goal-unit" placeholder="ммоль/л"
-                            style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
-                        </div>
-                        <div>
-                          <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Заметка (необязательно)</label>
-                          <input id="goal-note" placeholder="напр. рекомендация врача"
-                            style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
-                        </div>
-                        <button onclick="saveGoal()"
-                          style="background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;padding:14px;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;margin-top:6px;">
-                          Сохранить цель
-                        </button>
+                      <div style="flex:1;">
+                        <label
+                          style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Целевое
+                          значение</label>
+                        <input id="goal-target" type="number" step="0.01" placeholder="5.0"
+                          style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
                       </div>
                     </div>
+                    <div>
+                      <label
+                        style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Единица
+                        измерения</label>
+                      <input id="goal-unit" placeholder="ммоль/л"
+                        style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+                    </div>
+                    <div>
+                      <label
+                        style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Заметка
+                        (необязательно)</label>
+                      <input id="goal-note" placeholder="напр. рекомендация врача"
+                        style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+                    </div>
+                    <button onclick="saveGoal()"
+                      style="background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;padding:14px;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;margin-top:6px;">
+                      Сохранить цель
+                    </button>
                   </div>
+                </div>
+              </div>
 
 
-                <div class="recent-analyses" style="margin-top: 40px;">
-                    <div class="recent-analyses-head">
-                        <h2>My Uploaded Reports</h2>
-                        <a href="/pdf-upload-page/<%= user._id %>"
-                            style="display: flex; align-items: center; gap: 8px; background: linear-gradient(90deg, #AD46FF 0%, #E60076 100%);
+              <div class="recent-analyses" style="margin-top: 40px;">
+                <div class="recent-analyses-head">
+                  <h2>My Uploaded Reports</h2>
+                  <a href="/pdf-upload-page/<%= user._id %>"
+                    style="display: flex; align-items: center; gap: 8px; background: linear-gradient(90deg, #AD46FF 0%, #E60076 100%);
 ; color: white; padding: 10px 20px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: 0.3s; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);"
-                            onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-2px)'"
-                            onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)'">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="12" y1="5" x2="12" y2="19"></line>
-                                <line x1="5" y1="12" x2="19" y2="12"></line>
-                            </svg>
-                            Add New Analysis
-                        </a>
-                    </div>
-
-                    <% if (analyses && analyses.length >= 2) { %>
-                    <div id="compare-section" style="background:white;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05)">
-                        <h3 style="margin:0 0 16px;color:#172b4d;font-size:1rem;font-weight:600">Сравнить два анализа</h3>
-                        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
-                            <select id="compare-sel-1" style="flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px"></select>
-                            <span style="color:#7a869a;font-weight:600">vs</span>
-                            <select id="compare-sel-2" style="flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px"></select>
-                            <button id="compare-btn" style="padding:10px 24px;background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;border-radius:10px;font-weight:600;cursor:pointer;white-space:nowrap">Сравнить</button>
-                        </div>
-                    </div>
-                    <div id="compare-result" style="display:none;background:white;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05)"></div>
-                    <% } %>
-                    <div class="analyses-list-container" style="margin-top: 20px;">
-                        <% if (analyses && analyses.length> 0) { %>
-                            <% analyses.forEach(report=> { %>
-                                <div class="analysis-report-item"
-                                    style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-
-                                    <div style="display: flex; align-items: center; gap: 15px;">
-                                        <img src="/public/img/icon/Icon11.png" alt="PDF" style="width: 40px;">
-                                        <div>
-                                            <p style="margin: 0; font-weight: bold; color: #172b4d; font-size: 16px;">
-                                                <%= report.fileName %>
-                                            </p>
-                                            <p style="margin: 5px 0 0; color: #7a869a; font-size: 13px;">
-                                                Добавлен: <%= new Date(report.createdAt).toLocaleDateString() %>
-                                                    | <%= report.indicators.length %> показателей
-                                            </p>
-                                        </div>
-                                    </div>
-
-                                    <div class="actions">
-                                        <button onclick="deleteAnalysis('<%= report._id %>')"
-                                            style="background: #fff0f0; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; color: #eb5757; font-weight: 500; transition: 0.3s;"
-                                            onmouseover="this.style.background='#ffdada'"
-                                            onmouseout="this.style.background='#fff0f0'">
-                                            Удалить
-                                        </button>
-                                    </div>
-                                </div>
-                                <% }); %>
-                                    <% } %>
-                    </div>
+                    onmouseover="this.style.background='#1d4ed8'; this.style.transform='translateY(-2px)'"
+                    onmouseout="this.style.background='#2563eb'; this.style.transform='translateY(0)'">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="12" y1="5" x2="12" y2="19"></line>
+                      <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    Add New Analysis
+                  </a>
                 </div>
 
-                <% }else{ %>
-                    <div class="recent-analyses">
-                        <h2>Recent Analyses</h2>
-                        <div class="recent-analyses-cards"
-                            onclick="window.location.href='/pdf-upload-page/<%= user._id %>'" style="cursor: pointer;">
-                            <img src="/public/img/icon/Icon11.png" alt="">
-                            <p>No analyses uploaded yet</p>
-                            <p>Upload your first medical analysis. to get started</p>
-                        </div>
+                <% if (analyses && analyses.length>= 2) { %>
+                  <div id="compare-section"
+                    style="background:white;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05)">
+                    <h3 style="margin:0 0 16px;color:#172b4d;font-size:1rem;font-weight:600">Сравнить два анализа</h3>
+                    <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+                      <select id="compare-sel-1"
+                        style="flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px"></select>
+                      <span style="color:#7a869a;font-weight:600">vs</span>
+                      <select id="compare-sel-2"
+                        style="flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px"></select>
+                      <button id="compare-btn"
+                        style="padding:10px 24px;background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;border-radius:10px;font-weight:600;cursor:pointer;white-space:nowrap">Сравнить</button>
                     </div>
-                    <div class="recent-analyses">
-                        <h2>AI Analysis & Recommendations</h2>
-                        <div class="recent-analyses-cards" onclick="window.location.href='/ai/<%= user._id %>'"
-                            style="cursor: pointer;">
-                            <img src="/public/img/icon/Icon12.png" alt="">
-                            <p>Select an analysis to view details</p>
-                        </div>
+                  </div>
+                  <div id="compare-result"
+                    style="display:none;background:white;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05)">
+                  </div>
+                  <% } %>
+                    <div class="analyses-list-container" style="margin-top: 20px;">
+                      <% if (analyses && analyses.length> 0) { %>
+                        <% analyses.forEach(report=> { %>
+                          <div class="analysis-report-item"
+                            style="display: flex; justify-content: space-between; align-items: center; background: white; padding: 20px; border-radius: 15px; margin-bottom: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                              <img src="/public/img/icon/Icon11.png" alt="PDF" style="width: 40px;">
+                              <div>
+                                <p style="margin: 0; font-weight: bold; color: #172b4d; font-size: 16px;">
+                                  <%= report.fileName %>
+                                </p>
+                                <p style="margin: 5px 0 0; color: #7a869a; font-size: 13px;">
+                                  Добавлен: <%= new Date(report.createdAt).toLocaleDateString() %>
+                                    | <%= report.indicators.length %> показателей
+                                </p>
+                              </div>
+                            </div>
+
+                            <div class="actions">
+                              <button onclick="deleteAnalysis('<%= report._id %>')"
+                                style="background: #fff0f0; border: none; padding: 10px 15px; border-radius: 10px; cursor: pointer; color: #eb5757; font-weight: 500; transition: 0.3s;"
+                                onmouseover="this.style.background='#ffdada'"
+                                onmouseout="this.style.background='#fff0f0'">
+                                Удалить
+                              </button>
+                            </div>
+                          </div>
+                          <% }); %>
+                            <% } %>
                     </div>
-                    <!-- <div class="no-data-section">
+              </div>
+
+              <% }else{ %>
+                <div class="recent-analyses">
+                  <h2>Recent Analyses</h2>
+                  <div class="recent-analyses-cards" onclick="window.location.href='/pdf-upload-page/<%= user._id %>'"
+                    style="cursor: pointer;">
+                    <img src="/public/img/icon/Icon11.png" alt="">
+                    <p>No analyses uploaded yet</p>
+                    <p>Upload your first medical analysis. to get started</p>
+                  </div>
+                </div>
+                <div class="recent-analyses">
+                  <h2>AI Analysis & Recommendations</h2>
+                  <div class="recent-analyses-cards" onclick="window.location.href='/ai/<%= user._id %>'"
+                    style="cursor: pointer;">
+                    <img src="/public/img/icon/Icon12.png" alt="">
+                    <p>Select an analysis to view details</p>
+                  </div>
+                </div>
+                <!-- <div class="no-data-section">
                                     <h2>No data available</h2>
                                     <p>Please upload a PDF report to see your analytics.</p>
                                     <div class="upload-btn">
                                         <a href="/pdf-upload-page">+</a>
                                     </div>
                                 </div> -->
-                    <% } %>
-                        <footer>
-                            <%- include('partials/footer.ejs')%>
-                        </footer>
-                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <% } %>
+                  <footer>
+                    <%- include('partials/footer.ejs')%>
+                  </footer>
+                  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-                        <script src="/js/profile-charts.js"></script>
-                        <script src="/js/compare.js"></script>
+                  <script src="/js/profile-charts.js"></script>
+                  <script src="/js/compare.js"></script>
 
-                        <script>
-                        function openGoalModal() {
-                          document.getElementById('goalModal').style.display = 'flex';
-                        }
-                        function closeGoalModal() {
-                          document.getElementById('goalModal').style.display = 'none';
-                        }
-                        async function saveGoal() {
-                          const indicator = document.getElementById('goal-indicator').value.trim();
-                          const direction = document.getElementById('goal-direction').value;
-                          const target = document.getElementById('goal-target').value;
-                          const unit = document.getElementById('goal-unit').value.trim();
-                          const note = document.getElementById('goal-note').value.trim();
-                          if (!indicator || !target) { alert('Заполните показатель и целевое значение'); return; }
-                          const params = new URLSearchParams(window.location.search);
-                          const member = params.get('member');
-                          const body = { indicatorName: indicator, targetValue: target, direction, unit, note };
-                          if (member) body.memberId = member;
-                          const res = await fetch('/api/goals', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify(body),
-                          });
-                          const data = await res.json();
-                          if (data.success) { closeGoalModal(); location.reload(); }
-                          else alert('Ошибка: ' + data.error);
-                        }
-                        async function deleteGoal(id) {
-                          if (!confirm('Удалить цель?')) return;
-                          const res = await fetch('/api/goals/' + id, { method: 'DELETE' });
-                          const data = await res.json();
-                          if (data.success) location.reload();
-                          else alert('Ошибка: ' + data.error);
-                        }
-                        </script>
+                  <script>
+                    function openGoalModal() {
+                      document.getElementById('goalModal').style.display = 'flex';
+                    }
+                    function closeGoalModal() {
+                      document.getElementById('goalModal').style.display = 'none';
+                    }
+                    async function saveGoal() {
+                      const indicator = document.getElementById('goal-indicator').value.trim();
+                      const direction = document.getElementById('goal-direction').value;
+                      const target = document.getElementById('goal-target').value;
+                      const unit = document.getElementById('goal-unit').value.trim();
+                      const note = document.getElementById('goal-note').value.trim();
+                      if (!indicator || !target) { alert('Заполните показатель и целевое значение'); return; }
+                      const params = new URLSearchParams(window.location.search);
+                      const member = params.get('member');
+                      const body = { indicatorName: indicator, targetValue: target, direction, unit, note };
+                      if (member) body.memberId = member;
+                      const res = await fetch('/api/goals', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(body),
+                      });
+                      const data = await res.json();
+                      if (data.success) { closeGoalModal(); location.reload(); }
+                      else alert('Ошибка: ' + data.error);
+                    }
+                    async function deleteGoal(id) {
+                      if (!confirm('Удалить цель?')) return;
+                      const res = await fetch('/api/goals/' + id, { method: 'DELETE' });
+                      const data = await res.json();
+                      if (data.success) location.reload();
+                      else alert('Ошибка: ' + data.error);
+                    }
+                  </script>
 
-                        <script>
-                            document.addEventListener('DOMContentLoaded', () => {
-                                const dataContainer = document.getElementById('analyses-data-store');
-                                if (dataContainer) {
-                                    // Забираем строку и превращаем обратно в объект
-                                    const rawData = dataContainer.getAttribute('data-analyses');
-                                    const analysesData = JSON.parse(rawData);
+                  <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                      const dataContainer = document.getElementById('analyses-data-store');
+                      if (dataContainer) {
+                        // Забираем строку и превращаем обратно в объект
+                        const rawData = dataContainer.getAttribute('data-analyses');
+                        const analysesData = JSON.parse(rawData);
 
-                                    initProfileDashboard(analysesData);
-                                    initCompare(analysesData);
-                                }
-                            });
-                        </script>
-                        <%- include('partials/scripts.ejs')%>
-    </body>
+                        initProfileDashboard(analysesData);
+                        initCompare(analysesData);
+                      }
+                    });
+                  </script>
+                  <%- include('partials/scripts.ejs')%>
+  </body>
 
 </html>
