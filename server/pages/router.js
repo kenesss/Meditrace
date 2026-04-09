@@ -326,4 +326,31 @@ router.get("/goals/:id", isAuth, async function (req, res) {
   }
 });
 
+router.get("/all-analyses/:id", isAuth, async function (req, res) {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.redirect("/not-found");
+
+    const memberId = req.query.member || null;
+    const analysisQuery = memberId
+      ? { userId: req.params.id, memberId: memberId }
+      : { userId: req.params.id, memberId: null };
+
+    const analyses = await Analysis.find(analysisQuery).sort({ testDate: -1 }).lean();
+
+    const familyMembers = await FamilyMember.find({ ownerId: req.params.id }).sort({ createdAt: 1 });
+
+    res.render("allAnalysis", {
+      user,
+      loginUser: req.user,
+      analyses,
+      familyMembers,
+      activeMemberId: memberId,
+    });
+  } catch (error) {
+    console.error("Ошибка при загрузке списка анализов:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 module.exports = router

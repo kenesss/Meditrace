@@ -1,0 +1,96 @@
+<html lang="en">
+<%- include('partials/head.ejs')%>
+  <title>All Analyses - Meditrace</title>
+
+  <body>
+    <%- include('partials/header.ejs')%>
+    <%- include('partials/menu.ejs')%>
+
+    <% if(analyses && analyses.length > 0){ %>
+
+      <div class="recent-analyses" style="margin: 30px 9%;">
+        <div class="recent-analyses-head">
+          <h2>My Uploaded Reports</h2>
+          <a href="/pdf-upload-page/<%= user._id %>"
+            style="display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;padding:10px 20px;border-radius:12px;text-decoration:none;font-weight:600;box-shadow:0 4px 12px rgba(37,99,235,0.2);">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add New Analysis
+          </a>
+        </div>
+
+        <div class="analyses-list-container" style="margin-top: 20px;">
+          <% analyses.forEach(report => { %>
+            <div class="analysis-report-item"
+              style="display:flex;justify-content:space-between;align-items:center;background:white;padding:20px;border-radius:15px;margin-bottom:15px;box-shadow:0 4px 10px rgba(0,0,0,0.05);">
+
+              <div style="display:flex;align-items:center;gap:15px;">
+                <img src="/public/img/icon/Icon11.png" alt="PDF" style="width:40px;">
+                <div>
+                  <p style="margin:0;font-weight:bold;color:#172b4d;font-size:16px;">
+                    <%= report.fileName %>
+                  </p>
+                  <p style="margin:5px 0 0;color:#7a869a;font-size:13px;">
+                    Добавлен: <%= new Date(report.createdAt).toLocaleDateString() %>
+                    | <%= report.indicators.length %> показателей
+                  </p>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button onclick="deleteAnalysis('<%= report._id %>')"
+                  style="background:#fff0f0;border:none;padding:10px 15px;border-radius:10px;cursor:pointer;color:#eb5757;font-weight:500;transition:0.3s;"
+                  onmouseover="this.style.background='#ffdada'"
+                  onmouseout="this.style.background='#fff0f0'">
+                  Удалить
+                </button>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+
+    <% } else { %>
+      <div class="recent-analyses" style="margin: 30px 9%;">
+        <div class="recent-analyses-head">
+          <h2>My Uploaded Reports</h2>
+          <a href="/pdf-upload-page/<%= user._id %>"
+            style="display:flex;align-items:center;gap:8px;background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;padding:10px 20px;border-radius:12px;text-decoration:none;font-weight:600;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add New Analysis
+          </a>
+        </div>
+        <div class="recent-analyses-cards"
+          onclick="window.location.href='/pdf-upload-page/<%= user._id %>'"
+          style="cursor:pointer;">
+          <img src="/public/img/icon/Icon11.png" alt="">
+          <p>No analyses uploaded yet</p>
+          <p>Upload your first medical analysis to get started</p>
+        </div>
+      </div>
+    <% } %>
+
+    <footer>
+      <%- include('partials/footer.ejs')%>
+    </footer>
+
+    <script>
+      async function deleteAnalysis(id) {
+        if (!confirm('Удалить анализ?')) return;
+        const res = await fetch('/api/analyses/' + id, { method: 'DELETE' });
+        const data = await res.json();
+        if (data.success) location.reload();
+        else alert('Ошибка: ' + data.error);
+      }
+    </script>
+
+    <%- include('partials/scripts.ejs')%>
+  </body>
+</html>
