@@ -5,8 +5,8 @@
             <a href="/" class="logo">Meditrace</a>
             <div class="head-logo-log">
                 <div class="head-nav-log">
-                    <h1>Welcome back, <%=user.full_name%>!</h1>
-                    <p>Mange your medical analysis and get AI-powered insights</p>
+                    <h1>Добро пожаловать, <%=user.full_name%>!</h1>
+                    <p>Вот обзор вашего здоровья</p>
                 </div>
             </div>
             <div class="head-profile">
@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="profile-dropdown" id="profileDropdown">
-                        <div class="dropdown-header">SWITCH PROFILE</div>
+                        <div class="dropdown-header">СМЕНИТЬ ПРОФИЛЬ</div>
 
                         <div class="dropdown-user active" onclick="switchProfile(null)" style="cursor:pointer">
                             <div class="user-avatar" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
@@ -49,10 +49,6 @@
                             <div class="dropdown-user"
                                  onclick="switchProfile('<%= m._id %>')"
                                  style="cursor:pointer">
-                                <div class="user-avatar"
-                                     style="background:<%= colors[m.themeColor] || colors.purple %>">
-                                    <%= m.full_name[0].toUpperCase() %>
-                                </div>
                                 <div class="user-info">
                                     <span class="user-name"><%= m.full_name %></span>
                                     <span class="user-role"><%= m.relationship %></span>
@@ -66,7 +62,7 @@
 
                         <a href="/add-members/<%= user._id %>" class="manage-link">
                             <img src="/public/img/icon/Settings-purple.png" alt="" class="manage-icon">
-                            Manage Family Members
+                            Управление членами семьи
                         </a>
                     </div>
                 </div>
