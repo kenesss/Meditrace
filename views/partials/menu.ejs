@@ -26,7 +26,7 @@
     Мои анализы
   </a>
 
-  <a href="/comparison/:id" class="menu-item" onclick="setActive(this)">
+  <a href="/comparison/<%= user._id %>" class="menu-item" onclick="setActive(this)">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <rect x="3" y="14" width="4" height="7" rx="1" />
       <rect x="10" y="9" width="4" height="12" rx="1" />
@@ -35,7 +35,7 @@
     Сравнение
   </a>
 
-  <a href="/ai/:id" class="menu-item" onclick="setActive(this)">
+  <a href="/ai/<%= user._id %>" class="menu-item" onclick="setActive(this)">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <rect x="3" y="14" width="4" height="7" rx="1" />
       <rect x="10" y="9" width="4" height="12" rx="1" />
@@ -44,7 +44,7 @@
     AI-Ассистент
   </a>
 
-  <a href="/goals/:id" class="menu-item" onclick="setActive(this)">
+  <a href="/goals/<%= user._id %>" class="menu-item" onclick="setActive(this)">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <polygon points="4,4 20,4 20,7 12,14 4,7" />
       <rect x="4" y="14" width="16" height="6" rx="1" />
