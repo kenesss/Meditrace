@@ -61,51 +61,48 @@
                                                                                 </svg>
                                                                                 Save Changes</button>
                         </div>
-
-                        <div class="settings-navigation">
-                            <button class="nav-tab active">
-                                <span class="tab-icon">👤</span> Profile
-                            </button>
-                            <button class="nav-tab">
-                                <span class="tab-icon">🔒</span> Account
-                            </button>
-                        </div>
-
                         <div class="info-card">
                             <form id="nameForm" method="POST" action="/settings/update-name" class="personal-info-form">
                             </form>
-                            <h2 class="card-section-title">Personal Information</h2>
 
                             <div class="inputs-grid">
                                 <div class="field-group">
-                                    <label class="field-label">Full Name</label>
+                                    <label class="field-label">Полное имя</label>
                                     <div class="input-control">
-                                        <span class="field-icon">👤</span>
                                         <input type="text" name="name" value="<%=user.full_name%>" required>
                                     </div>
                                 </div>
 
                                 <div class="field-group">
-                                    <label class="field-label">Email Address</label>
+                                    <label class="field-label">Адрес электронной почты</label>
                                     <div class="input-control readonly">
-                                        <span class="field-icon">✉️</span>
                                         <input type="email" name="email" value="<%= user.email %>" readonly>
                                     </div>
                                     <p class="field-hint">Email cannot be changed</p>
                                 </div>
 
                                 <div class="field-group">
-                                    <label class="field-label">Phone Number</label>
+                                    <label class="field-label">Пол</label>
                                     <div class="input-control">
-                                        <span class="field-icon">📞</span>
-                                        <input type="text" name="phone" value="+7 (701) 234-5678">
+                                        <input type="text" name="phone" value="Женский">
                                     </div>
                                 </div>
 
                                 <div class="field-group">
-                                    <label class="field-label">Date of Birth</label>
+                                    <label class="field-label">Вес</label>
                                     <div class="input-control">
-                                        <span class="field-icon">📅</span>
+                                        <input type="text" name="dob" value="80">
+                                    </div>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label">Рост</label>
+                                    <div class="input-control">
+                                        <input type="text" name="dob" value="180">
+                                    </div>
+                                </div>
+                                <div class="field-group">
+                                    <label class="field-label">Дата рождения</label>
+                                    <div class="input-control">
                                         <input type="text" name="dob" value="04.07.2005">
                                     </div>
                                 </div>

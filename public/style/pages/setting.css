@@ -1,5 +1,6 @@
 .settings-container {
-    padding: 20px 10%;
+    padding: 20px 16px;
+    width: 82%;
 }
 
 .settings-top-bar {
@@ -87,12 +88,6 @@
 }
 
 /* Сетка инпутов */
-.inputs-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px 40px;
-}
-
 .field-group {
     display: flex;
     flex-direction: column;
