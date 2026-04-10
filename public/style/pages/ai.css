@@ -98,7 +98,7 @@
 }
 
 .chat-input-container button {
-    background: linear-gradient(90deg, #AD46FF 0%, #E60076 100%);
+    background: #3b9eec;
     color: white;
     border: none;
     padding: 0 25px;
