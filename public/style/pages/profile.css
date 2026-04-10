@@ -1,7 +1,6 @@
 /* Основной контейнер-обертка */
 .meditrace-wrapper {
     display: flex;
-    background-color: #f4f7f6;
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
     color: #333;
