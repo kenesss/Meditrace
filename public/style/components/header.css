@@ -112,3 +112,147 @@
     background: #9810FA;
 }
 .btn-register:hover { background: #8a0de0; }
+/* Когда меню активно */
+.profile-dropdown.show {
+    display: block;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    text-decoration: none;
+    color: #111;
+    font-weight: 500;
+}
+
+.dropdown-item:hover {
+    background-color: #F3F4F6;
+    color: #AD46FF;
+}
+
+/* Основной контейнер меню */
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 15px);
+    right: 0;
+    width: 320px;
+    background: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #F3F4F6;
+    z-index: 1000;
+    padding: 16px 0;
+}
+
+.profile-dropdown.show {
+    display: block;
+}
+
+/* Заголовок "SWITCH PROFILE" */
+.dropdown-header {
+    padding: 0 24px 16px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #9CA3AF;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #F3F4F6;
+}
+
+/* Блок пользователя */
+.dropdown-user {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    cursor: pointer;
+}
+
+.dropdown-user:hover {
+    background-color: #F9FAFB;
+}
+
+/* Аватарка-заглушка с градиентом */
+.user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    margin-right: 16px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.user-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.user-role {
+    font-size: 14px;
+    color: #9CA3AF;
+}
+
+/* Галочка выбора */
+.status-icon {
+    color: #22C55E;
+    font-size: 20px;
+    border: 2px solid #22C55E;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.status-icon.unchecked {
+    color: #E5E7EB;
+    border-color: #E5E7EB;
+}
+
+/* Разделитель и нижняя ссылка */
+.dropdown-divider {
+    height: 1px;
+    background: #F3F4F6;
+    margin: 8px 0;
+}
+
+.manage-link {
+    display: flex;
+    align-items: center;
+    padding: 16px 24px;
+    text-decoration: none;
+    color: #9810FA;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.manage-link:hover {
+    background-color: #F9FAFB;
+}
+
+.manage-icon {
+    width: 24px;
+    margin-right: 12px;
+}
+
+.profile-trigger svg{
+    margin-left: 10px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
