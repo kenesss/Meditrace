@@ -1,28 +1,25 @@
-async function deleteAnalysis(id) {
-    if (confirm('Вы уверены, что хотите удалить этот отчет?')) {
-        try {
-            // Поскольку в server.js нет префикса, путь должен начинаться с /api
-            const response = await fetch(`/delete-analysis/${id}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
+function filterAnalyses() {
+    const query = document.getElementById('searchInput').value.toLowerCase();
+    const items = document.querySelectorAll('.analysis-item');
+    let found = 0;
 
-            if (response.ok) {
-                const result = await response.json();
-                if (result.success) {
-                    location.reload(); 
-                } else {
-                    alert('Ошибка: ' + result.error);
-                }
-            } else {
-                // Если сервер ответил 404 или 500
-                alert('Сервер ответил ошибкой: ' + response.status);
-            }
-        } catch (error) {
-            console.error('Ошибка запроса:', error);
-            alert('Не удалось связаться с сервером. Убедитесь, что сервер запущен.');
+    items.forEach(item => {
+        const name = item.dataset.name || '';
+        if (name.includes(query)) {
+            item.style.display = 'flex';
+            found++;
+        } else {
+            item.style.display = 'none';
         }
-    }
+    });
+
+    document.getElementById('noSearchResult').style.display = found === 0 ? 'block' : 'none';
+}
+
+async function deleteAnalysis(id) {
+    if (!confirm('Удалить анализ?')) return;
+    const res = await fetch('/api/analyses/' + id, { method: 'DELETE' });
+    const data = await res.json();
+    if (data.success) location.reload();
+    else alert('Ошибка: ' + data.error);
 }

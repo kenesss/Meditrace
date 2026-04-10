@@ -1,92 +1,209 @@
-.AI-insights{
+.analyses-page {
+    width: 82%;
+    padding: 32px 40px;
+    background: #F7F8FA;
+    min-height: 100vh;
+}
+
+/* Шапка */
+.analyses-header {
     display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.add-analysis-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     background: linear-gradient(90deg, #AD46FF 0%, #E60076 100%);
-    border-radius: 20px;
     color: white;
-    margin: 20px 10%;
-    padding: 20px;
-}
-.AI-text h2{
-    font-weight: 600;
-    font-style: SemiBold;
-    font-size: 18px;
-    line-height: 28px;
-    letter-spacing: 0px;
-}
-.AI-text p{
-    font-weight: 400;
-    font-style: Regular;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0px;
-    color: #F3E8FF;
-}
-.AI-insights .container-base{
-    background-color: #FFFFFF33;
-    margin-right: 20px;
-}
-.no-data-section{
-    padding: 10% 20%;
-    margin: 2% 9% 8% 9%;
-    text-align: center;
-    background-color:#E5E7EB;
-    border-radius: 20px;
-}
-.no-data-section h2{
-    font-weight: 600;
-    font-size: 48px;
-    line-height: 28px;
-    letter-spacing: 0px;
-    margin-bottom: 20px;
-}
-.upload-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-.upload-btn a{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 40px;
-    width: 68px;
-    height: 68px;
-    background: linear-gradient(90deg, #AD46FF 0%, #E60076 100%);
+    padding: 11px 22px;
+    border-radius: 12px;
     text-decoration: none;
-    font-size: 20px;
-    color: white;
+    font-weight: 600;
+    font-size: 15px;
+    transition: opacity 0.2s;
 }
-.recent-analyses{
-    margin: 20px 10%;
+
+.add-analysis-btn:hover {
+    opacity: 0.9;
 }
-.recent-analyses h2{
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 28px;
-    letter-spacing: 0px;
+
+/* Поиск */
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 50px;
+    padding: 14px 20px;
     margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
-.recent-analyses-cards{
+
+.search-box input {
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: #111827;
+    width: 100%;
+    background: transparent;
+}
+
+.search-box input::placeholder {
+    color: #9CA3AF;
+}
+
+/* Список анализов */
+.analyses-list {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #F9FAFB;
-    border-radius: 20px;
-    padding: 40px 20px;
-    border: 2px solid #E5E7EB
+    gap: 12px;
 }
-.recent-analyses-cards img{
+
+/* Карточка анализа */
+.analysis-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 18px 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s;
+}
+
+.analysis-item:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.analysis-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Синяя иконка */
+.analysis-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    background: #2563EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.analysis-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.analysis-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.analysis-meta {
+    font-size: 13px;
+    color: #6B7280;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.meta-dot {
+    color: #D1D5DB;
+}
+
+/* Кнопки действий */
+.analysis-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #6B7280;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+}
+
+.action-btn:hover {
+    background: #F3F4F6;
+    color: #111827;
+}
+
+.action-btn--delete:hover {
+    background: #FEF2F2;
+    color: #EF4444;
+}
+
+/* Нет результатов */
+.no-search-result {
+    text-align: center;
+    padding: 40px;
+    color: #9CA3AF;
+    font-size: 15px;
+}
+
+/* Пустое состояние */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 80px 20px;
+    background: #fff;
+    border-radius: 20px;
+    border: 2px dashed #E5E7EB;
+}
+
+.empty-icon {
     width: 80px;
-    height: 80px;    
+    height: 80px;
+    border-radius: 20px;
+    background: #F3F4F6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 20px;
 }
-.recent-analyses-cards p{
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0px;
+
+.empty-state h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+.empty-state p {
+    font-size: 15px;
     color: #6B7280;
-    margin: 5px 0;
+}
+
+@media (max-width: 900px) {
+    .analyses-page {
+        width: 100%;
+        padding: 20px;
+    }
 }
