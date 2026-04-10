@@ -4,95 +4,115 @@
 
   <body>
     <%- include('partials/header.ejs')%>
-    <%- include('partials/menu.ejs')%>
 
-    <% if(analyses && analyses.length > 0){ %>
+      <div class="meditrace-wrapper">
+        <%- include('partials/menu.ejs')%>
 
-      <div class="goals-section" style="margin: 30px 9%;">
-        <div style="background:white;border-radius:20px;padding:25px;box-shadow:0 8px 30px rgba(0,0,0,0.05);">
+          <div class="goals-page">
 
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <h2 style="color:#172b4d;font-size:1.25rem;margin:0;">Цели здоровья</h2>
-            <button onclick="openGoalModal()"
-              style="background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;padding:10px 20px;border-radius:12px;font-weight:600;cursor:pointer;">
-              + Добавить цель
-            </button>
-          </div>
+            <% if(analyses && analyses.length> 0){ %>
 
-          <div id="goals-list">
-            <% if (typeof goals !== 'undefined' && goals.length > 0) { %>
-              <% goals.forEach(function(g) { %>
-                <div style="padding:16px;border-radius:12px;border:1px solid #f4f5f7;margin-bottom:12px;">
-                  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
-                    <div>
-                      <p style="margin:0;font-weight:600;color:#172b4d;font-size:15px;">
-                        <%= g.indicatorName %>
+              <div class="goals-grid" id="goals-list">
+                <% if (typeof goals !=='undefined' && goals.length> 0) { %>
+                  <% goals.forEach(function(g) { %>
+                    <div class="goal-card">
+
+                      <!-- Шапка карточки -->
+                      <div class="goal-card-header">
+                        <h3 class="goal-title">
+                          <%= g.direction==='below' ? 'Снизить' : 'Повысить' %>
+                            <%= g.indicatorName %>
+                        </h3>
+                        <div class="goal-status-icon <%= g.achieved ? 'achieved' : 'pending' %>">
+                          <% if (g.achieved) { %>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                              stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                              <polyline points="20 6 9 17 4 12"></polyline>
+                            </svg>
+                            <% } %>
+                        </div>
+                      </div>
+
+                      <!-- Описание -->
+                      <p class="goal-description">
+                        <%= g.direction==='below' ? 'Снизить' : 'Повысить' %>
+                          <%= g.indicatorName.toLowerCase() %> до
+                            <%= g.targetValue %>
+                              <%= g.unit %>
+                                <% if (g.note) { %><br><span class="goal-note">
+                                    <%= g.note %>
+                                  </span>
+                                  <% } %>
                       </p>
-                      <p style="margin:4px 0 0;color:#7a869a;font-size:13px;">
-                        <%= g.direction === 'below' ? 'Снизить до' : 'Повысить до' %>
-                        <strong><%= g.targetValue %> <%= g.unit %></strong>
-                        <% if (g.currentVal !== null) { %>
-                          · Сейчас: <strong style="color:<%= g.achieved ? '#16a34a' : '#dc2626' %>">
-                            <%= g.currentVal %>
-                          </strong>
-                        <% } else { %>
-                          · Нет данных
-                        <% } %>
-                      </p>
-                      <% if (g.note) { %>
-                        <p style="margin:4px 0 0;color:#9ca3af;font-size:12px;">
-                          <%= g.note %>
-                        </p>
-                      <% } %>
-                    </div>
-                    <div style="display:flex;align-items:center;gap:10px;">
-                      <% if (g.achieved) { %>
-                        <span style="background:#f0fdf4;color:#16a34a;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;">
-                          Достигнуто
+
+                      <!-- Прогресс -->
+                      <div class="goal-footer">
+                        <span class="goal-days">
+                          <% if (g.currentVal !==null) { %>
+                            Сейчас: <%= g.currentVal %>
+                              <%= g.unit %>
+                                <% } else { %>
+                                  Нет данных
+                                  <% } %>
                         </span>
-                      <% } %>
-                      <button onclick="deleteGoal('<%= g._id %>')"
-                        style="background:#fff0f0;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;color:#eb5757;font-size:13px;font-weight:500;">
+                        <span class="goal-percent <%= g.achieved ? 'goal-percent--done' : '' %>">
+                          <%= g.progress !==null ? g.progress : 0 %>%
+                        </span>
+                      </div>
+                      <div class="goal-progress-bar">
+                        <div class="goal-progress-fill" style="width: <%= g.progress !== null ? g.progress : 0 %>%">
+                        </div>
+                      </div>
+
+                      <!-- Кнопка удалить -->
+                      <div class="goal-divider"></div>
+                      <button class="goal-delete-btn" onclick="deleteGoal('<%= g._id %>')">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+                          <path d="M10 11v6M14 11v6"></path>
+                          <path d="M9 6V4h6v2"></path>
+                        </svg>
                         Удалить
                       </button>
                     </div>
-                  </div>
-                  <% if (g.progress !== null) { %>
-                    <div style="background:#f4f5f7;border-radius:8px;height:8px;overflow:hidden;">
-                      <div style="height:100%;width:<%= g.progress %>%;background:<%= g.achieved ? '#16a34a' : 'linear-gradient(90deg,#AD46FF,#E60076)' %>;border-radius:8px;transition:width 0.5s;">
-                      </div>
-                    </div>
-                    <p style="margin:4px 0 0;color:#7a869a;font-size:12px;text-align:right;">
-                      <%= g.progress %>%
-                    </p>
-                  <% } %>
-                </div>
-              <% }); %>
-            <% } else { %>
-              <div style="text-align:center;padding:30px;color:#9ca3af;">
-                <p style="font-size:15px;">Целей пока нет</p>
-                <p style="font-size:13px;">Добавь цель — ИИ будет отслеживать твой прогресс</p>
+                    <% }); %>
+                      <% } else { %>
+                        <div class="goals-empty">
+                          <p>Целей пока нет</p>
+                          <p>Добавь цель — ИИ будет отслеживать твой прогресс</p>
+                        </div>
+                        <% } %>
               </div>
-            <% } %>
-          </div>
 
-        </div>
+              <!-- Кнопка добавить — фиксированная внизу справа -->
+              <button class="add-goal-fab" onclick="openGoalModal()">
+                <span>+</span> Добавить цель
+              </button>
+
+              <% } else { %>
+                <div class="goals-no-analyses">
+                  <p>Нет загруженных анализов. Сначала загрузите анализ.</p>
+                  <a href="/pdf-upload-page/<%= user._id %>" class="add-goal-fab" style="text-decoration:none;">
+                    Загрузить анализ
+                  </a>
+                </div>
+                <% } %>
+          </div>
       </div>
 
-      <!-- Модалка добавления цели -->
-      <div id="goalModal"
-        style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;align-items:center;justify-content:center;">
-        <div style="background:white;border-radius:20px;padding:30px;width:90%;max-width:440px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <h3 style="margin:0;color:#172b4d;">Новая цель</h3>
-            <button onclick="closeGoalModal()"
-              style="background:none;border:none;font-size:20px;cursor:pointer;color:#7a869a;">✕</button>
+      <!-- Модалка -->
+      <div id="goalModal" class="modal-overlay">
+        <div class="modal-box">
+          <div class="modal-header">
+            <h3>Новая цель</h3>
+            <button class="modal-close" onclick="closeGoalModal()">✕</button>
           </div>
-          <div style="display:flex;flex-direction:column;gap:14px;">
-            <div>
-              <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Показатель</label>
-              <input id="goal-indicator" list="indicators-list" placeholder="напр. Холестерин"
-                style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+          <div class="modal-body">
+            <div class="modal-field">
+              <label>Показатель</label>
+              <input id="goal-indicator" list="indicators-list" placeholder="напр. Холестерин">
               <datalist id="indicators-list">
                 <option value="Гемоглобин">
                 <option value="Холестерин">
@@ -111,89 +131,61 @@
                 <option value="Креатинин">
               </datalist>
             </div>
-            <div style="display:flex;gap:10px;">
-              <div style="flex:1;">
-                <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Направление</label>
-                <select id="goal-direction"
-                  style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;">
+            <div class="modal-row">
+              <div class="modal-field">
+                <label>Направление</label>
+                <select id="goal-direction">
                   <option value="below">Снизить до</option>
                   <option value="above">Повысить до</option>
                 </select>
               </div>
-              <div style="flex:1;">
-                <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Целевое значение</label>
-                <input id="goal-target" type="number" step="0.01" placeholder="5.0"
-                  style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+              <div class="modal-field">
+                <label>Целевое значение</label>
+                <input id="goal-target" type="number" step="0.01" placeholder="5.0">
               </div>
             </div>
-            <div>
-              <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Единица измерения</label>
-              <input id="goal-unit" placeholder="ммоль/л"
-                style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+            <div class="modal-field">
+              <label>Единица измерения</label>
+              <input id="goal-unit" placeholder="ммоль/л">
             </div>
-            <div>
-              <label style="font-size:13px;color:#7a869a;font-weight:600;display:block;margin-bottom:6px;">Заметка (необязательно)</label>
-              <input id="goal-note" placeholder="напр. рекомендация врача"
-                style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;font-size:14px;box-sizing:border-box;">
+            <div class="modal-field">
+              <label>Заметка (необязательно)</label>
+              <input id="goal-note" placeholder="напр. рекомендация врача">
             </div>
-            <button onclick="saveGoal()"
-              style="background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;padding:14px;border-radius:12px;font-weight:600;font-size:15px;cursor:pointer;margin-top:6px;">
-              Сохранить цель
-            </button>
+            <button class="modal-save-btn" onclick="saveGoal()">Сохранить цель</button>
           </div>
         </div>
       </div>
 
-    <% } else { %>
-      <main style="margin: 30px 9%; text-align: center; color: #7a869a; padding: 60px 0;">
-        <p style="font-size: 16px;">Нет загруженных анализов. Сначала загрузите анализ.</p>
-        <a href="/pdf-upload-page/<%= user._id %>"
-          style="display:inline-block;margin-top:16px;background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:600;">
-          Загрузить анализ
-        </a>
-      </main>
-    <% } %>
-
-    <footer>
-      <%- include('partials/footer.ejs')%>
-    </footer>
-
-    <script>
-      function openGoalModal() {
-        document.getElementById('goalModal').style.display = 'flex';
-      }
-      function closeGoalModal() {
-        document.getElementById('goalModal').style.display = 'none';
-      }
-      async function saveGoal() {
-        const indicator = document.getElementById('goal-indicator').value.trim();
-        const direction = document.getElementById('goal-direction').value;
-        const target = document.getElementById('goal-target').value;
-        const unit = document.getElementById('goal-unit').value.trim();
-        const note = document.getElementById('goal-note').value.trim();
-        if (!indicator || !target) { alert('Заполните показатель и целевое значение'); return; }
-        const params = new URLSearchParams(window.location.search);
-        const member = params.get('member');
-        const body = { indicatorName: indicator, targetValue: target, direction, unit, note };
-        if (member) body.memberId = member;
-        const res = await fetch('/api/goals', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body),
-        });
-        const data = await res.json();
-        if (data.success) { closeGoalModal(); location.reload(); }
-        else alert('Ошибка: ' + data.error);
-      }
-      async function deleteGoal(id) {
-        if (!confirm('Удалить цель?')) return;
-        const res = await fetch('/api/goals/' + id, { method: 'DELETE' });
-        const data = await res.json();
-        if (data.success) location.reload();
-        else alert('Ошибка: ' + data.error);
-      }
-    </script>
-
-    <%- include('partials/scripts.ejs')%>
+      <footer><%- include('partials/footer.ejs')%></footer>
+      <script>
+        function openGoalModal() { document.getElementById('goalModal').style.display = 'flex'; }
+        function closeGoalModal() { document.getElementById('goalModal').style.display = 'none'; }
+        async function saveGoal() {
+          const indicator = document.getElementById('goal-indicator').value.trim();
+          const direction = document.getElementById('goal-direction').value;
+          const target = document.getElementById('goal-target').value;
+          const unit = document.getElementById('goal-unit').value.trim();
+          const note = document.getElementById('goal-note').value.trim();
+          if (!indicator || !target) { alert('Заполните показатель и целевое значение'); return; }
+          const params = new URLSearchParams(window.location.search);
+          const member = params.get('member');
+          const body = { indicatorName: indicator, targetValue: target, direction, unit, note };
+          if (member) body.memberId = member;
+          const res = await fetch('/api/goals', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+          const data = await res.json();
+          if (data.success) { closeGoalModal(); location.reload(); }
+          else alert('Ошибка: ' + data.error);
+        }
+        async function deleteGoal(id) {
+          if (!confirm('Удалить цель?')) return;
+          const res = await fetch('/api/goals/' + id, { method: 'DELETE' });
+          const data = await res.json();
+          if (data.success) location.reload();
+          else alert('Ошибка: ' + data.error);
+        }
+      </script>
+      <%- include('partials/scripts.ejs')%>
   </body>
+
 </html>

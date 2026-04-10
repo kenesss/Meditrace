@@ -25,6 +25,7 @@
     font-weight: 600;
     font-size: 15px;
     transition: opacity 0.2s;
+    margin: 20px 0;
 }
 
 .add-analysis-btn:hover {
