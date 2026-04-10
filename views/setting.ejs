@@ -81,29 +81,30 @@
                                     <p class="field-hint">Email cannot be changed</p>
                                 </div>
 
-                                <div class="field-group">
-                                    <label class="field-label">Пол</label>
-                                    <div class="input-control">
-                                        <input type="text" name="phone" value="Женский">
-                                    </div>
-                                </div>
+                                <div class="gender-toggle">
+                                    <input type="radio" name="gender" id="male" value="male">
+                                    <label for="male">Мужской</label>
+                                  
+                                    <input type="radio" name="gender" id="female" value="female">
+                                    <label for="female">Женский</label>
+                                  </div>
 
                                 <div class="field-group">
                                     <label class="field-label">Вес</label>
                                     <div class="input-control">
-                                        <input type="text" name="dob" value="80">
+                                        <input type="number" name="dob" placeholder="80">
                                     </div>
                                 </div>
                                 <div class="field-group">
                                     <label class="field-label">Рост</label>
                                     <div class="input-control">
-                                        <input type="text" name="dob" value="180">
+                                        <input type="number" name="dob" placeholder="180">
                                     </div>
                                 </div>
                                 <div class="field-group">
                                     <label class="field-label">Дата рождения</label>
                                     <div class="input-control">
-                                        <input type="text" name="dob" value="04.07.2005">
+                                        <input type="date" name="birth_date" id="birth_date">
                                     </div>
                                 </div>
                             </div>

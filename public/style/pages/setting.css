@@ -171,3 +171,56 @@
     font-size: 14px;
     margin-bottom: 16px;
 }
+.gender-toggle {
+    display: flex;
+    gap: 0;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    overflow: hidden;
+    width: fit-content;
+}
+.gender-toggle input[type="radio"] {
+    display: none;
+}
+.gender-toggle label {
+    padding: 10px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #6B7280;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s;
+}
+.gender-toggle label:hover {
+    background: #F9FAFB;
+}
+.gender-toggle input[type="radio"]:checked + label {
+    background: #9810FA;
+    color: #fff;
+}
+#birth_date {
+    padding: 10px 14px;
+    border: 1px solid #E5E7EB;
+    border-radius: 10px;
+    font-size: 15px;
+    color: #111827;
+    background: #fff;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+#birth_date:focus {
+    border-color: #9810FA;
+    box-shadow: 0 0 0 3px rgba(152, 16, 250, 0.1);
+}
+
+/* Убрать дефолтный стиль в Chrome */
+#birth_date::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+#birth_date::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+}
