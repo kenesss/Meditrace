@@ -1,177 +1,200 @@
 <html lang="en">
-<%- include('partials/head.ejs')%>
+<head>
+    <%- include('partials/head.ejs')%>
     <title>Profile - Meditrace</title>
+</head>
 
-    <body>
-        <%- include('partials/header.ejs') %>
+<body>
+    <%- include('partials/header.ejs') %>
 
-            <div class="meditrace-wrapper">
-                <%- include('partials/menu.ejs') %>
+    <div class="meditrace-wrapper">
+        <%- include('partials/menu.ejs') %>
 
-                    <main class="meditrace-main">
+        <main class="meditrace-main">
 
-                        <!-- Статистика -->
-                        <div class="mt-stats-grid">
-                            <div class="mt-stat-card">
-                                <div class="mt-stat-top">
-                                    <div class="mt-stat-icon">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <rect x="5" y="2" width="14" height="20" rx="2"></rect>
-                                            <line x1="9" y1="7" x2="15" y2="7"></line>
-                                            <line x1="9" y1="11" x2="15" y2="11"></line>
-                                            <line x1="9" y1="15" x2="13" y2="15"></line>
-                                        </svg>
-                                    </div>
-                                    <span class="mt-stat-value">
-                                        <%= analysesCount || '04' %>
-                                    </span>
-                                </div>
-                                <div class="mt-stat-label">Всего<br>анализов</div>
-                            </div>
-
-                            <div class="mt-stat-card">
-                                <div class="mt-stat-top">
-                                    <div class="mt-stat-icon">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="12" cy="7" r="4"></circle>
-                                        </svg>
-                                    </div>
-                                    <span class="mt-stat-value">
-                                        <%= profileHealth || '70%' %>
-                                    </span>
-                                </div>
-                                <div class="mt-stat-label">Профиль<br>здоровья</div>
-                            </div>
-
-                            <div class="mt-stat-card">
-                                <div class="mt-stat-top">
-                                    <div class="mt-stat-icon">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="9" cy="7" r="4"></circle>
-                                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                                        </svg>
-                                    </div>
-                                    <span class="mt-stat-value">
-                                        <%= familyCount || '01' %>
-                                    </span>
-                                </div>
-                                <div class="mt-stat-label">Члена<br>семьи</div>
-                            </div>
-
-                            <div class="mt-stat-card">
-                                <div class="mt-stat-top">
-                                    <div class="mt-stat-icon">
-                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
-                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                            <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
-                                            <line x1="4" y1="22" x2="4" y2="15"></line>
-                                        </svg>
-                                    </div>
-                                    <span class="mt-stat-value">
-                                        <%= goalsCount || '02' %>
-                                    </span>
-                                </div>
-                                <div class="mt-stat-label">Активных<br>целей</div>
-                            </div>
+            <!-- Статистика -->
+            <div class="mt-stats-grid">
+                <div class="mt-stat-card">
+                    <div class="mt-stat-top">
+                        <div class="mt-stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+                                <line x1="9" y1="7" x2="15" y2="7"></line>
+                                <line x1="9" y1="11" x2="15" y2="11"></line>
+                                <line x1="9" y1="15" x2="13" y2="15"></line>
+                            </svg>
                         </div>
+                        <span class="mt-stat-value"><%= analysesCount ?? '04' %></span>
+                    </div>
+                    <div class="mt-stat-label">Всего<br>анализов</div>
+                </div>
 
-                        <!-- График -->
-                        <div class="mt-chart-card">
-                            <h2 class="mt-chart-title">Динамика показателей</h2>
-                            <div class="mt-chart-wrap">
-                                <canvas id="healthChart"></canvas>
-                            </div>
-                            <div class="mt-legend">
-                                <span class="mt-leg-item">
-                                    <svg width="20" height="10" viewBox="0 0 20 10">
-                                        <line x1="0" y1="5" x2="20" y2="5" stroke="#2563EB" stroke-width="2" />
-                                        <circle cx="10" cy="5" r="3" fill="#2563EB" />
-                                    </svg>
-                                    Systolic
-                                </span>
-                                <span class="mt-leg-item">
-                                    <svg width="20" height="10" viewBox="0 0 20 10">
-                                        <line x1="0" y1="5" x2="20" y2="5" stroke="#CBD5E1" stroke-width="2" />
-                                        <circle cx="10" cy="5" r="3" fill="#CBD5E1" />
-                                    </svg>
-                                    Diastolic
-                                </span>
-                            </div>
+                <div class="mt-stat-card">
+                    <div class="mt-stat-top">
+                        <div class="mt-stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
                         </div>
-                    </main>
+                        <span class="mt-stat-value"><%= profileHealth ?? '70%' %></span>
+                    </div>
+                    <div class="mt-stat-label">Профиль<br>здоровья</div>
+                </div>
+
+                <div class="mt-stat-card">
+                    <div class="mt-stat-top">
+                        <div class="mt-stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <span class="mt-stat-value"><%= familyCount ?? '01' %></span>
+                    </div>
+                    <div class="mt-stat-label">Члена<br>семьи</div>
+                </div>
+
+                <div class="mt-stat-card">
+                    <div class="mt-stat-top">
+                        <div class="mt-stat-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                                <line x1="4" y1="22" x2="4" y2="15"></line>
+                            </svg>
+                        </div>
+                        <span class="mt-stat-value"><%= goalsCount ?? '02' %></span>
+                    </div>
+                    <div class="mt-stat-label">Активных<br>целей</div>
+                </div>
             </div>
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script>
-                const ctx = document.getElementById('healthChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: ['Jan', 'Feb', 'Mar', 'Apr'],
-                        datasets: [
-                            {
-                                label: 'Systolic',
-                                data: [118, 115, 120, 117],
-                                borderColor: '#2563EB',
-                                backgroundColor: 'transparent',
-                                borderWidth: 2.5,
-                                pointBackgroundColor: '#2563EB',
-                                pointRadius: 5,
-                                pointHoverRadius: 7,
-                                tension: 0.4,
-                            },
-                            {
-                                label: 'Diastolic',
-                                data: [78, 76, 79, 77],
-                                borderColor: '#CBD5E1',
-                                backgroundColor: 'transparent',
-                                borderWidth: 2.5,
-                                pointBackgroundColor: '#CBD5E1',
-                                pointRadius: 5,
-                                pointHoverRadius: 7,
-                                tension: 0.4,
-                            }
-                        ]
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        plugins: {
-                            legend: { display: false }
+
+            <!-- График -->
+            <div class="mt-chart-card">
+                <h2 class="mt-chart-title">Динамика показателей</h2>
+                <div class="mt-chart-wrap">
+                    <canvas id="healthChart"></canvas>
+                </div>
+                <div class="mt-legend">
+                    <span class="mt-leg-item">
+                        <svg width="20" height="10" viewBox="0 0 20 10">
+                            <line x1="0" y1="5" x2="20" y2="5" stroke="#2563EB" stroke-width="2"/>
+                            <circle cx="10" cy="5" r="3" fill="#2563EB"/>
+                        </svg>
+                        Systolic
+                    </span>
+                    <span class="mt-leg-item">
+                        <svg width="20" height="10" viewBox="0 0 20 10">
+                            <line x1="0" y1="5" x2="20" y2="5" stroke="#CBD5E1" stroke-width="2"/>
+                            <circle cx="10" cy="5" r="3" fill="#CBD5E1"/>
+                        </svg>
+                        Diastolic
+                    </span>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <footer>
+        <%- include('partials/footer.ejs')%>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const canvas = document.getElementById('healthChart');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr'],
+                    datasets: [
+                        {
+                            label: 'Systolic',
+                            data: [118, 115, 120, 117],
+                            borderColor: '#2563EB',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2.5,
+                            pointBackgroundColor: '#2563EB',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            tension: 0.4,
                         },
-                        scales: {
-                            y: {
-                                min: 0,
-                                max: 140,
-                                ticks: {
-                                    stepSize: 35,
-                                    color: '#9CA3AF',
-                                    font: { size: 13 }
-                                },
-                                grid: {
-                                    color: '#F3F4F6',
-                                    drawBorder: false
-                                }
+                        {
+                            label: 'Diastolic',
+                            data: [78, 76, 79, 77],
+                            borderColor: '#CBD5E1',
+                            backgroundColor: 'transparent',
+                            borderWidth: 2.5,
+                            pointBackgroundColor: '#CBD5E1',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 5,
+                            pointHoverRadius: 7,
+                            tension: 0.4,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: '#fff',
+                            titleColor: '#111827',
+                            bodyColor: '#6B7280',
+                            borderColor: '#E5E7EB',
+                            borderWidth: 1,
+                            padding: 12,
+                            cornerRadius: 10,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 140,
+                            ticks: {
+                                stepSize: 35,
+                                color: '#9CA3AF',
+                                font: { size: 13 }
                             },
-                            x: {
-                                ticks: {
-                                    color: '#9CA3AF',
-                                    font: { size: 13 }
-                                },
-                                grid: {
-                                    display: false
-                                }
+                            grid: {
+                                color: '#F3F4F6',
+                            },
+                            border: {
+                                display: false
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                color: '#9CA3AF',
+                                font: { size: 13 }
+                            },
+                            grid: {
+                                display: false
+                            },
+                            border: {
+                                display: false
                             }
                         }
                     }
-                });
-            </script>
-            <%- include('partials/scripts.ejs')%>
-    </body>
+                }
+            });
+        });
+    </script>
 
+    <%- include('partials/scripts.ejs')%>
+</body>
 </html>
