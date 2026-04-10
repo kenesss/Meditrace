@@ -43,28 +43,16 @@ router.get("/profile/:id", isAuth, async (req, res) => {
 
       function getStatus(val, reference) {
         const noData = { label: 'Нет данных', color: '#6b7280', bg: '#f9fafb' };
-        if (reference == null || String(reference).trim() === '') {
-          return noData;
-        }
+        if (reference == null || String(reference).trim() === '') return noData;
         const parts = String(reference).trim().split('-');
-        if (parts.length !== 2) {
-          return noData;
-        }
+        if (parts.length !== 2) return noData;
         const min = parseFloat(parts[0]);
         const max = parseFloat(parts[1]);
-        if (Number.isNaN(min) || Number.isNaN(max)) {
-          return noData;
-        }
+        if (Number.isNaN(min) || Number.isNaN(max)) return noData;
         const numVal = typeof val === 'number' ? val : parseFloat(val);
-        if (Number.isNaN(numVal)) {
-          return noData;
-        }
-        if (numVal < min) {
-          return { label: 'Ниже нормы', color: '#2563eb', bg: '#eff6ff' };
-        }
-        if (numVal > max) {
-          return { label: 'Выше нормы', color: '#dc2626', bg: '#fef2f2' };
-        }
+        if (Number.isNaN(numVal)) return noData;
+        if (numVal < min) return { label: 'Ниже нормы', color: '#2563eb', bg: '#eff6ff' };
+        if (numVal > max) return { label: 'Выше нормы', color: '#dc2626', bg: '#fef2f2' };
         return { label: 'В норме', color: '#16a34a', bg: '#f0fdf4' };
       }
 
@@ -119,6 +107,18 @@ router.get("/profile/:id", isAuth, async (req, res) => {
         reminderBanner = { months: null, lastDate: null };
       }
 
+      // ── Подсчёт процента заполненности профиля ──
+      const fields = [
+        user.full_name,
+        user.email,
+        user.gender,
+        user.birth_date,
+        user.weight,
+        user.height,
+      ];
+      const filled = fields.filter(f => f !== null && f !== undefined && f !== '').length;
+      const profileHealth = Math.round((filled / fields.length) * 100) + '%';
+
       res.render("profile", {
         user: user,
         loginUser: req.user,
@@ -129,6 +129,11 @@ router.get("/profile/:id", isAuth, async (req, res) => {
         goals: goalsWithProgress,
         reminderBanner: reminderBanner,
         activePage: 'home',
+        // ── Новые переменные для статкарточек ──
+        analysesCount: String(analyses.length).padStart(2, '0'),
+        familyCount: String(familyMembers.length).padStart(2, '0'),
+        goalsCount: String(goals.length).padStart(2, '0'),
+        profileHealth: profileHealth,
       });
     } else {
       res.redirect("/not-found");
