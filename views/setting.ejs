@@ -6,141 +6,218 @@
         <%- include('partials/header.ejs')%>
             <div class="meditrace-wrapper">
                 <%- include('partials/menu.ejs') %>
-                    <div class="info-card">
-                        <form id="nameForm" method="POST" action="/settings/update-name" class="personal-info-form">
-                        </form>
 
-                        <div class="inputs-grid">
-                            <div class="field-group">
-                                <label class="field-label">Полное имя</label>
-                                <div class="input-control">
-                                    <input type="text" name="name" value="<%=user.full_name%>" required>
-                                </div>
-                            </div>
+                    <div class="settings-container">
+                        <!-- Уведомления -->
+                        <% if (query && query.success==='name' ) { %>
+                            <div class="alert alert-success">Имя успешно изменено.</div>
+                            <% } %>
+                                <% if (query && query.success==='password' ) { %>
+                                    <div class="alert alert-success">Пароль успешно изменён.</div>
+                                    <% } %>
+                                        <% if (query && query.error==='wrong' ) { %>
+                                            <div class="alert alert-error">Неверный текущий пароль.</div>
+                                            <% } %>
+                                                <% if (query && query.error==='confirm' ) { %>
+                                                    <div class="alert alert-error">Новые пароли не совпадают.</div>
+                                                    <% } %>
+                                                        <% if (query && query.error==='short' ) { %>
+                                                            <div class="alert alert-error">Пароль минимум 6 символов.
+                                                            </div>
+                                                            <% } %>
+                                                                <% if (query && query.error==='name' ) { %>
+                                                                    <div class="alert alert-error">Имя минимум 2
+                                                                        символа.</div>
+                                                                    <% } %>
 
-                            <div class="field-group">
-                                <label class="field-label">Адрес электронной почты</label>
-                                <div class="input-control readonly">
-                                    <input type="email" name="email" value="<%= user.email %>" readonly>
-                                </div>
-                                <p class="field-hint">Email cannot be changed</p>
-                            </div>
+                                                                        <!-- Карточка личных данных -->
+                                                                        <div class="info-card">
+                                                                            <form id="nameForm" method="POST"
+                                                                                action="/settings/update-name">
 
-                            <div class="gender-toggle">
-                                <input type="radio" name="gender" id="male" value="male">
-                                <label for="male">Мужской</label>
+                                                                                <!-- Аватар -->
+                                                                                <div class="profile-avatar-block">
+                                                                                    <div class="avatar-circle">
+                                                                                        <%= user.full_name ?
+                                                                                            user.full_name[0].toUpperCase()
+                                                                                            : 'U' %>
+                                                                                    </div>
+                                                                                    <div class="avatar-info">
+                                                                                        <span class="avatar-name">
+                                                                                            <%= user.full_name %>
+                                                                                        </span>
+                                                                                        <span class="avatar-email">
+                                                                                            <%= user.email %>
+                                                                                        </span>
+                                                                                    </div>
+                                                                                </div>
 
-                                <input type="radio" name="gender" id="female" value="female">
-                                <label for="female">Женский</label>
-                            </div>
+                                                                                <div class="inputs-grid">
+                                                                                    <div class="field-group">
+                                                                                        <label
+                                                                                            class="field-label">Полное
+                                                                                            имя</label>
+                                                                                        <div class="input-control">
+                                                                                            <input type="text"
+                                                                                                name="name"
+                                                                                                value="<%= user.full_name %>"
+                                                                                                required>
+                                                                                        </div>
+                                                                                    </div>
 
-                            <div class="field-group">
-                                <label class="field-label">Вес</label>
-                                <div class="input-control">
-                                    <input type="number" name="dob" placeholder="80">
-                                </div>
-                            </div>
-                            <div class="field-group">
-                                <label class="field-label">Рост</label>
-                                <div class="input-control">
-                                    <input type="number" name="dob" placeholder="180">
-                                </div>
-                            </div>
-                            <div class="field-group">
-                                <label class="field-label">Дата рождения</label>
+                                                                                    <div class="field-group">
+                                                                                        <label class="field-label">Адрес
+                                                                                            электронной почты</label>
+                                                                                        <div
+                                                                                            class="input-control readonly">
+                                                                                            <input type="email"
+                                                                                                name="email"
+                                                                                                value="<%= user.email %>"
+                                                                                                readonly>
+                                                                                        </div>
+                                                                                    </div>
 
-                            </div>
-                        </div>
-                        </form>
+                                                                                    <div class="field-group">
+                                                                                        <label
+                                                                                            class="field-label">Пол</label>
+                                                                                        <div class="input-control">
+                                                                                            <select name="gender">
+                                                                                                <option value=""
+                                                                                                    disabled selected>
+                                                                                                    Выберите пол
+                                                                                                </option>
+                                                                                                <option value="male"
+                                                                                                    <%=user.gender==='male'
+                                                                                                    ? 'selected' : '' %>
+                                                                                                    >Мужской</option>
+                                                                                                <option value="female"
+                                                                                                    <%=user.gender==='female'
+                                                                                                    ? 'selected' : '' %>
+                                                                                                    >Женский</option>
+                                                                                            </select>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="field-group">
+                                                                                        <label
+                                                                                            class="field-label">Вес</label>
+                                                                                        <div class="input-control">
+                                                                                            <input type="number"
+                                                                                                name="weight"
+                                                                                                value="<%= user.weight || '' %>"
+                                                                                                placeholder="80">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="field-group">
+                                                                                        <label
+                                                                                            class="field-label">Рост</label>
+                                                                                        <div class="input-control">
+                                                                                            <input type="number"
+                                                                                                name="height"
+                                                                                                value="<%= user.height || '' %>"
+                                                                                                placeholder="180">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="field-group">
+                                                                                        <label class="field-label">Дата
+                                                                                            рождения</label>
+                                                                                        <div class="input-control">
+                                                                                            <input type="date"
+                                                                                                name="birth_date"
+                                                                                                id="birth_date"
+                                                                                                value="<%= user.birth_date ? user.birth_date.toISOString().split('T')[0] : '' %>"
+                                                                                                max="<%= new Date().toISOString().split('T')[0] %>">
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <button type="submit"
+                                                                                    class="save-changes-btn">
+                                                                                    <svg width="18" height="18"
+                                                                                        viewBox="0 0 24 24" fill="none"
+                                                                                        stroke="currentColor"
+                                                                                        stroke-width="2">
+                                                                                        <path
+                                                                                            d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z">
+                                                                                        </path>
+                                                                                        <polyline
+                                                                                            points="17 21 17 13 7 13 7 21">
+                                                                                        </polyline>
+                                                                                        <polyline points="7 3 7 8 15 8">
+                                                                                        </polyline>
+                                                                                    </svg>
+                                                                                    Сохранить изменения
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
+
+                                                                        <!-- Карточка смены пароля -->
+                                                                        <div class="info-card">
+                                                                            <form id="passwordForm" method="POST"
+                                                                                action="/settings/update-password">
+                                                                                <h2 class="card-section-title">Изменить
+                                                                                    пароль</h2>
+
+                                                                                <div class="inputs-grid">
+                                                                                    <div class="field-group">
+                                                                                        <label
+                                                                                            class="field-label">Текущий
+                                                                                            пароль</label>
+                                                                                        <div class="input-control">
+                                                                                            <img src="/public/img/icon/Lock.png"
+                                                                                                alt="">
+                                                                                            <input type="password"
+                                                                                                name="currentPassword"
+                                                                                                required>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="field-group">
+                                                                                        <label class="field-label">Новый
+                                                                                            пароль</label>
+                                                                                        <div class="input-control">
+                                                                                            <img src="/public/img/icon/Lock.png"
+                                                                                                alt="">
+                                                                                            <input type="password"
+                                                                                                name="newPassword"
+                                                                                                required>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="field-group">
+                                                                                        <label
+                                                                                            class="field-label">Подтвердите
+                                                                                            пароль</label>
+                                                                                        <div class="input-control">
+                                                                                            <img src="/public/img/icon/Lock.png"
+                                                                                                alt="">
+                                                                                            <input type="password"
+                                                                                                name="confirmPassword"
+                                                                                                required>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <button type="submit"
+                                                                                    class="save-changes-btn">
+                                                                                    <svg width="18" height="18"
+                                                                                        viewBox="0 0 24 24" fill="none"
+                                                                                        stroke="currentColor"
+                                                                                        stroke-width="2">
+                                                                                        <rect x="3" y="11" width="18"
+                                                                                            height="11" rx="2" ry="2">
+                                                                                        </rect>
+                                                                                        <path
+                                                                                            d="M7 11V7a5 5 0 0 1 10 0v4">
+                                                                                        </path>
+                                                                                    </svg>
+                                                                                    Сохранить пароль
+                                                                                </button>
+                                                                            </form>
+                                                                        </div>
                     </div>
-
-                    <div class="info-card">
-                        <form id="passwordForm" method="POST" action="/settings/update-password"
-                            class="personal-info-form">
-                        </form>
-                        <h2 class="card-section-title">Change Password</h2>
-
-                        <div class="inputs-grid">
-                            <div class="field-group">
-                                <label class="field-label">Current Password</label>
-                                <div class="input-control">
-                                    <img src="/public/img/icon/Lock.png" alt="">
-                                    <input type="password" name="currentPassword" required>
-                                </div>
-                            </div>
-
-                            <div class="field-group">
-                                <label class="field-label">New Password</label>
-                                <div class="input-control">
-                                    <img src="/public/img/icon/Lock.png" alt="">
-                                    <input type="password" name="newPassword" required>
-                                </div>
-                            </div>
-
-                            <div class="field-group">
-                                <label class="field-label">Confirm New Password</label>
-                                <div class="input-control">
-                                    <img src="/public/img/icon/Lock.png" alt="">
-                                    <input type="password" name="confirmPassword" required>
-                                </div>
-                            </div>
-                        </div>
-                        </form>
-                    </div>
-            </div>
-            <div class="settings-container">
-                <div class="settings-top-bar">
-                    <% if (query && query.success==='name' ) { %>
-                        <div
-                            style="background:#f0fdf4;border:1px solid #86efac;color:#16a34a;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:16px;">
-                            Имя успешно изменено.
-                        </div>
-                        <% } %>
-                            <% if (query && query.success==='password' ) { %>
-                                <div
-                                    style="background:#f0fdf4;border:1px solid #86efac;color:#16a34a;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:16px;">
-                                    Пароль успешно изменён.
-                                </div>
-                                <% } %>
-                                    <% if (query && query.error==='wrong' ) { %>
-                                        <div
-                                            style="background:#fef2f2;border:1px solid #fecaca;color:#dc2626;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:16px;">
-                                            Неверный текущий пароль.
-                                        </div>
-                                        <% } %>
-                                            <% if (query && query.error==='confirm' ) { %>
-                                                <div
-                                                    style="background:#fef2f2;border:1px solid #fecaca;color:#dc2626;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:16px;">
-                                                    Новые пароли не совпадают.
-                                                </div>
-                                                <% } %>
-                                                    <% if (query && query.error==='short' ) { %>
-                                                        <div
-                                                            style="background:#fef2f2;border:1px solid #fecaca;color:#dc2626;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:16px;">
-                                                            Пароль минимум 6 символов.
-                                                        </div>
-                                                        <% } %>
-                                                            <% if (query && query.error==='name' ) { %>
-                                                                <div
-                                                                    style="background:#fef2f2;border:1px solid #fecaca;color:#dc2626;border-radius:10px;padding:12px 16px;font-size:14px;margin-bottom:16px;">
-                                                                    Имя минимум 2 символа.
-                                                                </div>
-                                                                <% } %>
-                                                                    <button type="submit" form="nameForm"
-                                                                        class="save-changes-btn"><svg width="20"
-                                                                            height="20" viewBox="0 0 24 24" fill="none"
-                                                                            stroke="currentColor" stroke-width="2"
-                                                                            style="margin-right: 8px; vertical-align: middle;">
-                                                                            <path
-                                                                                d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z">
-                                                                            </path>
-                                                                            <polyline points="17 21 17 13 7 13 7 21">
-                                                                            </polyline>
-                                                                            <polyline points="7 3 7 8 15 8">
-                                                                            </polyline>
-                                                                        </svg>
-                                                                        Save Changes</button>
-                </div>
             </div>
             <footer>
                 <%- include('partials/footer.ejs')%>
