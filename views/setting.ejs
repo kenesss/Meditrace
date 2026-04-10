@@ -7,13 +7,6 @@
             <div class="meditrace-wrapper">
                 <%- include('partials/menu.ejs') %>
                     <div class="settings-container">
-
-                        <div class="back-to-dashboard" onclick="window.location.href='/profile/<%= user._id %>'"
-                            style="cursor: pointer;">
-                            <img src="/public/img/icon/Icon13.png" alt="">
-                            <p>Back to Dashboard</p>
-                        </div>
-
                         <div class="settings-top-bar">
                             <% if (query && query.success==='name' ) { %>
                                 <div
@@ -51,11 +44,6 @@
                                                                             Имя минимум 2 символа.
                                                                         </div>
                                                                         <% } %>
-                                                                            <div class="title-area">
-                                                                                <h1>Settings</h1>
-                                                                                <p>Manage your account and preferences
-                                                                                </p>
-                                                                            </div>
                                                                             <button type="submit" form="nameForm"
                                                                                 class="save-changes-btn"><svg width="20"
                                                                                     height="20" viewBox="0 0 24 24"
@@ -74,14 +62,14 @@
                                                                                 Save Changes</button>
                         </div>
 
-                        <!-- <div class="settings-navigation">
-                    <button class="nav-tab active">
-                        <span class="tab-icon">👤</span> Profile
-                    </button>
-                    <button class="nav-tab">
-                        <span class="tab-icon">🔒</span> Account
-                    </button>
-                </div> -->
+                        <div class="settings-navigation">
+                            <button class="nav-tab active">
+                                <span class="tab-icon">👤</span> Profile
+                            </button>
+                            <button class="nav-tab">
+                                <span class="tab-icon">🔒</span> Account
+                            </button>
+                        </div>
 
                         <div class="info-card">
                             <form id="nameForm" method="POST" action="/settings/update-name" class="personal-info-form">
@@ -106,21 +94,21 @@
                                     <p class="field-hint">Email cannot be changed</p>
                                 </div>
 
-                                <!-- <div class="field-group">
-                                <label class="field-label">Phone Number</label>
-                                <div class="input-control">
-                                    <span class="field-icon">📞</span>
-                                    <input type="text" name="phone" value="+7 (701) 234-5678">
+                                <div class="field-group">
+                                    <label class="field-label">Phone Number</label>
+                                    <div class="input-control">
+                                        <span class="field-icon">📞</span>
+                                        <input type="text" name="phone" value="+7 (701) 234-5678">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="field-group">
-                                <label class="field-label">Date of Birth</label>
-                                <div class="input-control">
-                                    <span class="field-icon">📅</span>
-                                    <input type="text" name="dob" value="04.07.2005">
+                                <div class="field-group">
+                                    <label class="field-label">Date of Birth</label>
+                                    <div class="input-control">
+                                        <span class="field-icon">📅</span>
+                                        <input type="text" name="dob" value="04.07.2005">
+                                    </div>
                                 </div>
-                            </div> -->
                             </div>
                             </form>
                         </div>
