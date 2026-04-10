@@ -1,329 +1,114 @@
-.head-logo a{
-    text-decoration: none;
-    color: #101828;
-    font-size: 50px;
-    font-weight: 600;
-}
-.head-search{
-    display: flex;
-    width: 35%;
-    height: 50px;
-}
-.head-search input{
-    width: 100%;
-    border: 1px solid #E7E7E7;
-    padding: 5px 7px;
-    outline: none;
-}
-.head-button{
-    display: flex;  
-    width: 24%;
-    height: 50px;
-}
-.buttons:first-child{
-    padding: 5px 10px;
-    width: 40%;
-    margin-right: 15px;
-    border-radius: 4px;
-    text-decoration: none;
-    color: #4A5565;
-    font-size: 16px;
-    font-weight: 500;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.buttons:last-child{
-    padding: 5px 10px;
-    width: 40%;
-    margin-right: 15px;
-    border-radius: 10px;
-    text-decoration: none;
-    color: #FFF;
-    font-size: 16px;
-    font-weight: 500;
-    background: #AD46FF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.profile-img{
-    width: 62px;
-    height: 62px;
-}
-.head-nav{
+/* ── LOGGED IN ── */
+.head-container {
     display: flex;
     justify-content: space-between;
-}
-.nav-link{
-    text-decoration: none;
-    color: #4A5565;
-    font-size: 20px;
-    font-weight: 500;
-    margin: 0 32px;
-}
-.nav-link:hover{
-    color: #9810FA;
-} 
-.nav-link.active{
-    color: #9810FA;
-    border-bottom: 2px solid #9810FA;
-}
-.logout-link {
-    display: flex;        
-    align-items: center;   
-    gap: 10px;             
-    text-decoration: none; 
-    color: inherit;        
-    cursor: pointer;
-    padding: 20px;        
-    font-size: 20px;
-    margin: 0px 5px;
-}
-
-.logout-link:hover {
-    background-color: #f3f4f6; 
-    border-radius: 8px;
-}
-.profile a{
-    display: flex;
     align-items: center;
-    border-top: 2px solid #E5E7EB;
-    box-shadow: 0px 1px 2px -1px #0000001A;
-    box-shadow: 0px 1px 3px 0px #0000001A;
-    padding: 10px 16px;
-    border-radius: 14px;
+    padding: 20px 40px;
+    border-bottom: 1px solid #F3F4F6;
+    background: #fff;
+}
+.logo {
     text-decoration: none;
-    color: #111;
-}
-.profile img{
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 12px;
-}
-.head-logo-log{
-    width: 60%;
-}
-.head-logo-log h1{
+    color: #2563EB;
+    font-size: 28px;
     font-weight: 700;
-    font-style: Bold;
-    font-size: 36px;
-    line-height: 40px;
-    letter-spacing: 0px;
+    letter-spacing: -0.5px;
+    min-width: 160px;
+}
+.head-logo-log {
+    flex: 1;
+    text-align: center;
+    padding: 0 24px;
+}
+.head-logo-log h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
     margin-bottom: 4px;
 }
-.head-logo-log p{
+.head-logo-log p {
+    font-size: 15px;
+    color: #6B7280;
     font-weight: 400;
-    font-style: Regular;
-    font-size: 16px;
-    line-height: 24px;
-    letter-spacing: 0px;
-    color: #4A5565;
 }
-.head-container{
+.head-profile {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    width: 100%;
+    justify-content: flex-end;
+    min-width: 160px;
 }
-.head-profile{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 40%;
-}
-/* Контейнер для позиционирования */
-.profile-container {
-    position: relative;
-    cursor: pointer;
-}
-
-/* Стили триггера (похожие на ваш .profile a) */
+.profile-container { position: relative; }
 .profile-trigger {
     display: flex;
     align-items: center;
-    border-top: 2px solid #E5E7EB;
-    box-shadow: 0px 1px 3px 0px #0000001A;
-    padding: 10px 16px;
+    gap: 10px;
+    padding: 8px 14px;
+    border: 1px solid #E5E7EB;
     border-radius: 14px;
-    background: #fff;   
-}
-
-.profile-trigger:hover {
-    background-color: #f9fafb;
-}
-
-.profile-trigger img {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 12px;
-}
-
-.arrow-down {
-    font-size: 10px;
-    margin-left: 10px;
-    color: #4A5565;
-}
-
-/* Само выпадающее меню */
-.profile-dropdown {
-    display: none; /* Скрыто по умолчанию */
-    position: absolute;
-    top: calc(100% + 10px);
-    left: 0;
-    width: 200px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
-    border: 1px solid #F3F4F6;
-    z-index: 100;
-    overflow: hidden;
-}
-
-/* Когда меню активно */
-.profile-dropdown.show {
-    display: block;
-    animation: fadeIn 0.2s ease-out;
-}
-
-.dropdown-item {
-    display: flex;
-    align-items: center;
-    padding: 12px 16px;
-    text-decoration: none;
-    color: #111;
-    font-weight: 500;
-}
-
-.dropdown-item:hover {
-    background-color: #F3F4F6;
-    color: #AD46FF;
-}
-
-/* Основной контейнер меню */
-.profile-dropdown {
-    display: none;
-    position: absolute;
-    top: calc(100% + 15px);
-    right: 0;
-    width: 320px;
-    background: #FFFFFF;
-    border-radius: 20px;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-    border: 1px solid #F3F4F6;
-    z-index: 1000;
-    padding: 16px 0;
-}
-
-.profile-dropdown.show {
-    display: block;
-}
-
-/* Заголовок "SWITCH PROFILE" */
-.dropdown-header {
-    padding: 0 24px 16px 24px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #9CA3AF;
-    letter-spacing: 0.5px;
-    border-bottom: 1px solid #F3F4F6;
-}
-
-/* Блок пользователя */
-.dropdown-user {
-    display: flex;
-    align-items: center;
-    padding: 16px 24px;
+    background: #fff;
     cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
 }
+.profile-trigger:hover { background: #F9FAFB; }
 
-.dropdown-user:hover {
-    background-color: #F9FAFB;
-}
-
-/* Аватарка-заглушка с градиентом */
-.user-avatar {
-    width: 48px;
-    height: 48px;
+/* Аватар-круг с инициалом */
+.profile-avatar-circle {
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
     display: flex;
-    justify-content: center;
     align-items: center;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    margin-right: 16px;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    flex-shrink: 0;
 }
-
-.user-info {
+.profile-trigger-info {
     display: flex;
     flex-direction: column;
-    flex-grow: 1;
+    line-height: 1.2;
 }
-
-.user-name {
-    font-size: 18px;
-    font-weight: 700;
+.profile-trigger-name {
+    font-size: 15px;
+    font-weight: 600;
     color: #111827;
 }
-
-.user-role {
-    font-size: 14px;
+.profile-trigger-role {
+    font-size: 12px;
     color: #9CA3AF;
 }
+.chevron-icon { color: #9CA3AF; flex-shrink: 0; }
 
-/* Галочка выбора */
-.status-icon {
-    color: #22C55E;
-    font-size: 20px;
-    border: 2px solid #22C55E;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
+/* ── LANDING (не залогинен) ── */
+.landing-top-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid #F3F4F6;
+    background: #fff;
 }
-
-.status-icon.unchecked {
-    color: #E5E7EB;
-    border-color: #E5E7EB;
-}
-
-/* Разделитель и нижняя ссылка */
-.dropdown-divider {
-    height: 1px;
-    background: #F3F4F6;
-    margin: 8px 0;
-}
-
-.manage-link {
-    display: flex;
-    align-items: center;
-    padding: 16px 24px;
+.auth-actions { display: flex; align-items: center; gap: 12px; }
+.link-login {
     text-decoration: none;
-    color: #9810FA;
-    font-size: 18px;
+    color: #4A5565;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 10px;
+    border: 1px solid #E5E7EB;
+}
+.link-login:hover { background: #F3F4F6; }
+.btn-register {
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;
     font-weight: 600;
+    padding: 9px 22px;
+    border-radius: 10px;
+    background: #9810FA;
 }
-
-.manage-link:hover {
-    background-color: #F9FAFB;
-}
-
-.manage-icon {
-    width: 24px;
-    margin-right: 12px;
-}
-
-.profile-trigger svg{
-    margin-left: 10px;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
+.btn-register:hover { background: #8a0de0; }
