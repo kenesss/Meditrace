@@ -1,184 +1,110 @@
-/* .meditrace-wrapper {
+.meditrace-wrapper {
     display: flex;
-    font-family: 'Inter', sans-serif;
+    background: #F7F8FA;
     min-height: 100vh;
-    color: #333;
-
-    --blue: #007bff;
-    --dark-blue: #0056b3;
-    --white: #ffffff;
-    --gray-text: #777;
+    font-family: 'Inter', sans-serif;
 }
 
 .meditrace-main {
-    flex-grow: 1;
-    padding: 30px;
-    box-sizing: border-box;
+    width: 82%;
+    padding: 32px 40px;
+    min-height: 100vh;
 }
 
-.mt-greeting h1 {
-    margin: 0;
-    font-size: 26px;
-    font-weight: 700;
-}
-
-.mt-greeting p {
-    color: var(--gray-text);
-    margin: 5px 0 25px 0;
-}
-
-.mt-grid {
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    gap: 20px;
-    margin-bottom: 25px;
-}
-
+/* ── Статкарточки ── */
 .mt-stats-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 32px;
 }
 
 .mt-stat-card {
-    background-color: var(--blue);
-    color: white;
-    padding: 20px;
-    border-radius: 16px;
+    background: #2563EB;
+    border-radius: 20px;
+    padding: 24px 20px 20px;
+    color: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    min-height: 110px;
+    gap: 14px;
+    min-height: 140px;
 }
 
-.mt-icon-box {
-    background: rgba(255, 255, 255, 0.2);
-    width: 32px;
-    height: 32px;
+.mt-stat-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.mt-stat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
-    font-size: 18px;
+    flex-shrink: 0;
 }
 
 .mt-stat-value {
     font-size: 32px;
-    font-weight: 700;
-    margin: 8px 0;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1;
 }
 
 .mt-stat-label {
-    font-size: 14px;
-    line-height: 1.3;
-    opacity: 0.9;
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.4;
 }
 
-.mt-ai-card {
-    background: var(--white);
+/* ── График ── */
+.mt-chart-card {
+    background: #fff;
     border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    border: 1px solid #F3F4F6;
 }
 
-.mt-ai-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
+.mt-chart-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 28px 0;
+}
+
+.mt-chart-wrap {
+    position: relative;
+    height: 320px;
     margin-bottom: 20px;
 }
 
-.mt-ai-title {
-    font-weight: 700;
-    font-size: 16px;
-}
-
-.mt-ai-date {
-    font-size: 11px;
-    color: var(--gray-text);
-}
-
-.mt-ai-status {
-    padding: 12px 15px;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    display: flex;
-    gap: 12px;
-    color: white;
-}
-
-.mt-ai-status.primary { background-color: var(--blue); }
-.mt-ai-status.secondary { background-color: var(--dark-blue); }
-
-.mt-ai-status strong { font-size: 14px; display: block; }
-.mt-ai-status p { font-size: 12px; margin: 2px 0 0; opacity: 0.8; }
-
-.mt-ai-button {
-    width: 100%;
-    background: var(--blue);
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 10px;
-    margin-top: 10px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.mt-chart-card {
-    background: var(--white);
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-}
-
-.mt-chart-card h2 {
-    font-size: 18px;
-    margin-bottom: 30px;
-}
-
-.mt-visual-chart {
-    display: flex;
-    height: 180px;
-    position: relative;
-    border-left: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-}
-
-.mt-y-axis {
-    position: absolute;
-    left: -35px;
-    top: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    font-size: 11px;
-    color: #999;
-}
-
-.mt-x-axis {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px 40px 0;
-    font-size: 11px;
-    color: #999;
-}
-
-.mt-legend {ssss
+/* Легенда */
+.mt-legend {
     display: flex;
     justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-    font-size: 12px;
+    gap: 28px;
+    margin-top: 8px;
 }
 
-.mt-leg-item { display: flex; align-items: center; gap: 6px; }
-.mt-dot { width: 8px; height: 8px; border-radius: 50%; }
-.mt-dot.blue { background: var(--blue); }
-.mt-dot.gray { background: #cbd5e0; }
+.mt-leg-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #6B7280;
+    font-weight: 500;
+}
 
-@media (max-width: 1024px) {
-    .mt-grid { grid-template-columns: 1fr; }
-    .meditrace-wrapper { flex-direction: column; }
-} */
+@media (max-width: 1100px) {
+    .mt-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+    .meditrace-main { width: 100%; padding: 20px; }
+    .mt-stats-grid { grid-template-columns: repeat(2, 1fr); }
+}

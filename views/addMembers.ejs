@@ -28,12 +28,12 @@
                           </p>
                           <p class="mt-role">Статус : <%= m.relationship %>
                           </p>
-                          <p class="mt-birthdate">📅 21.04.2010</p>
+                          <p class="mt-birthdate">21.04.2010</p>
                         </div>
                       </div>
-                      <div class="mt-card-divider"></div>
+                      <!-- <div class="mt-card-divider"></div> -->
                       <button class="mt-delete-btn" onclick="deleteMember('<%= m._id %>')">
-                        <span class="trash-icon">🗑</span> Удалить
+                        Удалить
                       </button>
                     </div>
                     <% }); %>
@@ -41,7 +41,7 @@
               </div>
 
               <button class="mt-add-member-btn" onclick="openAddMemberModal()">
-                <span class="plus-icon">+ 👥</span> Добавить члена семьи
+                Добавить члена семьи
               </button>
             </div>
           </div>
