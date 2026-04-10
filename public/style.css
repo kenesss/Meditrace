@@ -11,10 +11,6 @@ CSS стили для Meditrace
     --border-color: #f3f4f6;
 }
 
-body {
-    background-color: #ffffff;
-}
-
 /* Базовые стили шапки для главной страницы */
 .site-header {
     background-color: var(--bg-color);
@@ -33,14 +29,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-.logo {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    text-decoration: none;
-    letter-spacing: -0.025em;
 }
 
 .nav-links {
