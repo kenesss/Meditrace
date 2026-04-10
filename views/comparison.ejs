@@ -4,58 +4,216 @@
 
   <body>
     <%- include('partials/header.ejs')%>
-    <%- include('partials/menu.ejs')%>
 
-    <% if(analyses && analyses.length >= 2) { %>
-      <main style="margin: 30px 9%;">
+    <div class="meditrace-wrapper">
+        <%- include('partials/menu.ejs')%>
 
-        <div style="background:white;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05)">
-          <h3 style="margin:0 0 16px;color:#172b4d;font-size:1rem;font-weight:600">Сравнить два анализа</h3>
-          <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
-            <select id="compare-sel-1"
-              style="flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px"></select>
-            <span style="color:#7a869a;font-weight:600">vs</span>
-            <select id="compare-sel-2"
-              style="flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px"></select>
-            <button id="compare-btn"
-              style="padding:10px 24px;background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;border:none;border-radius:10px;font-weight:600;cursor:pointer;white-space:nowrap">Сравнить</button>
-          </div>
+        <div class="compare-page">
+
+            <% if(analyses && analyses.length >= 2) { %>
+
+            <!-- Выбор анализов -->
+            <div class="compare-selectors" id="compareSelectors">
+                <div class="compare-slot" id="slot1" onclick="openSlotPicker(1)">
+                    <div class="slot-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+                            <line x1="9" y1="7" x2="15" y2="7"></line>
+                            <line x1="9" y1="11" x2="15" y2="11"></line>
+                            <line x1="9" y1="15" x2="13" y2="15"></line>
+                        </svg>
+                    </div>
+                    <p class="slot-label" id="slot1-label">Добавить прошлый анализ</p>
+                </div>
+
+                <div class="compare-slot" id="slot2" onclick="openSlotPicker(2)">
+                    <div class="slot-icon">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+                            <line x1="9" y1="7" x2="15" y2="7"></line>
+                            <line x1="9" y1="11" x2="15" y2="11"></line>
+                            <line x1="9" y1="15" x2="13" y2="15"></line>
+                        </svg>
+                    </div>
+                    <p class="slot-label" id="slot2-label">Добавить текущий анализ</p>
+                </div>
+            </div>
+
+            <!-- Кнопка сравнить -->
+            <div class="compare-fab-wrap">
+                <button class="compare-fab-btn" id="compare-btn" onclick="runCompare()">Сравнить</button>
+            </div>
+
+            <!-- Результат -->
+            <div id="compare-result" style="display:none;">
+
+                <!-- Период -->
+                <div class="compare-period-bar">
+                    <div class="period-left">
+                        <div class="period-clock-icon">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                        </div>
+                        <div>
+                            <p class="period-title">Период сравнения</p>
+                            <p class="period-dates" id="period-dates">—</p>
+                        </div>
+                    </div>
+                    <div class="period-right">
+                        <p class="period-duration" id="period-duration">—</p>
+                        <p class="period-days" id="period-days">—</p>
+                    </div>
+                </div>
+
+                <!-- Таблица -->
+                <div class="compare-table-card">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Показатель</th>
+                                <th>Прошлое<br>значение</th>
+                                <th>Текущее<br>значение</th>
+                                <th>Статус</th>
+                                <th>Изменение</th>
+                            </tr>
+                        </thead>
+                        <tbody id="compare-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Picker модалка -->
+            <div id="slotPickerModal" class="modal-overlay">
+                <div class="modal-box">
+                    <div class="modal-header">
+                        <h3 id="picker-title">Выберите анализ</h3>
+                        <button class="modal-close" onclick="closeSlotPicker()">✕</button>
+                    </div>
+                    <div class="picker-list" id="picker-list"></div>
+                </div>
+            </div>
+
+            <% } else { %>
+            <div class="compare-empty">
+                <p>Для сравнения нужно минимум 2 загруженных анализа.</p>
+                <a href="/pdf-upload-page/<%= user._id %>" class="compare-fab-btn" style="text-decoration:none; margin-top:20px;">
+                    Загрузить анализ
+                </a>
+            </div>
+            <% } %>
+
         </div>
-
-        <div id="compare-result"
-          style="display:none;background:white;border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 10px rgba(0,0,0,0.05)">
-        </div>
-
-      </main>
-    <% } else { %>
-      <main style="margin: 30px 9%; text-align: center; color: #7a869a; padding: 60px 0;">
-        <p style="font-size: 16px;">Для сравнения нужно минимум 2 загруженных анализа.</p>
-        <a href="/pdf-upload-page/<%= user._id %>"
-          style="display:inline-block;margin-top:16px;background:linear-gradient(90deg,#AD46FF 0%,#E60076 100%);color:white;padding:12px 24px;border-radius:12px;text-decoration:none;font-weight:600;">
-          Загрузить анализ
-        </a>
-      </main>
-    <% } %>
+    </div>
 
     <div id="analyses-data-store" data-analyses='<%- JSON.stringify(analyses) %>' style="display:none;"></div>
 
-    <footer>
-      <%- include('partials/footer.ejs')%>
-    </footer>
+    <footer><%- include('partials/footer.ejs')%></footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="/js/compare.js"></script>
 
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const dataContainer = document.getElementById('analyses-data-store');
-        if (dataContainer) {
-          const analysesData = JSON.parse(dataContainer.getAttribute('data-analyses'));
-          initCompare(analysesData);
+    let selectedSlot1 = null;
+    let selectedSlot2 = null;
+    let currentSlot = null;
+    let allAnalyses = [];
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const store = document.getElementById('analyses-data-store');
+        if (store) allAnalyses = JSON.parse(store.getAttribute('data-analyses'));
+    });
+
+    function openSlotPicker(slot) {
+        currentSlot = slot;
+        document.getElementById('picker-title').textContent =
+            slot === 1 ? 'Выберите прошлый анализ' : 'Выберите текущий анализ';
+        const list = document.getElementById('picker-list');
+        list.innerHTML = '';
+        allAnalyses.forEach(a => {
+            const div = document.createElement('div');
+            div.className = 'picker-item';
+            div.innerHTML = `
+                <div class="picker-item-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="2" width="14" height="20" rx="2"></rect>
+                        <line x1="9" y1="7" x2="15" y2="7"></line>
+                        <line x1="9" y1="11" x2="15" y2="11"></line>
+                    </svg>
+                </div>
+                <div>
+                    <p class="picker-name">${a.fileName}</p>
+                    <p class="picker-date">${new Date(a.createdAt).toLocaleDateString('ru-RU')}</p>
+                </div>`;
+            div.onclick = () => selectAnalysis(a);
+            list.appendChild(div);
+        });
+        document.getElementById('slotPickerModal').style.display = 'flex';
+    }
+
+    function selectAnalysis(a) {
+        if (currentSlot === 1) {
+            selectedSlot1 = a;
+            document.getElementById('slot1-label').textContent = a.fileName;
+            document.getElementById('slot1').classList.add('slot--selected');
+        } else {
+            selectedSlot2 = a;
+            document.getElementById('slot2-label').textContent = a.fileName;
+            document.getElementById('slot2').classList.add('slot--selected');
         }
-      });
+        closeSlotPicker();
+    }
+
+    function closeSlotPicker() {
+        document.getElementById('slotPickerModal').style.display = 'none';
+    }
+
+    function runCompare() {
+        if (!selectedSlot1 || !selectedSlot2) {
+            alert('Выберите оба анализа'); return;
+        }
+        const d1 = new Date(selectedSlot1.createdAt);
+        const d2 = new Date(selectedSlot2.createdAt);
+        const diffMs = Math.abs(d2 - d1);
+        const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+        const years = Math.floor(diffDays / 365);
+        const remDays = diffDays % 365;
+
+        document.getElementById('period-dates').textContent =
+            `${d1.toLocaleDateString('ru-RU')} → ${d2.toLocaleDateString('ru-RU')}`;
+        document.getElementById('period-duration').textContent =
+            years > 0 ? `${years} год ${remDays} дней` : `${diffDays} дней`;
+        document.getElementById('period-days').textContent = `${diffDays} дней`;
+
+        const map1 = {};
+        (selectedSlot1.indicators || []).forEach(i => { map1[i.name] = i; });
+
+        const tbody = document.getElementById('compare-tbody');
+        tbody.innerHTML = '';
+
+        (selectedSlot2.indicators || []).forEach(ind => {
+            const prev = map1[ind.name];
+            if (!prev) return;
+            const diff = (parseFloat(ind.value) - parseFloat(prev.value)).toFixed(2);
+            const isUp = diff > 0;
+            const arrow = isUp ? '↑' : '↓';
+            const sign = isUp ? '+' : '';
+
+            tbody.innerHTML += `
+                <tr>
+                    <td class="ct-name">${ind.name}</td>
+                    <td><span class="ct-badge">${prev.value} ${prev.unit || ''}</span></td>
+                    <td><span class="ct-badge">${ind.value} ${ind.unit || ''}</span></td>
+                    <td class="ct-status">Норма</td>
+                    <td class="ct-change ${isUp ? 'ct-up' : 'ct-down'}">${arrow} ${sign}${diff}</td>
+                </tr>`;
+        });
+
+        document.getElementById('compare-result').style.display = 'block';
+        document.getElementById('compare-result').scrollIntoView({ behavior: 'smooth' });
+    }
     </script>
 
     <%- include('partials/scripts.ejs')%>
-  </body>
+</body>
 </html>
