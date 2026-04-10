@@ -1,17 +1,15 @@
-/* Основной контейнер-обертка */
-.meditrace-wrapper {
+/* .meditrace-wrapper {
     display: flex;
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
     color: #333;
-    /* Локальные переменные */
+
     --blue: #007bff;
     --dark-blue: #0056b3;
     --white: #ffffff;
     --gray-text: #777;
 }
 
-/* Область контента */
 .meditrace-main {
     flex-grow: 1;
     padding: 30px;
@@ -29,7 +27,6 @@
     margin: 5px 0 25px 0;
 }
 
-/* Сетка (Статистика + AI) */
 .mt-grid {
     display: grid;
     grid-template-columns: 1fr 340px;
@@ -77,7 +74,6 @@
     opacity: 0.9;
 }
 
-/* AI Карточка */
 .mt-ai-card {
     background: var(--white);
     border-radius: 20px;
@@ -129,7 +125,6 @@
     cursor: pointer;
 }
 
-/* Секция графика */
 .mt-chart-card {
     background: var(--white);
     border-radius: 20px;
@@ -170,7 +165,7 @@
     color: #999;
 }
 
-.mt-legend {
+.mt-legend {ssss
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -183,8 +178,7 @@
 .mt-dot.blue { background: var(--blue); }
 .mt-dot.gray { background: #cbd5e0; }
 
-/* Адаптация */
 @media (max-width: 1024px) {
     .mt-grid { grid-template-columns: 1fr; }
     .meditrace-wrapper { flex-direction: column; }
-}
+} */
