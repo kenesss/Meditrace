@@ -12,11 +12,6 @@
       <%- include('partials/menu.ejs') %>
 
         <main class="meditrace-main">
-          <section class="mt-page-header">
-            <h1>Моя семья</h1>
-            <p>Управляйте медицинскими данными членов семьи</p>
-          </section>
-
           <div class="mt-family-layout">
             <div class="mt-family-container">
               <div class="mt-members-grid">
@@ -61,23 +56,21 @@
         </div>
         <form id="addMemberForm" class="mt-modal-form">
           <div class="mt-form-group">
-            <label>ФИО *</label>
-            <input type="text" name="full_name" placeholder="Например: Алия Смагулова" required>
+            <label>Имя</label>
+            <input type="text" name="full_name" placeholder="Arnur Tolep" required>
           </div>
           <div class="mt-form-group">
-            <label>Кем приходится *</label>
-            <input type="text" name="relationship" placeholder="Например: Сын, Супруга" required>
+            <label>Статус</label>
+            <input type="text" name="relationship" placeholder="Сын" required>
           </div>
           <div class="mt-form-group">
-            <label>Цвет профиля</label>
-            <div class="mt-color-picker">
-              <input type="radio" name="theme_color" value="purple" id="c1" checked>
-              <label for="c1" style="background: #8B5CF6;"></label>
-              <input type="radio" name="theme_color" value="blue" id="c2">
-              <label for="c2" style="background: #3B82F6;"></label>
-            </div>
+            <label>Дата рождения</label>
+            <input type="date" name="birth_date" max="<%= new Date().toISOString().split('T')[0] %>">
           </div>
-          <button type="button" onclick="submitMember()" class="mt-submit-btn">Сохранить</button>
+          <div class="mt-form-actions">
+            <button type="button" class="mt-cancel-btn" onclick="closeAddMemberModal()">Отмена</button>
+            <button type="button" class="mt-submit-btn" onclick="submitMember()">Добавить</button>
+          </div>
         </form>
       </div>
     </div>

@@ -1,157 +1,156 @@
 .meditrace-wrapper {
     display: flex;
-    background-color: #f8fafc;
+    background-color: #F7F8FA;
     min-height: 100vh;
     font-family: 'Inter', sans-serif;
-    --blue-main: #4481d2;
-    --text-dark: #2c3e50;
-    --text-gray: #7f8c8d;
 }
 
 .meditrace-main {
-    flex-grow: 1;
+    width: 82%;
     padding: 40px;
+    position: relative;
+    min-height: 100vh;
 }
 
-.mt-page-header h1 {
-    font-size: 32px;
-    color: var(--text-dark);
-    margin: 0;
-}
-
-.mt-page-header p {
-    color: var(--text-gray);
-    margin: 8px 0 30px 0;
-}
-
-/* Layout Grid */
-.mt-family-layout {
-    display: grid;
-    grid-template-columns: 1fr 350px;
-    gap: 30px;
-    align-items: start;
-}
-
-/* Member Cards */
+/* Сетка карточек */
 .mt-members-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 120px;
 }
 
+/* Карточка */
 .mt-member-card {
     background: #fff;
     border-radius: 20px;
     padding: 24px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    transition: transform 0.2s;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.2s;
 }
 
+.mt-member-card:hover {
+    box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+}
+
+/* Шапка карточки: аватар + имя */
 .mt-member-info {
     display: flex;
-    gap: 15px;
-    margin-bottom: 15px;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
 }
 
 .mt-avatar {
-    width: 50px;
-    height: 50px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-weight: bold;
-    font-size: 20px;
+    font-weight: 700;
+    font-size: 18px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #8B5CF6, #6366F1);
+}
+
+.mt-details {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
 .mt-name {
-    font-weight: 700;
     font-size: 16px;
+    font-weight: 700;
+    color: #111827;
     margin: 0;
-    color: var(--text-dark);
 }
 
-.mt-role, .mt-birthdate {
-    font-size: 13px;
-    color: var(--text-gray);
-    margin: 4px 0 0 0;
+/* Статус и дата */
+.mt-role {
+    font-size: 14px;
+    color: #6B7280;
+    margin: 10px 0 6px 0;
 }
 
+.mt-birthdate {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: #374151;
+    margin: 0 0 16px 0;
+}
+
+/* Разделитель */
 .mt-card-divider {
     height: 1px;
-    background: #eee;
-    margin: 15px 0;
+    background: #F3F4F6;
+    margin-bottom: 16px;
 }
 
+/* Кнопка удалить */
 .mt-delete-btn {
-    width: 100%;
     background: none;
     border: none;
-    color: #e74c3c;
+    color: #EF4444;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 8px;
-    padding: 5px;
+    padding: 0;
+    transition: opacity 0.15s;
 }
 
-/* Кнопка Добавить */
+.mt-delete-btn:hover {
+    opacity: 0.7;
+}
+
+.trash-icon {
+    font-size: 16px;
+}
+
+/* FAB кнопка */
 .mt-add-member-btn {
-    background-color: var(--blue-main);
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: #2563EB;
     color: white;
     border: none;
-    padding: 16px 30px;
-    border-radius: 12px;
+    padding: 16px 28px;
+    border-radius: 50px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
-}
-
-/* AI Sidebar (как на макете) */
-.mt-ai-card {
-    background: #fff;
-    border-radius: 20px;
-    padding: 25px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-}
-
-.mt-ai-header { display: flex; gap: 12px; margin-bottom: 20px; }
-.mt-ai-title { font-weight: 700; }
-.mt-ai-date { font-size: 11px; color: var(--text-gray); }
-
-.mt-ai-status {
-    padding: 15px;
-    border-radius: 12px;
-    color: white;
-    margin-bottom: 12px;
-    display: flex;
     gap: 12px;
-}
-.mt-ai-status.primary { background: #4a90e2; }
-.mt-ai-status.secondary { background: #357abd; }
-
-.mt-ai-button {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    background: #4a90e2;
-    color: white;
-    font-weight: 600;
-    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(37,99,235,0.35);
+    transition: background 0.2s, transform 0.1s;
+    z-index: 100;
 }
 
-/* Modal */
+.mt-add-member-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.plus-icon {
+    font-size: 18px;
+}
+
+/* Модалка */
 .mt-modal-overlay {
     position: fixed;
-    top:0; left:0; right:0; bottom:0;
-    background: rgba(0,0,0,0.5);
+    inset: 0;
+    background: rgba(0,0,0,0.35);
     display: none;
     justify-content: center;
     align-items: center;
@@ -159,38 +158,160 @@
 }
 
 .mt-modal {
-    background: white;
-    padding: 30px;
-    border-radius: 20px;
-    width: 400px;
+    background: #F0F2F5;
+    border-radius: 24px;
+    padding: 40px 36px;
+    width: 90%;
+    max-width: 520px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
 }
 
 .mt-modal-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    align-items: flex-start;
+    margin-bottom: 32px;
 }
 
-.mt-form-group { margin-bottom: 15px; }
-.mt-form-group label { display: block; margin-bottom: 5px; font-size: 14px; }
+.mt-modal-header h3 {
+    font-size: 32px;
+    font-weight: 800;
+    color: #111827;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.mt-modal-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #9CA3AF;
+    padding: 4px 8px;
+    border-radius: 8px;
+    line-height: 1;
+}
+
+.mt-modal-close:hover {
+    background: #E5E7EB;
+}
+
+/* Форма */
+.mt-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mt-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.mt-form-group label {
+    font-size: 15px;
+    font-weight: 600;
+    color: #374151;
+}
+
 .mt-form-group input {
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 16px;
+    background: #fff;
+    font-size: 15px;
+    color: #111827;
+    outline: none;
     box-sizing: border-box;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    transition: box-shadow 0.2s;
+}
+
+.mt-form-group input:focus {
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+
+.mt-form-group input::placeholder {
+    color: #9CA3AF;
+}
+
+/* Цвет профиля */
+.mt-color-picker {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.mt-color-picker input[type="radio"] {
+    display: none;
+}
+
+.mt-color-picker label {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: border-color 0.15s;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.mt-color-picker input[type="radio"]:checked + label {
+    border-color: #111827;
+}
+
+/* Кнопки формы */
+.mt-form-actions {
+    display: flex;
+    gap: 14px;
+    margin-top: 8px;
+}
+
+.mt-cancel-btn {
+    flex: 1;
+    padding: 15px;
+    border-radius: 14px;
+    border: none;
+    background: #2563EB;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.mt-cancel-btn:hover {
+    background: #1d4ed8;
 }
 
 .mt-submit-btn {
-    width: 100%;
-    padding: 12px;
-    background: var(--blue-main);
-    color: white;
+    flex: 1;
+    padding: 15px;
+    border-radius: 14px;
     border: none;
-    border-radius: 10px;
+    background: #2563EB;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
+    transition: background 0.2s;
 }
 
-@media (max-width: 1100px) {
-    .mt-family-layout { grid-template-columns: 1fr; }
+.mt-submit-btn:hover {
+    background: #1d4ed8;
+}
+
+@media (max-width: 900px) {
+    .meditrace-main {
+        width: 100%;
+        padding: 20px;
+    }
+    .mt-add-member-btn {
+        bottom: 20px;
+        right: 20px;
+    }
 }
