@@ -1,5 +1,5 @@
 :root {
-    --primary-gradient: linear-gradient(90deg, #b026ff, #e6007e);
+    --primary-gradient: #1b88e0;
     --bg-light: #f8fafc;
     --border-color: #e2e8f0;
     --text-main: #0f172a;
@@ -7,7 +7,8 @@
 }
 
 .container-upload{
-    padding: 20px 10%;
+    width: 82%;
+    padding: 20px 10px;
 }
 
 .top-nav {

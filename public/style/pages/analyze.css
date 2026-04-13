@@ -210,8 +210,6 @@
 }
 
 .ma-page {
-    display: flex;
-    gap: 24px;
     padding: 24px;
     min-height: calc(100vh - 80px);
     box-sizing: border-box;
@@ -219,11 +217,10 @@
 
   /* ── Левая колонка: список анализов ── */
   .ma-sidebar {
-    width: 300px;
-    flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    margin-bottom: 20px;
   }
 
   .ma-sidebar-title {
