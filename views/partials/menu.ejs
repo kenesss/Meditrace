@@ -7,31 +7,12 @@
     Главная
   </a>
 
-  <a href="/add-members/<%= user._id %>" class="menu-item <%= activePage === 'members' ? 'active' : '' %>">
+  <a href="/all-analyses/<%= user._id %>" class="menu-item <%= activePage === 'all-analyses' ? 'active' : '' %>">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="9" cy="7" r="3" />
-      <circle cx="15" cy="10" r="2.5" />
-      <path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6H2z" />
-      <path d="M17 14c2.2.5 4 2.3 4 5h-4" opacity="0.5" />
+      <rect x="3" y="3" width="18" height="18" rx="3" />
+      <path d="M7 8h10M7 12h10M7 16h6" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" />
     </svg>
-    Моя семья
-  </a>
-
-  <a href="/pdf-upload-page/<%= user._id %>" class="menu-item <%= activePage === 'analyses' ? 'active' : '' %>">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="3" width="18" height="18" rx="4" />
-      <path d="M8 12l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
-    </svg>
-    Мои анализы
-  </a>
-
-  <a href="/comparison/<%= user._id %>" class="menu-item <%= activePage === 'comparison' ? 'active' : '' %>">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="14" width="4" height="7" rx="1" />
-      <rect x="10" y="9" width="4" height="12" rx="1" />
-      <rect x="17" y="4" width="4" height="17" rx="1" />
-    </svg>
-    Сравнение
+    Все анализы
   </a>
 
   <a href="/ai/<%= user._id %>" class="menu-item <%= activePage === 'ai' ? 'active' : '' %>">
@@ -43,6 +24,23 @@
     AI-Ассистент
   </a>
 
+  <a href="/pdf-upload-page/<%= user._id %>" class="menu-item <%= activePage === 'analyses' ? 'active' : '' %>">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="3" width="18" height="18" rx="4" />
+      <path d="M8 12l2 2 4-4" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    Загрузить анализы 
+  </a>
+
+  <a href="/comparison/<%= user._id %>" class="menu-item <%= activePage === 'comparison' ? 'active' : '' %>">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="14" width="4" height="7" rx="1" />
+      <rect x="10" y="9" width="4" height="12" rx="1" />
+      <rect x="17" y="4" width="4" height="17" rx="1" />
+    </svg>
+    Сравнение
+  </a>
+
   <a href="/goals/<%= user._id %>" class="menu-item <%= activePage === 'goals' ? 'active' : '' %>">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <polygon points="4,4 20,4 20,7 12,14 4,7" />
@@ -51,12 +49,14 @@
     Цели
   </a>
 
-  <a href="/all-analyses/<%= user._id %>" class="menu-item <%= activePage === 'all-analyses' ? 'active' : '' %>">
+  <a href="/add-members/<%= user._id %>" class="menu-item <%= activePage === 'members' ? 'active' : '' %>">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="3" width="18" height="18" rx="3" />
-      <path d="M7 8h10M7 12h10M7 16h6" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" />
+      <circle cx="9" cy="7" r="3" />
+      <circle cx="15" cy="10" r="2.5" />
+      <path d="M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6H2z" />
+      <path d="M17 14c2.2.5 4 2.3 4 5h-4" opacity="0.5" />
     </svg>
-    Все анализы
+    Моя семья
   </a>
 
   <a href="/setting/<%= user._id %>" class="menu-item <%= activePage === 'settings' ? 'active' : '' %>">

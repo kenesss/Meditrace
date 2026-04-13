@@ -4,185 +4,190 @@
 
     <body>
         <%- include('partials/header.ejs')%>
-        <%- include('partials/menu.ejs') %>
-        <span id="current-user-id" data-id="<%= user._id || '' %>"></span>
-            <div class="container-upload">
-                <div class="back-to-dashboard" onclick="window.location.href='/profile/<%= user._id %>'"
-                    style="cursor: pointer;">
-                    <img src="/public/img/icon/Icon13.png" alt="">
-                    <p>Back to Dashboard</p>
-                </div>
-                <div class="top-nav">
-                    <div class="nav-card active">
-                        <div class="icon-box purple-bg">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path
-                                    d="M3 7V5a2 2 0 012-2h2m10 0h2a2 2 0 012 2v2m0 10v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="nav-text">
-                            <strong>Scan New Report</strong>
-                            <span>Upload medical analysis</span>
-                        </div>
-                    </div>
-                    <div class="nav-card">
-                        <div class="icon-box blue-bg">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="nav-text">
-                            <strong>Health Vault</strong>
-                            <span>Browse all records</span>
-                        </div>
-                    </div>
-                    <div class="nav-card">
-                        <div class="icon-box green-bg">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path
-                                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                                </path>
-                            </svg>
-                        </div>
-                        <div class="nav-text">
-                            <strong>AI Health Coach</strong>
-                            <span>Get personalized advice</span>
-                        </div>
-                    </div>
-                </div>
-
-                <main class="upload-section">
-                    <h2 class="form-title">Upload Medical Analysis</h2>
-
-                    <form id="analysisForm" action="/upload" method="POST" enctype="multipart/form-data">
-                        <div class="input-group">
-                            <label>Test Type</label>
-                            <input type="text" name="testType" placeholder="e.g. Blood Test, Invitro" required>
-                        </div>
-
-                        <div class="input-group">
-                            <label>Test Date</label>
-                            <input type="date" id="testDate" name="testDate" required>
-                        </div>
-
-                        <% if (typeof familyMembers !== 'undefined' && familyMembers.length > 0) { %>
-                        <div class="input-group">
-                            <label>Для кого анализ?</label>
-                            <select name="memberId" style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px;">
-                                <option value="">Для себя</option>
-                                <% familyMembers.forEach(function(m) { %>
-                                    <option value="<%= m._id %>"><%= m.full_name %> (<%= m.relationship %>)</option>
-                                <% }); %>
-                            </select>
-                        </div>
-                        <% } %>
-
-                        <div class="input-group">
-                            <label>Upload File (PDF)</label>
-                            <div class="file-input-wrapper">
-                                <label for="reportPdf" class="file-input-label" id="fileLabel">
-                                    📄 Choose PDF file or drag it here
-                                </label>
-                                <input type="file" name="reportPdf" id="reportPdf" accept="application/pdf" required>
+            <div class="meditrace-wrapper">
+                <%- include('partials/menu.ejs')%>
+                    <span id="current-user-id" data-id="<%= user._id || '' %>"></span>
+                    <div class="container-upload">
+                        <div class="top-nav">
+                            <div class="nav-card active">
+                                <div class="icon-box purple-bg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M3 7V5a2 2 0 012-2h2m10 0h2a2 2 0 012 2v2m0 10v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="nav-text">
+                                    <strong>Scan New Report</strong>
+                                    <span>Upload medical analysis</span>
+                                </div>
+                            </div>
+                            <div class="nav-card">
+                                <div class="icon-box blue-bg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="nav-text">
+                                    <strong>Health Vault</strong>
+                                    <span>Browse all records</span>
+                                </div>
+                            </div>
+                            <div class="nav-card">
+                                <div class="icon-box green-bg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="nav-text">
+                                    <strong>AI Health Coach</strong>
+                                    <span>Get personalized advice</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="form-actions">
-                            <button type="submit" class="btn-submit">Upload Analysis</button>
-                            <button type="button" class="btn-cancel" onclick="resetForm()">Cancel</button>
-                        </div>
-                    </form>
-                </main>
+                        <main class="upload-section">
+                            <h2 class="form-title">Upload Medical Analysis</h2>
 
-                <!-- Health Trend Analysis Block -->
-                <div class="health-trend-section" id="healthTrendSection" style="display: none;">
+                            <form id="analysisForm" action="/upload" method="POST" enctype="multipart/form-data">
+                                <div class="input-group">
+                                    <label>Test Type</label>
+                                    <input type="text" name="testType" placeholder="e.g. Blood Test, Invitro" required>
+                                </div>
 
-                    <div class="trend-header-card">
-                        <div class="trend-header-left">
-                            <div class="trend-icon-box">
-                                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
-                                    </path>
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M4 12h3.5l1.5-3 3 6 1.5-3H19">
-                                    </path>
-                                </svg>
+                                <div class="input-group">
+                                    <label>Test Date</label>
+                                    <input type="date" id="testDate" name="testDate" required>
+                                </div>
+
+                                <% if (typeof familyMembers !=='undefined' && familyMembers.length> 0) { %>
+                                    <div class="input-group">
+                                        <label>Для кого анализ?</label>
+                                        <select name="memberId"
+                                            style="width:100%;padding:10px 14px;border-radius:10px;border:1px solid #e2e8f0;color:#172b4d;font-size:14px;">
+                                            <option value="">Для себя</option>
+                                            <% familyMembers.forEach(function(m) { %>
+                                                <option value="<%= m._id %>">
+                                                    <%= m.full_name %> (<%= m.relationship %>)
+                                                </option>
+                                                <% }); %>
+                                        </select>
+                                    </div>
+                                    <% } %>
+
+                                        <div class="input-group">
+                                            <label>Upload File (PDF)</label>
+                                            <div class="file-input-wrapper">
+                                                <label for="reportPdf" class="file-input-label" id="fileLabel">
+                                                    📄 Choose PDF file or drag it here
+                                                </label>
+                                                <input type="file" name="reportPdf" id="reportPdf"
+                                                    accept="application/pdf" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-actions">
+                                            <button type="submit" class="btn-submit">Upload Analysis</button>
+                                            <button type="button" class="btn-cancel"
+                                                onclick="resetForm()">Cancel</button>
+                                        </div>
+                            </form>
+                        </main>
+
+                        <!-- Health Trend Analysis Block -->
+                        <div class="health-trend-section" id="healthTrendSection" style="display: none;">
+
+                            <div class="trend-header-card">
+                                <div class="trend-header-left">
+                                    <div class="trend-icon-box">
+                                        <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"
+                                            viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6">
+                                            </path>
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M4 12h3.5l1.5-3 3 6 1.5-3H19">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h2 class="trend-title">Health Trend Analysis</h2>
+                                        <p class="trend-subtitle">Comparing 2 blood tests from 15.07.2024 to 15.12.2024
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="trend-badge">
+                                    <span>Latest Test</span>
+                                    <strong>December 2024</strong>
+                                </div>
                             </div>
-                            <div>
-                                <h2 class="trend-title">Health Trend Analysis</h2>
-                                <p class="trend-subtitle">Comparing 2 blood tests from 15.07.2024 to 15.12.2024</p>
+
+                            <div class="chart-card">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <h3 class="section-title">Biomarker Trends Over Time</h3>
+                                    <div style="width: 80px; height: 24px; background: #f3f4f6; border-radius: 6px;">
+                                    </div>
+                                </div>
+
+                                <div class="chart-wrapper">
+                                    <canvas id="trendChart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="details-card">
+                                <h3 class="section-title">Detailed Changes</h3>
+
+                                <div id="trendChangesList">
+                                    <!-- Changes will be populated by JavaScript -->
+                                </div>
                             </div>
                         </div>
-                        <div class="trend-badge">
-                            <span>Latest Test</span>
-                            <strong>December 2024</strong>
+
+                        <!-- Результаты анализа -->
+                        <div class="results-section" id="resultsSection">
+                            <div class="card chart-card">
+                                <h3 class="card-title">Biomarker Trends Over Time</h3>
+                                <div class="chart-wrapper">
+                                    <canvas id="resultsChart"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="card details-card">
+                                <h3 class="card-title">Detailed Changes</h3>
+
+                                <div id="testInfo" class="mb-6 p-4 bg-gray-50 rounded-lg">
+                                    <h4 class="font-semibold text-gray-900" id="testTypeDisplay"></h4>
+                                    <p class="text-sm text-gray-600" id="testDateDisplay"></p>
+                                </div>
+
+                                <div class="details-list" id="resultsGrid">
+                                    <!-- Результаты будут добавлены через JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="trend-analysis-card">
+                            <div class="trend-info">
+                                <div class="icon-box-vibe pink-bg">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h3>Health Trend Analysis</h3>
+                                    <p>Comparing 2 blood tests from 15.07.2024 to 15.12.2024</p>
+                                </div>
+                            </div>
+                            <div class="latest-test">
+                                <small>Latest Test</small>
+                                <strong>December 2024</strong>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="chart-card">
-                        <div style="display: flex; justify-content: space-between; align-items: center;">
-                            <h3 class="section-title">Biomarker Trends Over Time</h3>
-                            <div style="width: 80px; height: 24px; background: #f3f4f6; border-radius: 6px;"></div>
-                        </div>
-
-                        <div class="chart-wrapper">
-                            <canvas id="trendChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="details-card">
-                        <h3 class="section-title">Detailed Changes</h3>
-
-                        <div id="trendChangesList">
-                            <!-- Changes will be populated by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Результаты анализа -->
-                <div class="results-section" id="resultsSection">
-                    <div class="card chart-card">
-                        <h3 class="card-title">Biomarker Trends Over Time</h3>
-                        <div class="chart-wrapper">
-                            <canvas id="resultsChart"></canvas>
-                        </div>
-                    </div>
-
-                    <div class="card details-card">
-                        <h3 class="card-title">Detailed Changes</h3>
-
-                        <div id="testInfo" class="mb-6 p-4 bg-gray-50 rounded-lg">
-                            <h4 class="font-semibold text-gray-900" id="testTypeDisplay"></h4>
-                            <p class="text-sm text-gray-600" id="testDateDisplay"></p>
-                        </div>
-
-                        <div class="details-list" id="resultsGrid">
-                            <!-- Результаты будут добавлены через JavaScript -->
-                        </div>
-                    </div>
-                </div>
-
-                <div class="trend-analysis-card">
-                    <div class="trend-info">
-                        <div class="icon-box-vibe pink-bg">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                            </svg>
-                        </div>
-                        <div>
-                            <h3>Health Trend Analysis</h3>
-                            <p>Comparing 2 blood tests from 15.07.2024 to 15.12.2024</p>
-                        </div>
-                    </div>
-                    <div class="latest-test">
-                        <small>Latest Test</small>
-                        <strong>December 2024</strong>
-                    </div>
-                </div>
             </div>
             <%- include('partials/scripts.ejs')%>
     </body>
