@@ -76,28 +76,20 @@
             </div>
 
             <!-- График -->
-            <div class="mt-chart-card">
-                <h2 class="mt-chart-title">Динамика показателей</h2>
-                <div class="mt-chart-wrap">
-                    <canvas id="healthChart"></canvas>
+            <div id="chartSection" class="ma-chart-card">
+                <div class="ma-chart-topbar">
+                  <span class="ma-chart-label">Динамика показателя</span>
+                  <select id="indicatorSelect" class="ma-indicator-select"></select>
                 </div>
-                <div class="mt-legend">
-                    <span class="mt-leg-item">
-                        <svg width="20" height="10" viewBox="0 0 20 10">
-                            <line x1="0" y1="5" x2="20" y2="5" stroke="#2563EB" stroke-width="2"/>
-                            <circle cx="10" cy="5" r="3" fill="#2563EB"/>
-                        </svg>
-                        Systolic
-                    </span>
-                    <span class="mt-leg-item">
-                        <svg width="20" height="10" viewBox="0 0 20 10">
-                            <line x1="0" y1="5" x2="20" y2="5" stroke="#CBD5E1" stroke-width="2"/>
-                            <circle cx="10" cy="5" r="3" fill="#CBD5E1"/>
-                        </svg>
-                        Diastolic
-                    </span>
+                <div class="ma-chart-wrapper">
+                  <canvas id="maChart"></canvas>
                 </div>
-            </div>
+                <div class="ma-legend">
+                  <div class="ma-legend-item"><div class="ma-legend-dot" style="background:#22c55e"></div>В норме</div>
+                  <div class="ma-legend-item"><div class="ma-legend-dot" style="background:#ef4444"></div>Выше нормы</div>
+                  <div class="ma-legend-item"><div class="ma-legend-dot" style="background:#3b82f6"></div>Ниже нормы</div>
+                </div>
+              </div>
 
         </main>
     </div>
