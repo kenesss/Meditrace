@@ -2,235 +2,288 @@
 
 <head>
     <%- include('partials/head.ejs')%>
-    <title>Profile - Meditrace</title>
+        <title>Profile - Meditrace</title>
 </head>
 
 <body>
     <%- include('partials/header.ejs') %>
 
-    <div class="meditrace-wrapper">
-        <%- include('partials/menu.ejs') %>
+        <div class="meditrace-wrapper">
+            <%- include('partials/menu.ejs') %>
 
-        <main class="meditrace-main">
+                <main class="meditrace-main">
 
-            <!-- Баннер -->
-            <div class="mt-banner">
-                <div class="mt-banner-left">
-                    <h2>Добро пожаловать в Meditrace</h2>
-                    <p>Следите за своим здоровьем, анализируйте показатели и достигайте целей вместе с вашей семьёй.</p>
-                    <a class="mt-banner-btn" href="/all-analyses/<%= user._id %>">
-                        Перейти к анализам
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 8h10M9 4l4 4-4 4"/>
-                        </svg>
-                    </a>
-                </div>
-                <div class="mt-banner-right">
-                    <div class="mt-banner-illustration">
-                        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="36" cy="36" r="28" fill="rgba(255,255,255,0.15)"/>
-                            <path d="M36 20 C36 20, 24 28, 24 38 C24 44.6 29.4 50 36 50 C42.6 50 48 44.6 48 38 C48 28, 36 20 36 20Z" fill="rgba(255,255,255,0.8)"/>
-                            <path d="M31 39 L35 43 L41 35" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <rect x="27" y="56" width="18" height="4" rx="2" fill="rgba(255,255,255,0.4)"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Статистика -->
-            <div class="mt-stats-grid">
-
-                <a class="mt-stat-card mt-stat-blue" href="/all-analyses/<%= user._id %>">
-                    <div class="mt-stat-top">
-                        <div class="mt-stat-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="5" y="2" width="14" height="20" rx="2"/>
-                                <line x1="9" y1="7" x2="15" y2="7"/>
-                                <line x1="9" y1="11" x2="15" y2="11"/>
-                                <line x1="9" y1="15" x2="13" y2="15"/>
-                            </svg>
+                    <!-- Баннер -->
+                    <div class="mt-banner">
+                        <div class="mt-banner-left">
+                            <h2>Добро пожаловать в Meditrace</h2>
+                            <p>Следите за своим здоровьем, анализируйте показатели и достигайте целей вместе с вашей
+                                семьёй.</p>
+                            <a class="mt-banner-btn" href="/all-analyses/<%= user._id %>">
+                                Перейти к анализам
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 8h10M9 4l4 4-4 4" />
+                                </svg>
+                            </a>
                         </div>
-                        <span class="mt-stat-value"><%= analysesCount ?? '04' %></span>
-                    </div>
-                    <div class="mt-stat-label">Всего<br>анализов</div>
-                    <div class="mt-stat-arrow">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 6h8M6 2l4 4-4 4"/>
-                        </svg>
-                    </div>
-                </a>
-
-                <a class="mt-stat-card mt-stat-purple" href="/ai/<%= user._id %>">
-                    <div class="mt-stat-top">
-                        <div class="mt-stat-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                <circle cx="12" cy="7" r="4"/>
-                            </svg>
+                        <div class="mt-banner-right">
+                            <div class="mt-banner-illustration">
+                                <svg width="72" height="72" viewBox="0 0 72 72" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="36" cy="36" r="28" fill="rgba(255,255,255,0.15)" />
+                                    <path
+                                        d="M36 20 C36 20, 24 28, 24 38 C24 44.6 29.4 50 36 50 C42.6 50 48 44.6 48 38 C48 28, 36 20 36 20Z"
+                                        fill="rgba(255,255,255,0.8)" />
+                                    <path d="M31 39 L35 43 L41 35" stroke="#2563eb" stroke-width="2.5"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                    <rect x="27" y="56" width="18" height="4" rx="2" fill="rgba(255,255,255,0.4)" />
+                                </svg>
+                            </div>
                         </div>
-                        <span class="mt-stat-value"><%= profileHealth ?? '70%' %></span>
                     </div>
-                    <div class="mt-stat-label">Профиль<br>здоровья</div>
-                    <div class="mt-stat-arrow">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 6h8M6 2l4 4-4 4"/>
-                        </svg>
-                    </div>
-                </a>
 
-                <a class="mt-stat-card mt-stat-teal" href="/add-members/<%= user._id %>">
-                    <div class="mt-stat-top">
-                        <div class="mt-stat-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                            </svg>
+                    <!-- Статистика -->
+                    <div class="mt-stats-grid">
+
+                        <a class="mt-stat-card mt-stat-blue" href="/all-analyses/<%= user._id %>">
+                            <div class="mt-stat-top">
+                                <div class="mt-stat-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="5" y="2" width="14" height="20" rx="2" />
+                                        <line x1="9" y1="7" x2="15" y2="7" />
+                                        <line x1="9" y1="11" x2="15" y2="11" />
+                                        <line x1="9" y1="15" x2="13" y2="15" />
+                                    </svg>
+                                </div>
+                                <span class="mt-stat-value">
+                                    <%= analysesCount ?? '04' %>
+                                </span>
+                            </div>
+                            <div class="mt-stat-label">Всего<br>анализов</div>
+                            <div class="mt-stat-arrow">
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 6h8M6 2l4 4-4 4" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a class="mt-stat-card mt-stat-purple" href="/ai/<%= user._id %>">
+                            <div class="mt-stat-top">
+                                <div class="mt-stat-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                </div>
+                                <span class="mt-stat-value">
+                                    <%= profileHealth ?? '70%' %>
+                                </span>
+                            </div>
+                            <div class="mt-stat-label">Профиль<br>здоровья</div>
+                            <div class="mt-stat-arrow">
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 6h8M6 2l4 4-4 4" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a class="mt-stat-card mt-stat-teal" href="/add-members/<%= user._id %>">
+                            <div class="mt-stat-top">
+                                <div class="mt-stat-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                        <circle cx="9" cy="7" r="4" />
+                                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                    </svg>
+                                </div>
+                                <span class="mt-stat-value">
+                                    <%= familyCount ?? '01' %>
+                                </span>
+                            </div>
+                            <div class="mt-stat-label">Члена<br>семьи</div>
+                            <div class="mt-stat-arrow">
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 6h8M6 2l4 4-4 4" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a class="mt-stat-card mt-stat-green" href="/goals/<%= user._id %>">
+                            <div class="mt-stat-top">
+                                <div class="mt-stat-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                                        <line x1="4" y1="22" x2="4" y2="15" />
+                                    </svg>
+                                </div>
+                                <span class="mt-stat-value">
+                                    <%= goalsCount ?? '02' %>
+                                </span>
+                            </div>
+                            <div class="mt-stat-label">Активных<br>целей</div>
+                            <div class="mt-stat-arrow">
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M2 6h8M6 2l4 4-4 4" />
+                                </svg>
+                            </div>
+                        </a>
+
+                    </div>
+
+                    <!-- Быстрые действия -->
+                    <div class="mt-quick-actions">
+
+                        <a class="mt-qa-card" href="/ai/<%= user._id %>">
+                            <div class="mt-qa-icon mt-qa-icon--blue">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                </svg>
+                            </div>
+                            <div class="mt-qa-text">
+                                <span class="mt-qa-title">Спросить ИИ-врача</span>
+                                <span class="mt-qa-sub">Анализ симптомов</span>
+                            </div>
+                        </a>
+
+                        <a class="mt-qa-card" href="/pdf-upload-page/<%= user._id %>">
+                            <div class="mt-qa-icon mt-qa-icon--green">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                </svg>
+                            </div>
+                            <div class="mt-qa-text">
+                                <span class="mt-qa-title">Загрузить анализ</span>
+                                <span class="mt-qa-sub">PDF или фото</span>
+                            </div>
+                        </a>
+
+                        <a class="mt-qa-card" href="#" onclick="document.getElementById('soonModal').classList.add('mt-modal-active'); return false;">
+                            <div class="mt-qa-icon mt-qa-icon--amber">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" />
+                                    <line x1="16" y1="2" x2="16" y2="6" />
+                                    <line x1="8" y1="2" x2="8" y2="6" />
+                                    <line x1="3" y1="10" x2="21" y2="10" />
+                                </svg>
+                            </div>
+                            <div class="mt-qa-text">
+                                <span class="mt-qa-title">Запись к врачу</span>
+                                <span class="mt-qa-sub">Выбрать дату</span>
+                            </div>
+                        </a>
+
+                    </div>
+
+                    <!-- Нижний блок: напоминания + показатели -->
+                    <div class="mt-bottom-row">
+
+                        <div class="mt-info-card">
+                            <div class="mt-card-heading">Ближайшие напоминания</div>
+                            <div class="mt-reminder-item">
+                                <div class="mt-reminder-dot mt-dot--red"></div>
+                                <span class="mt-reminder-text">Сдать общий анализ крови</span>
+                                <span class="mt-reminder-date">Сегодня</span>
+                            </div>
+                            <div class="mt-reminder-item">
+                                <div class="mt-reminder-dot mt-dot--amber"></div>
+                                <span class="mt-reminder-text">Принять витамин D</span>
+                                <span class="mt-reminder-date">Завтра</span>
+                            </div>
+                            <div class="mt-reminder-item">
+                                <div class="mt-reminder-dot mt-dot--green"></div>
+                                <span class="mt-reminder-text">Плановый осмотр у терапевта</span>
+                                <span class="mt-reminder-date">15 апр</span>
+                            </div>
+                            <div class="mt-reminder-item">
+                                <div class="mt-reminder-dot mt-dot--amber"></div>
+                                <span class="mt-reminder-text">Контроль давления</span>
+                                <span class="mt-reminder-date">17 апр</span>
+                            </div>
                         </div>
-                        <span class="mt-stat-value"><%= familyCount ?? '01' %></span>
-                    </div>
-                    <div class="mt-stat-label">Члена<br>семьи</div>
-                    <div class="mt-stat-arrow">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 6h8M6 2l4 4-4 4"/>
-                        </svg>
-                    </div>
-                </a>
 
-                <a class="mt-stat-card mt-stat-green" href="/goals/<%= user._id %>">
-                    <div class="mt-stat-top">
-                        <div class="mt-stat-icon">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/>
-                                <line x1="4" y1="22" x2="4" y2="15"/>
-                            </svg>
+                        <div class="mt-info-card">
+                            <div class="mt-card-heading">Показатели здоровья</div>
+                            <div class="mt-health-row">
+                                <span class="mt-health-label">Сердечно-сосудистая</span>
+                                <span class="mt-health-pct">85%</span>
+                            </div>
+                            <div class="mt-health-bar-bg">
+                                <div class="mt-health-bar-fill" style="width: 85%; background: #22c55e;"></div>
+                            </div>
+                            <div class="mt-health-row">
+                                <span class="mt-health-label">Иммунитет</span>
+                                <span class="mt-health-pct">60%</span>
+                            </div>
+                            <div class="mt-health-bar-bg">
+                                <div class="mt-health-bar-fill" style="width: 60%; background: #f59e0b;"></div>
+                            </div>
+                            <div class="mt-health-row">
+                                <span class="mt-health-label">Обмен веществ</span>
+                                <span class="mt-health-pct">72%</span>
+                            </div>
+                            <div class="mt-health-bar-bg">
+                                <div class="mt-health-bar-fill" style="width: 72%; background: #3b82f6;"></div>
+                            </div>
+                            <div class="mt-health-row">
+                                <span class="mt-health-label">Гормональный фон</span>
+                                <span class="mt-health-pct">45%</span>
+                            </div>
+                            <div class="mt-health-bar-bg mt-health-bar-bg--last">
+                                <div class="mt-health-bar-fill" style="width: 45%; background: #ef4444;"></div>
+                            </div>
                         </div>
-                        <span class="mt-stat-value"><%= goalsCount ?? '02' %></span>
-                    </div>
-                    <div class="mt-stat-label">Активных<br>целей</div>
-                    <div class="mt-stat-arrow">
-                        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M2 6h8M6 2l4 4-4 4"/>
-                        </svg>
-                    </div>
-                </a>
 
-            </div>
+                    </div>
 
-            <!-- Быстрые действия -->
-            <div class="mt-quick-actions">
+                </main>
+        </div>
 
-                <a class="mt-qa-card" href="/ai/<%= user._id %>">
-                    <div class="mt-qa-icon mt-qa-icon--blue">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
-                        </svg>
-                    </div>
-                    <div class="mt-qa-text">
-                        <span class="mt-qa-title">Спросить ИИ-врача</span>
-                        <span class="mt-qa-sub">Анализ симптомов</span>
-                    </div>
-                </a>
-
-                <a class="mt-qa-card" href="/all-analyses/<%= user._id %>">
-                    <div class="mt-qa-icon mt-qa-icon--green">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                        </svg>
-                    </div>
-                    <div class="mt-qa-text">
-                        <span class="mt-qa-title">Загрузить анализ</span>
-                        <span class="mt-qa-sub">PDF или фото</span>
-                    </div>
-                </a>
-
-                <a class="mt-qa-card" href="/goals/<%= user._id %>">
-                    <div class="mt-qa-icon mt-qa-icon--amber">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="4" width="18" height="18" rx="2"/>
-                            <line x1="16" y1="2" x2="16" y2="6"/>
-                            <line x1="8" y1="2" x2="8" y2="6"/>
-                            <line x1="3" y1="10" x2="21" y2="10"/>
-                        </svg>
-                    </div>
-                    <div class="mt-qa-text">
-                        <span class="mt-qa-title">Запись к врачу</span>
-                        <span class="mt-qa-sub">Выбрать дату</span>
-                    </div>
-                </a>
-
-            </div>
-
-            <!-- Нижний блок: напоминания + показатели -->
-            <div class="mt-bottom-row">
-
-                <div class="mt-info-card">
-                    <div class="mt-card-heading">Ближайшие напоминания</div>
-                    <div class="mt-reminder-item">
-                        <div class="mt-reminder-dot mt-dot--red"></div>
-                        <span class="mt-reminder-text">Сдать общий анализ крови</span>
-                        <span class="mt-reminder-date">Сегодня</span>
-                    </div>
-                    <div class="mt-reminder-item">
-                        <div class="mt-reminder-dot mt-dot--amber"></div>
-                        <span class="mt-reminder-text">Принять витамин D</span>
-                        <span class="mt-reminder-date">Завтра</span>
-                    </div>
-                    <div class="mt-reminder-item">
-                        <div class="mt-reminder-dot mt-dot--green"></div>
-                        <span class="mt-reminder-text">Плановый осмотр у терапевта</span>
-                        <span class="mt-reminder-date">15 апр</span>
-                    </div>
-                    <div class="mt-reminder-item">
-                        <div class="mt-reminder-dot mt-dot--amber"></div>
-                        <span class="mt-reminder-text">Контроль давления</span>
-                        <span class="mt-reminder-date">17 апр</span>
-                    </div>
+        <!-- Модальное окно "Скоро" -->
+        <div class="mt-modal-overlay" id="soonModal" onclick="closeSoonModal(event)">
+            <div class="mt-modal">
+                <div class="mt-modal-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="4" width="18" height="18" rx="2" />
+                        <line x1="16" y1="2" x2="16" y2="6" />
+                        <line x1="8" y1="2" x2="8" y2="6" />
+                        <line x1="3" y1="10" x2="21" y2="10" />
+                    </svg>
                 </div>
-
-                <div class="mt-info-card">
-                    <div class="mt-card-heading">Показатели здоровья</div>
-                    <div class="mt-health-row">
-                        <span class="mt-health-label">Сердечно-сосудистая</span>
-                        <span class="mt-health-pct">85%</span>
-                    </div>
-                    <div class="mt-health-bar-bg">
-                        <div class="mt-health-bar-fill" style="width: 85%; background: #22c55e;"></div>
-                    </div>
-                    <div class="mt-health-row">
-                        <span class="mt-health-label">Иммунитет</span>
-                        <span class="mt-health-pct">60%</span>
-                    </div>
-                    <div class="mt-health-bar-bg">
-                        <div class="mt-health-bar-fill" style="width: 60%; background: #f59e0b;"></div>
-                    </div>
-                    <div class="mt-health-row">
-                        <span class="mt-health-label">Обмен веществ</span>
-                        <span class="mt-health-pct">72%</span>
-                    </div>
-                    <div class="mt-health-bar-bg">
-                        <div class="mt-health-bar-fill" style="width: 72%; background: #3b82f6;"></div>
-                    </div>
-                    <div class="mt-health-row">
-                        <span class="mt-health-label">Гормональный фон</span>
-                        <span class="mt-health-pct">45%</span>
-                    </div>
-                    <div class="mt-health-bar-bg mt-health-bar-bg--last">
-                        <div class="mt-health-bar-fill" style="width: 45%; background: #ef4444;"></div>
-                    </div>
-                </div>
-
+                <h3>Скоро будет доступно</h3>
+                <p>Функция записи к врачу пока находится в разработке. Мы планируем добавить её в ближайшее время.</p>
+                <button class="mt-modal-btn"
+                    onclick="document.getElementById('soonModal').classList.remove('mt-modal-active')">
+                    Понятно
+                </button>
             </div>
+        </div>
 
-        </main>
-    </div>
+        <footer>
+            <%- include('partials/footer.ejs')%>
+        </footer>
 
-    <footer>
-        <%- include('partials/footer.ejs')%>
-    </footer>
-
-    <%- include('partials/scripts.ejs')%>
+        <%- include('partials/scripts.ejs')%>
+        <script>
+            function closeSoonModal(e) {
+                if (e.target === document.getElementById('soonModal')) {
+                    document.getElementById('soonModal').classList.remove('mt-modal-active');
+                }
+            }
+        </script>
 </body>
 
 </html>
