@@ -341,23 +341,44 @@ router.get("/all-analyses/:id", isAuth, async function (req, res) {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.redirect("/not-found");
-
+ 
     const memberId = req.query.member || null;
     const analysisQuery = memberId
       ? { userId: req.params.id, memberId: memberId }
       : { userId: req.params.id, memberId: null };
-
+ 
     const analyses = await Analysis.find(analysisQuery).sort({ testDate: -1 }).lean();
-
+ 
+    function getStatus(val, reference) {
+      const noData = { label: 'Нет данных', color: '#6b7280', bg: '#f9fafb' };
+      if (reference == null || String(reference).trim() === '') return noData;
+      const parts = String(reference).trim().split('-');
+      if (parts.length !== 2) return noData;
+      const min = parseFloat(parts[0]);
+      const max = parseFloat(parts[1]);
+      if (Number.isNaN(min) || Number.isNaN(max)) return noData;
+      const numVal = typeof val === 'number' ? val : parseFloat(val);
+      if (Number.isNaN(numVal)) return noData;
+      if (numVal < min) return { label: 'Ниже нормы', color: '#2563eb', bg: '#eff6ff' };
+      if (numVal > max) return { label: 'Выше нормы', color: '#dc2626', bg: '#fef2f2' };
+      return { label: 'В норме', color: '#16a34a', bg: '#f0fdf4' };
+    }
+ 
+    analyses.forEach(a => {
+      a.indicators.forEach(ind => {
+        ind.status = getStatus(ind.val, ind.reference);
+      });
+    });
+ 
     const familyMembers = await FamilyMember.find({ ownerId: req.params.id }).sort({ createdAt: 1 });
-
+ 
     res.render("allAnalysis", {
       user,
       loginUser: req.user,
       analyses,
       familyMembers,
       activeMemberId: memberId,
-      activePage: 'all-analyses', 
+      activePage: 'all-analyses',
     });
   } catch (error) {
     console.error("Ошибка при загрузке списка анализов:", error);
