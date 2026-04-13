@@ -169,7 +169,8 @@
                             </div>
                         </a>
 
-                        <a class="mt-qa-card" href="#" onclick="document.getElementById('soonModal').classList.add('mt-modal-active'); return false;">
+                        <a class="mt-qa-card" href="#"
+                            onclick="document.getElementById('soonModal').classList.add('mt-modal-active'); return false;">
                             <div class="mt-qa-icon mt-qa-icon--amber">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -190,61 +191,67 @@
                     <!-- Нижний блок: напоминания + показатели -->
                     <div class="mt-bottom-row">
 
-                        <div class="mt-info-card">
-                            <div class="mt-card-heading">Ближайшие напоминания</div>
-                            <div class="mt-reminder-item">
-                                <div class="mt-reminder-dot mt-dot--red"></div>
-                                <span class="mt-reminder-text">Сдать общий анализ крови</span>
-                                <span class="mt-reminder-date">Сегодня</span>
+                        <a class="mt-qa-card" href="#"
+                            onclick="document.getElementById('soonModal').classList.add('mt-modal-active'); return false;">
+                            <div class="mt-info-card">
+                                <div class="mt-card-heading">Ближайшие напоминания</div>
+                                <div class="mt-reminder-item">
+                                    <div class="mt-reminder-dot mt-dot--red"></div>
+                                    <span class="mt-reminder-text">Сдать общий анализ крови</span>
+                                    <span class="mt-reminder-date">Сегодня</span>
+                                </div>
+                                <div class="mt-reminder-item">
+                                    <div class="mt-reminder-dot mt-dot--amber"></div>
+                                    <span class="mt-reminder-text">Принять витамин D</span>
+                                    <span class="mt-reminder-date">Завтра</span>
+                                </div>
+                                <div class="mt-reminder-item">
+                                    <div class="mt-reminder-dot mt-dot--green"></div>
+                                    <span class="mt-reminder-text">Плановый осмотр у терапевта</span>
+                                    <span class="mt-reminder-date">15 апр</span>
+                                </div>
+                                <div class="mt-reminder-item">
+                                    <div class="mt-reminder-dot mt-dot--amber"></div>
+                                    <span class="mt-reminder-text">Контроль давления</span>
+                                    <span class="mt-reminder-date">17 апр</span>
+                                </div>
                             </div>
-                            <div class="mt-reminder-item">
-                                <div class="mt-reminder-dot mt-dot--amber"></div>
-                                <span class="mt-reminder-text">Принять витамин D</span>
-                                <span class="mt-reminder-date">Завтра</span>
-                            </div>
-                            <div class="mt-reminder-item">
-                                <div class="mt-reminder-dot mt-dot--green"></div>
-                                <span class="mt-reminder-text">Плановый осмотр у терапевта</span>
-                                <span class="mt-reminder-date">15 апр</span>
-                            </div>
-                            <div class="mt-reminder-item">
-                                <div class="mt-reminder-dot mt-dot--amber"></div>
-                                <span class="mt-reminder-text">Контроль давления</span>
-                                <span class="mt-reminder-date">17 апр</span>
-                            </div>
-                        </div>
+                        </a>
 
-                        <div class="mt-info-card">
-                            <div class="mt-card-heading">Показатели здоровья</div>
-                            <div class="mt-health-row">
-                                <span class="mt-health-label">Сердечно-сосудистая</span>
-                                <span class="mt-health-pct">85%</span>
+                        <a class="mt-qa-card" href="#"
+                            onclick="document.getElementById('soonModal').classList.add('mt-modal-active'); return false;">
+                            <div class="mt-info-card">
+                                <div class="mt-card-heading">Показатели здоровья</div>
+                                <div class="mt-health-row">
+                                    <span class="mt-health-label">Сердечно-сосудистая</span>
+                                    <span class="mt-health-pct">85%</span>
+                                </div>
+                                <div class="mt-health-bar-bg">
+                                    <div class="mt-health-bar-fill" style="width: 85%; background: #22c55e;"></div>
+                                </div>
+                                <div class="mt-health-row">
+                                    <span class="mt-health-label">Иммунитет</span>
+                                    <span class="mt-health-pct">60%</span>
+                                </div>
+                                <div class="mt-health-bar-bg">
+                                    <div class="mt-health-bar-fill" style="width: 60%; background: #f59e0b;"></div>
+                                </div>
+                                <div class="mt-health-row">
+                                    <span class="mt-health-label">Обмен веществ</span>
+                                    <span class="mt-health-pct">72%</span>
+                                </div>
+                                <div class="mt-health-bar-bg">
+                                    <div class="mt-health-bar-fill" style="width: 72%; background: #3b82f6;"></div>
+                                </div>
+                                <div class="mt-health-row">
+                                    <span class="mt-health-label">Гормональный фон</span>
+                                    <span class="mt-health-pct">45%</span>
+                                </div>
+                                <div class="mt-health-bar-bg mt-health-bar-bg--last">
+                                    <div class="mt-health-bar-fill" style="width: 45%; background: #ef4444;"></div>
+                                </div>
                             </div>
-                            <div class="mt-health-bar-bg">
-                                <div class="mt-health-bar-fill" style="width: 85%; background: #22c55e;"></div>
-                            </div>
-                            <div class="mt-health-row">
-                                <span class="mt-health-label">Иммунитет</span>
-                                <span class="mt-health-pct">60%</span>
-                            </div>
-                            <div class="mt-health-bar-bg">
-                                <div class="mt-health-bar-fill" style="width: 60%; background: #f59e0b;"></div>
-                            </div>
-                            <div class="mt-health-row">
-                                <span class="mt-health-label">Обмен веществ</span>
-                                <span class="mt-health-pct">72%</span>
-                            </div>
-                            <div class="mt-health-bar-bg">
-                                <div class="mt-health-bar-fill" style="width: 72%; background: #3b82f6;"></div>
-                            </div>
-                            <div class="mt-health-row">
-                                <span class="mt-health-label">Гормональный фон</span>
-                                <span class="mt-health-pct">45%</span>
-                            </div>
-                            <div class="mt-health-bar-bg mt-health-bar-bg--last">
-                                <div class="mt-health-bar-fill" style="width: 45%; background: #ef4444;"></div>
-                            </div>
-                        </div>
+                        </a>
 
                     </div>
 
@@ -277,13 +284,13 @@
         </footer>
 
         <%- include('partials/scripts.ejs')%>
-        <script>
-            function closeSoonModal(e) {
-                if (e.target === document.getElementById('soonModal')) {
-                    document.getElementById('soonModal').classList.remove('mt-modal-active');
+            <script>
+                function closeSoonModal(e) {
+                    if (e.target === document.getElementById('soonModal')) {
+                        document.getElementById('soonModal').classList.remove('mt-modal-active');
+                    }
                 }
-            }
-        </script>
+            </script>
 </body>
 
 </html>
