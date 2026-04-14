@@ -205,27 +205,29 @@
 /* Найди в analyze.css (или где хранится .ma-page) и замени/добавь: */
 
 .ma-page {
-  display: flex;          /* ← добавить */
-  gap: 24px;              /* ← добавить */
+  display: flex;
+  gap: 24px;
   padding: 24px;
-  min-height: calc(100vh - 80px);
+  flex: 1;              /* ← занимает всю ширину после меню */
+  align-items: flex-start;
   box-sizing: border-box;
-  align-items: flex-start; /* ← добавить */
 }
 
 .ma-sidebar {
-  width: 280px;           /* ← фиксированная ширина сайдбара */
-  flex-shrink: 0;         /* ← не сжимается */
+  width: 260px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  position: sticky;     /* ← сайдбар остаётся на месте при скролле */
+  top: 24px;
 }
 
 .ma-content {
-  flex: 1;                /* ← занимает всё оставшееся пространство */
+  flex: 1;
   min-width: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: column;  /* ← шапка, потом график, потом таблица — всё в столбик */
   gap: 20px;
 }
 
