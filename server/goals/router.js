@@ -15,11 +15,14 @@ router.get('/api/goals', isAuth, async (req, res) => {
     const analysisQuery = memberId ? { userId, memberId } : { userId, memberId: null };
     const lastAnalysis = await Analysis.findOne(analysisQuery).sort({ testDate: -1 });
 
+    const indicatorMap = new Map(
+      lastAnalysis?.indicators?.map(i => [i.name.toLowerCase(), i]) ?? []
+    );
+
+
     const goalsWithProgress = goals.map(goal => {
-      const ind = lastAnalysis?.indicators?.find(
-        i => i.name.toLowerCase() === goal.indicatorName.toLowerCase()
-      );
-      const currentVal = ind ? ind.val : null;
+      const ind = indicatorMap.get(goal.indicatorName.toLowerCase());
+      const currentVal = ind?.val ?? null;
 
       let progress = null;
       let achieved = false;
