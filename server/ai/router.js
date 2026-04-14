@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { aiLimiter } = require('../config/limiters');
-const { OpenAI } = require('openai');
 const Analysis = require('../Parser/Analysis');
 const HealthGoal = require('../goals/HealthGoal');
-
-const openai = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY,
-    timeout: 30000,
-});
+const openai = require('../config/openai');
 
 router.post('/api/ai/chat', aiLimiter, async (req, res) => {
     try {
