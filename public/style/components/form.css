@@ -48,3 +48,12 @@
     font-size: 15px;
     box-sizing: border-box;
 }
+.auth-register__error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-size: 14px;
+  }

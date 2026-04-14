@@ -1,8 +1,10 @@
 <html lang="ru" class="auth-register-html">
+
 <head>
     <%- include('partials/head.ejs')%>
-    <title>Регистрация — Meditrace</title>
+        <title>Регистрация — Meditrace</title>
 </head>
+
 <body class="auth-page auth-register">
     <div class="bg-shape shape-blue"></div>
     <div class="bg-shape shape-gray"></div>
@@ -18,7 +20,8 @@
             </h2>
 
             <p class="auth-register__description">
-                Безопасный доступ ко всей вашей медицинской истории из OLYMP, INVITRO и всех ваших медицинских учреждений в одном месте.
+                Безопасный доступ ко всей вашей медицинской истории из OLYMP, INVITRO и всех ваших медицинских
+                учреждений в одном месте.
             </p>
 
             <ul class="auth-register__features">
@@ -32,51 +35,61 @@
             <div class="auth-register__card">
                 <h3 class="auth-register__title">Создать аккаунт</h3>
                 <p class="auth-register__subtitle">Начните управлять своими медицинскими данными уже сегодня</p>
-
-                <form action="/api/signup" method="POST">
-                    <div class="auth-register__group">
-                        <label for="full_name">Полное имя</label>
-                        <div class="auth-register__input">
-                            <input type="text" id="full_name" name="full_name" placeholder="Иван Иванов" required>
+                <% const err=parseInt(query && query.error); %>
+                    <% if (err) { %>
+                        <div class="auth-register__error">
+                            <% if (err===1) { %>Пожалуйста, заполните все поля корректно.<% } %>
+                                    <% if (err===3) { %>Пользователь с таким email уже зарегистрирован.<% } %>
+                                            <% if (err===4) { %>Произошла ошибка сервера. Попробуйте позже.<% } %>
                         </div>
-                    </div>
+                        <% } %>
 
-                    <div class="auth-register__group">
-                        <label for="email">Адрес электронной почты</label>
-                        <div class="auth-register__input has-left-icon">
-                            <i class="fa-regular fa-envelope icon-left" aria-hidden="true"></i>
-                            <input type="email" id="email" name="email" placeholder="you@example.com" required>
-                        </div>
-                    </div>
+                            <form action="/api/signup" method="POST">
+                                <div class="auth-register__group">
+                                    <label for="full_name">Полное имя</label>
+                                    <div class="auth-register__input">
+                                        <input type="text" id="full_name" name="full_name" placeholder="Иван Иванов"
+                                            required>
+                                    </div>
+                                </div>
 
-                    <div class="auth-register__group">
-                        <label for="password">Пароль</label>
-                        <div class="auth-register__input has-left-icon has-right-icon">
-                            <i class="fa-solid fa-lock icon-left" aria-hidden="true"></i>
-                            <input type="password" id="password" name="password" placeholder="••••••••" required>
-                            <i class="fa-regular fa-eye icon-right js-password-toggle" role="button" tabindex="0" aria-label="Показать пароль"></i>
-                        </div>
-                    </div>
+                                <div class="auth-register__group">
+                                    <label for="email">Адрес электронной почты</label>
+                                    <div class="auth-register__input has-left-icon">
+                                        <i class="fa-regular fa-envelope icon-left" aria-hidden="true"></i>
+                                        <input type="email" id="email" name="email" placeholder="you@example.com"
+                                            required>
+                                    </div>
+                                </div>
 
-                    <input type="hidden" name="re_password" id="re_password">
+                                <div class="auth-register__group">
+                                    <label for="password">Пароль</label>
+                                    <div class="auth-register__input has-left-icon has-right-icon">
+                                        <i class="fa-solid fa-lock icon-left" aria-hidden="true"></i>
+                                        <input type="password" id="password" name="password" placeholder="••••••••"
+                                            required>
+                                        <i class="fa-regular fa-eye icon-right js-password-toggle" role="button"
+                                            tabindex="0" aria-label="Показать пароль"></i>
+                                    </div>
+                                </div>
 
-                    <button
-                        type="submit"
-                        class="auth-register__submit"
-                        onclick="document.getElementById('re_password').value = document.getElementsByName('password')[0].value;"
-                    >
-                        Создать аккаунт
-                    </button>
-                </form>
+                                <input type="hidden" name="re_password" id="re_password">
 
-                <div class="auth-register__footer">
-                    <span>Уже есть аккаунт?</span>
-                    <a href="/login" class="login-link">Войти</a>
-                </div>
+                                <button type="submit" class="auth-register__submit"
+                                    onclick="document.getElementById('re_password').value = document.getElementsByName('password')[0].value;">
+                                    Создать аккаунт
+                                </button>
+                            </form>
+
+                            <div class="auth-register__footer">
+                                <span>Уже есть аккаунт?</span>
+                                <a href="/login" class="login-link">Войти</a>
+                            </div>
             </div>
         </section>
     </main>
 
     <script src="/js/password-toggle.js" defer></script>
 </body>
+
 </html>

@@ -17,17 +17,17 @@
         let activeTab = 'chart';
 
         // ── DOM ────────────────────────────────────────────────────────────────────
-        const analysisCards   = document.querySelectorAll('.ma-analysis-card');
-        const tabChart        = document.getElementById('tabChart');
-        const tabTable        = document.getElementById('tabTable');
-        const chartSection    = document.getElementById('chartSection');
-        const tableSection    = document.getElementById('tableSection');
+        const analysisCards = document.querySelectorAll('.ma-analysis-card');
+        const tabChart = document.getElementById('tabChart');
+        const tabTable = document.getElementById('tabTable');
+        const chartSection = document.getElementById('chartSection');
+        const tableSection = document.getElementById('tableSection');
         const indicatorSelect = document.getElementById('indicatorSelect');
-        const chartCanvas     = document.getElementById('maChart');
-        const tableBody       = document.getElementById('maTableBody');
-        const analysisTitle   = document.getElementById('maAnalysisTitle');
-        const analysisMeta    = document.getElementById('maAnalysisMeta');
-        const searchInput     = document.getElementById('searchInput');
+        const chartCanvas = document.getElementById('maChart');
+        const tableBody = document.getElementById('maTableBody');
+        const analysisTitle = document.getElementById('maAnalysisTitle');
+        const analysisMeta = document.getElementById('maAnalysisMeta');
+        const searchInput = document.getElementById('searchInput');
 
         // ── Утилиты ────────────────────────────────────────────────────────────────
         function formatDate(d) {
@@ -42,7 +42,7 @@
 
         function getStatusClass(status) {
             if (!status) return '';
-            if (status.label === 'В норме')    return 'status-ok';
+            if (status.label === 'В норме') return 'status-ok';
             if (status.label === 'Выше нормы') return 'status-high';
             if (status.label === 'Ниже нормы') return 'status-low';
             return 'status-nd';
@@ -214,13 +214,38 @@
             card.addEventListener('click', () => activateAnalysis(i));
         });
 
-        if (tabChart)        tabChart.addEventListener('click', () => switchTab('chart'));
-        if (tabTable)        tabTable.addEventListener('click', () => switchTab('table'));
+        if (tabChart) tabChart.addEventListener('click', () => switchTab('chart'));
+        if (tabTable) tabTable.addEventListener('click', () => switchTab('table'));
         if (indicatorSelect) indicatorSelect.addEventListener('change', e => buildChart(e.target.value));
-        if (searchInput)     searchInput.addEventListener('input', filterCards);
+        if (searchInput) searchInput.addEventListener('input', filterCards);
 
         // ── Инициализация ─────────────────────────────────────────────────────────
         activateAnalysis(0);
         switchTab('chart');
     }
+    // ── Удаление анализа ───────────────────────────────────────────────
+    document.querySelectorAll('.ma-delete-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            e.stopPropagation(); // не переключать карточку при клике
+            const card = btn.closest('.ma-analysis-card');
+            const id = card.dataset.id;
+            if (!id) return;
+
+            if (!confirm('Удалить этот анализ?')) return;
+
+            try {
+                const res = await fetch(`/delete-analysis/${id}`, { method: 'DELETE' });
+                const json = await res.json();
+                if (json.success) {
+                    card.remove();
+                    // Если удалили активный — обновляем страницу
+                    window.location.reload();
+                } else {
+                    alert('Ошибка: ' + json.error);
+                }
+            } catch (err) {
+                alert('Не удалось удалить анализ');
+            }
+        });
+    });
 })();

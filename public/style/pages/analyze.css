@@ -206,7 +206,8 @@
 
 .ma-page {
   padding: 24px;
-  flex: 1;              /* ← занимает всю ширину после меню */
+  flex: 1;
+  /* ← занимает всю ширину после меню */
   align-items: flex-start;
   box-sizing: border-box;
 }
@@ -222,7 +223,8 @@
   flex: 1;
   min-width: 0;
   display: flex;
-  flex-direction: column;  /* ← шапка, потом график, потом таблица — всё в столбик */
+  flex-direction: column;
+  /* ← шапка, потом график, потом таблица — всё в столбик */
   gap: 20px;
 }
 
@@ -596,6 +598,24 @@
 #maChart {
   width: 100% !important;
   height: 100% !important;
+}
+
+.ma-delete-btn {
+  margin-left: auto;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+}
+
+.ma-delete-btn:hover {
+  color: #ef4444;
 }
 
 @media (max-width: 900px) {
