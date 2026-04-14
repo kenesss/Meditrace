@@ -1,11 +1,13 @@
 const express = require('express')
 const router = express.Router();
 const User = require('../auth/User')
+const { OpenAI } = require('openai');
 const Analysis = require('../Parser/Analysis');
 const FamilyMember = require('../family/FamilyMember');
 const HealthGoal = require('../goals/HealthGoal');
 const { isAuth } = require('../auth/middlewares');
 
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 router.get('/', async (req, res) => {
   res.render("index", { user: req.user ? req.user : {} });
@@ -388,12 +390,64 @@ router.get("/all-analyses/:id", isAuth, async function (req, res) {
 
 router.post("/api/ai/chat", isAuth, async (req, res) => {
   try {
-    const { message } = req.body;
-    // здесь ваш вызов к AI (OpenAI, Claude и т.д.)
-    // пример заглушки:
-    res.json({ reply: "Это тестовый ответ на: " + message });
+      const { message } = req.body;
+      const userId = req.user ? req.user._id : req.session.userId;
+
+      if (!message) return res.status(400).json({ reply: "Сообщение пустое." });
+
+      let medicalContext = "Данные анализов не найдены в базе.";
+      if (userId) {
+          const recentAnalyses = await Analysis.find({ userId })
+              .sort({ testDate: -1 })
+              .limit(3);
+
+          if (recentAnalyses.length > 0) {
+              medicalContext = recentAnalyses.map((a, i) =>
+                  `Анализ ${i + 1} от ${a.testDate.toLocaleDateString('ru-RU')}:\n` +
+                  a.indicators.map(ind =>
+                      `  - ${ind.name}: ${ind.val} ${ind.unit} (Норма: ${ind.reference || 'не указана'})`
+                  ).join('\n')
+              ).join('\n\n');
+          }
+      }
+
+      let goalsContext = '';
+      if (userId) {
+          const userGoals = await HealthGoal.find({ userId, memberId: null });
+          if (userGoals.length > 0) {
+              goalsContext = '\n\nЦели здоровья пользователя:\n' + userGoals.map(g =>
+                  `- ${g.indicatorName}: ${g.direction === 'below' ? 'снизить до' : 'повысить до'} ${g.targetValue} ${g.unit}${g.note ? ' (' + g.note + ')' : ''}`
+              ).join('\n');
+          }
+      }
+
+      if (!req.session.chatHistory) req.session.chatHistory = [];
+
+      const messagesToAI = [
+          {
+              role: "system",
+              content: `Ты — медицинский ассистент Meditrace. Данные пользователя:\n${medicalContext}${goalsContext}\nБудь профессионален. Если есть отклонения от нормы, укажи на них. Всегда советуй обратиться к врачу.`
+          },
+          ...req.session.chatHistory.slice(-10),
+          { role: "user", content: message }
+      ];
+
+      const completion = await openai.chat.completions.create({
+          model: "gpt-4o",
+          messages: messagesToAI,
+          temperature: 0.7,
+      });
+
+      const aiReply = completion.choices[0].message.content;
+
+      req.session.chatHistory.push({ role: "user", content: message });
+      req.session.chatHistory.push({ role: "assistant", content: aiReply });
+
+      res.json({ reply: aiReply });
+
   } catch (error) {
-    res.status(500).json({ reply: "Ошибка сервера" });
+      console.error('OpenAI Error:', error.message);
+      res.status(500).json({ reply: "Произошла ошибка в работе ИИ." });
   }
 });
 
