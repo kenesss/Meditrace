@@ -388,67 +388,67 @@ router.get("/all-analyses/:id", isAuth, async function (req, res) {
   }
 });
 
-router.post("/api/ai/chat", isAuth, async (req, res) => {
-  try {
-      const { message } = req.body;
-      const userId = req.user ? req.user._id : req.session.userId;
+// router.post("/api/ai/chat", isAuth, async (req, res) => {
+//   try {
+//       const { message } = req.body;
+//       const userId = req.user ? req.user._id : req.session.userId;
 
-      if (!message) return res.status(400).json({ reply: "Сообщение пустое." });
+//       if (!message) return res.status(400).json({ reply: "Сообщение пустое." });
 
-      let medicalContext = "Данные анализов не найдены в базе.";
-      if (userId) {
-          const recentAnalyses = await Analysis.find({ userId })
-              .sort({ testDate: -1 })
-              .limit(3);
+//       let medicalContext = "Данные анализов не найдены в базе.";
+//       if (userId) {
+//           const recentAnalyses = await Analysis.find({ userId })
+//               .sort({ testDate: -1 })
+//               .limit(3);
 
-          if (recentAnalyses.length > 0) {
-              medicalContext = recentAnalyses.map((a, i) =>
-                  `Анализ ${i + 1} от ${a.testDate.toLocaleDateString('ru-RU')}:\n` +
-                  a.indicators.map(ind =>
-                      `  - ${ind.name}: ${ind.val} ${ind.unit} (Норма: ${ind.reference || 'не указана'})`
-                  ).join('\n')
-              ).join('\n\n');
-          }
-      }
+//           if (recentAnalyses.length > 0) {
+//               medicalContext = recentAnalyses.map((a, i) =>
+//                   `Анализ ${i + 1} от ${a.testDate.toLocaleDateString('ru-RU')}:\n` +
+//                   a.indicators.map(ind =>
+//                       `  - ${ind.name}: ${ind.val} ${ind.unit} (Норма: ${ind.reference || 'не указана'})`
+//                   ).join('\n')
+//               ).join('\n\n');
+//           }
+//       }
 
-      let goalsContext = '';
-      if (userId) {
-          const userGoals = await HealthGoal.find({ userId, memberId: null });
-          if (userGoals.length > 0) {
-              goalsContext = '\n\nЦели здоровья пользователя:\n' + userGoals.map(g =>
-                  `- ${g.indicatorName}: ${g.direction === 'below' ? 'снизить до' : 'повысить до'} ${g.targetValue} ${g.unit}${g.note ? ' (' + g.note + ')' : ''}`
-              ).join('\n');
-          }
-      }
+//       let goalsContext = '';
+//       if (userId) {
+//           const userGoals = await HealthGoal.find({ userId, memberId: null });
+//           if (userGoals.length > 0) {
+//               goalsContext = '\n\nЦели здоровья пользователя:\n' + userGoals.map(g =>
+//                   `- ${g.indicatorName}: ${g.direction === 'below' ? 'снизить до' : 'повысить до'} ${g.targetValue} ${g.unit}${g.note ? ' (' + g.note + ')' : ''}`
+//               ).join('\n');
+//           }
+//       }
 
-      if (!req.session.chatHistory) req.session.chatHistory = [];
+//       if (!req.session.chatHistory) req.session.chatHistory = [];
 
-      const messagesToAI = [
-          {
-              role: "system",
-              content: `Ты — медицинский ассистент Meditrace. Данные пользователя:\n${medicalContext}${goalsContext}\nБудь профессионален. Если есть отклонения от нормы, укажи на них. Всегда советуй обратиться к врачу.`
-          },
-          ...req.session.chatHistory.slice(-10),
-          { role: "user", content: message }
-      ];
+//       const messagesToAI = [
+//           {
+//               role: "system",
+//               content: `Ты — медицинский ассистент Meditrace. Данные пользователя:\n${medicalContext}${goalsContext}\nБудь профессионален. Если есть отклонения от нормы, укажи на них. Всегда советуй обратиться к врачу.`
+//           },
+//           ...req.session.chatHistory.slice(-10),
+//           { role: "user", content: message }
+//       ];
 
-      const completion = await openai.chat.completions.create({
-          model: "gpt-4o",
-          messages: messagesToAI,
-          temperature: 0.7,
-      });
+//       const completion = await openai.chat.completions.create({
+//           model: "gpt-4o",
+//           messages: messagesToAI,
+//           temperature: 0.7,
+//       });
 
-      const aiReply = completion.choices[0].message.content;
+//       const aiReply = completion.choices[0].message.content;
 
-      req.session.chatHistory.push({ role: "user", content: message });
-      req.session.chatHistory.push({ role: "assistant", content: aiReply });
+//       req.session.chatHistory.push({ role: "user", content: message });
+//       req.session.chatHistory.push({ role: "assistant", content: aiReply });
 
-      res.json({ reply: aiReply });
+//       res.json({ reply: aiReply });
 
-  } catch (error) {
-      console.error('OpenAI Error:', error.message);
-      res.status(500).json({ reply: "Произошла ошибка в работе ИИ." });
-  }
-});
+//   } catch (error) {
+//       console.error('OpenAI Error:', error.message);
+//       res.status(500).json({ reply: "Произошла ошибка в работе ИИ." });
+//   }
+// });
 
 module.exports = router
