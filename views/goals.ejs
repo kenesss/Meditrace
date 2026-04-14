@@ -9,9 +9,6 @@
         <%- include('partials/menu.ejs')%>
 
           <div class="goals-page">
-
-            <% if(analyses && analyses.length> 0){ %>
-
               <div class="goals-grid" id="goals-list">
                 <% if (typeof goals !=='undefined' && goals.length> 0) { %>
                   <% goals.forEach(function(g) { %>
@@ -90,15 +87,6 @@
               <button class="add-goal-fab" onclick="openGoalModal()">
                 <span>+</span> Добавить цель
               </button>
-
-              <% } else { %>
-                <div class="goals-no-analyses">
-                  <p>Нет загруженных анализов. Сначала загрузите анализ.</p>
-                  <a href="/pdf-upload-page/<%= user._id %>" class="add-goal-fab" style="text-decoration:none;">
-                    Загрузить анализ
-                  </a>
-                </div>
-                <% } %>
           </div>
       </div>
 

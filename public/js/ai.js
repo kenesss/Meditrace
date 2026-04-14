@@ -45,10 +45,11 @@ function appendMessage(role, text, id = null) {
 }
 
 document.querySelectorAll('.quick-btn').forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function () {
         const input = document.getElementById('user-input');
         const form = document.getElementById('chat-form');
-        input.value = this.textContent;
+        input.value = this.textContent.replace(/^[^\w\sа-яА-Я]+\s*/, ''); // убирает эмодзи
+        document.querySelector('.quick-questions').classList.add('hidden'); // скрываем после выбора
         form.dispatchEvent(new Event('submit'));
     });
 });
