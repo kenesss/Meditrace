@@ -1,5 +1,12 @@
 require('dotenv').config();
 
+const REQUIRED_ENV = ['MONGO_URL', 'SESSION_SECRET', 'OPENAI_API_KEY'];
+const missing = REQUIRED_ENV.filter(k => !process.env[k]);
+if (missing.length) {
+  console.error('Missing env vars:', missing.join(', '));
+  process.exit(1);
+}
+
 const express = require('express');
 const session = require("express-session");
 const mongooseStore = require("connect-mongo");

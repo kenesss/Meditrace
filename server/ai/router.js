@@ -71,6 +71,7 @@ router.post('/api/ai/chat', aiLimiter, async (req, res) => {
 
         req.session.chatHistory.push({ role: "user", content: message });
         req.session.chatHistory.push({ role: "assistant", content: aiReply });
+        req.session.chatHistory = req.session.chatHistory.slice(-20);
 
         res.json({ reply: aiReply });
 
