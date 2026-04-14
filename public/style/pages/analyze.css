@@ -205,8 +205,6 @@
 /* Найди в analyze.css (или где хранится .ma-page) и замени/добавь: */
 
 .ma-page {
-  display: flex;
-  gap: 24px;
   padding: 24px;
   flex: 1;              /* ← занимает всю ширину после меню */
   align-items: flex-start;
@@ -214,13 +212,12 @@
 }
 
 .ma-sidebar {
-  width: 260px;
-  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 12px;
   position: sticky;     /* ← сайдбар остаётся на месте при скролле */
   top: 24px;
+  margin-bottom: 20px;
 }
 
 .ma-content {
