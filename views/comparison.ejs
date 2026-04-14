@@ -1,6 +1,6 @@
-<html lang="en">
+<html lang="ru">
 <%- include('partials/head.ejs')%>
-  <title>Compare - Meditrace</title>
+  <title>Сравнение — Meditrace</title>
 
   <body>
     <%- include('partials/header.ejs')%>
@@ -111,8 +111,6 @@
 
     <footer><%- include('partials/footer.ejs')%></footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script>
     let selectedSlot1 = null;
     let selectedSlot2 = null;
@@ -131,6 +129,7 @@
         const list = document.getElementById('picker-list');
         list.innerHTML = '';
         allAnalyses.forEach(a => {
+            const date = new Date(a.testDate || a.createdAt).toLocaleDateString('ru-RU');
             const div = document.createElement('div');
             div.className = 'picker-item';
             div.innerHTML = `
@@ -142,8 +141,8 @@
                     </svg>
                 </div>
                 <div>
-                    <p class="picker-name">${a.fileName}</p>
-                    <p class="picker-date">${new Date(a.createdAt).toLocaleDateString('ru-RU')}</p>
+                    <p class="picker-name">${a.fileName || a.testType || 'Анализ'}</p>
+                    <p class="picker-date">${date} · ${a.indicators ? a.indicators.length : 0} показат.</p>
                 </div>`;
             div.onclick = () => selectAnalysis(a);
             list.appendChild(div);
@@ -154,11 +153,11 @@
     function selectAnalysis(a) {
         if (currentSlot === 1) {
             selectedSlot1 = a;
-            document.getElementById('slot1-label').textContent = a.fileName;
+            document.getElementById('slot1-label').textContent = a.fileName || a.testType || 'Анализ';
             document.getElementById('slot1').classList.add('slot--selected');
         } else {
             selectedSlot2 = a;
-            document.getElementById('slot2-label').textContent = a.fileName;
+            document.getElementById('slot2-label').textContent = a.fileName || a.testType || 'Анализ';
             document.getElementById('slot2').classList.add('slot--selected');
         }
         closeSlotPicker();
@@ -168,46 +167,99 @@
         document.getElementById('slotPickerModal').style.display = 'none';
     }
 
+    /* ── Определение статуса по референсному диапазону ── */
+    function getStatus(val, reference) {
+        if (val === null || val === undefined || !reference) return { label: 'Нет данных', cls: '' };
+
+        // Поддержка форматов: "3.5-5.0", "3.5 - 5.0", "< 5.0", "> 3.5"
+        const rangeParts = reference.match(/([\d.]+)\s*[-–]\s*([\d.]+)/);
+        if (rangeParts) {
+            const low  = parseFloat(rangeParts[1]);
+            const high = parseFloat(rangeParts[2]);
+            const v    = parseFloat(val);
+            if (isNaN(v))   return { label: 'Нет данных', cls: '' };
+            if (v < low)    return { label: 'Ниже нормы', cls: 'status-low' };
+            if (v > high)   return { label: 'Выше нормы', cls: 'status-high' };
+            return { label: 'В норме', cls: 'status-ok' };
+        }
+        return { label: 'Нет данных', cls: '' };
+    }
+
     function runCompare() {
         if (!selectedSlot1 || !selectedSlot2) {
-            alert('Выберите оба анализа'); return;
+            alert('Выберите оба анализа');
+            return;
         }
-        const d1 = new Date(selectedSlot1.createdAt);
-        const d2 = new Date(selectedSlot2.createdAt);
-        const diffMs = Math.abs(d2 - d1);
+
+        // Даты — используем testDate, fallback на createdAt
+        const d1 = new Date(selectedSlot1.testDate || selectedSlot1.createdAt);
+        const d2 = new Date(selectedSlot2.testDate || selectedSlot2.createdAt);
+        const diffMs   = Math.abs(d2 - d1);
         const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
-        const years = Math.floor(diffDays / 365);
-        const remDays = diffDays % 365;
+        const years    = Math.floor(diffDays / 365);
+        const remDays  = diffDays % 365;
 
         document.getElementById('period-dates').textContent =
             `${d1.toLocaleDateString('ru-RU')} → ${d2.toLocaleDateString('ru-RU')}`;
         document.getElementById('period-duration').textContent =
-            years > 0 ? `${years} год ${remDays} дней` : `${diffDays} дней`;
+            years > 0 ? `${years} г. ${remDays} дн.` : `${diffDays} дней`;
         document.getElementById('period-days').textContent = `${diffDays} дней`;
 
+        // Строим map по имени показателя для первого анализа
         const map1 = {};
         (selectedSlot1.indicators || []).forEach(i => { map1[i.name] = i; });
 
         const tbody = document.getElementById('compare-tbody');
         tbody.innerHTML = '';
 
+        let hasRows = false;
+
         (selectedSlot2.indicators || []).forEach(ind => {
             const prev = map1[ind.name];
             if (!prev) return;
-            const diff = (parseFloat(ind.value) - parseFloat(prev.value)).toFixed(2);
-            const isUp = diff > 0;
-            const arrow = isUp ? '↑' : '↓';
-            const sign = isUp ? '+' : '';
+
+            // ── ИСПРАВЛЕНИЕ: используем ind.val, а не ind.value ──
+            const valPrev = prev.val;
+            const valCurr = ind.val;
+
+            const numPrev = parseFloat(valPrev);
+            const numCurr = parseFloat(valCurr);
+            const diff    = (!isNaN(numPrev) && !isNaN(numCurr))
+                ? (numCurr - numPrev).toFixed(2)
+                : null;
+
+            const isUp   = diff !== null && parseFloat(diff) > 0;
+            const isDown = diff !== null && parseFloat(diff) < 0;
+            const isZero = diff !== null && parseFloat(diff) === 0;
+
+            const arrowHtml = diff === null
+                ? '<span style="color:#9ca3af">—</span>'
+                : isZero
+                    ? '<span style="color:#16a34a">= 0</span>'
+                    : `<span class="ct-change ${isUp ? 'ct-up' : 'ct-down'}">${isUp ? '↑ +' : '↓ '}${diff}</span>`;
+
+            const status = getStatus(valCurr, ind.reference);
+
+            const unit = ind.unit || prev.unit || '';
 
             tbody.innerHTML += `
                 <tr>
                     <td class="ct-name">${ind.name}</td>
-                    <td><span class="ct-badge">${prev.value} ${prev.unit || ''}</span></td>
-                    <td><span class="ct-badge">${ind.value} ${ind.unit || ''}</span></td>
-                    <td class="ct-status">Норма</td>
-                    <td class="ct-change ${isUp ? 'ct-up' : 'ct-down'}">${arrow} ${sign}${diff}</td>
+                    <td><span class="ct-badge">${valPrev !== undefined && valPrev !== null ? valPrev : '—'} ${unit}</span></td>
+                    <td><span class="ct-badge">${valCurr !== undefined && valCurr !== null ? valCurr : '—'} ${unit}</span></td>
+                    <td class="ct-status">
+                        ${status.cls
+                            ? `<span class="ma-status ${status.cls}">${status.label}</span>`
+                            : `<span style="color:#9ca3af">${status.label}</span>`}
+                    </td>
+                    <td>${arrowHtml}</td>
                 </tr>`;
+            hasRows = true;
         });
+
+        if (!hasRows) {
+            tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:32px;color:#9ca3af;">Общих показателей не найдено</td></tr>`;
+        }
 
         document.getElementById('compare-result').style.display = 'block';
         document.getElementById('compare-result').scrollIntoView({ behavior: 'smooth' });
