@@ -202,18 +202,31 @@
   color: #6B7280;
 }
 
+/* Найди в analyze.css (или где хранится .ma-page) и замени/добавь: */
+
 .ma-page {
+  display: flex;          /* ← добавить */
+  gap: 24px;              /* ← добавить */
   padding: 24px;
   min-height: calc(100vh - 80px);
   box-sizing: border-box;
+  align-items: flex-start; /* ← добавить */
 }
 
-/* ── Левая колонка: список анализов ── */
 .ma-sidebar {
+  width: 280px;           /* ← фиксированная ширина сайдбара */
+  flex-shrink: 0;         /* ← не сжимается */
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 20px;
+}
+
+.ma-content {
+  flex: 1;                /* ← занимает всё оставшееся пространство */
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .ma-sidebar-title {
@@ -321,15 +334,6 @@
   transform: translateY(-1px);
   color: #fff;
   text-decoration: none;
-}
-
-/* ── Правая колонка ── */
-.ma-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  min-width: 0;
 }
 
 .ma-detail-header {
