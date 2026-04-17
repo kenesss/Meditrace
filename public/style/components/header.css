@@ -378,7 +378,7 @@
   
     /* === НЕ ЗАЛОГИНЕН (landing) === */
     .landing-top-header {
-      padding: 12px 16px;
+      padding: 12px 15%;
     }
   
     .logo { font-size: 22px; }
