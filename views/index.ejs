@@ -2,12 +2,12 @@
 <html lang="ru">
 <%- include('partials/head.ejs')%>
 <body>
+    <%- include('partials/header.ejs', { activePage: 'home' }) %>
     <div class="landing-hero-root page-wrapper">
         <section class="landing-block landing-hero-panel" aria-label="Главный экран">
             <!-- <div class="decor decor-blue-circle" aria-hidden="true"></div> -->
             <div class="decor decor-gray-circle" aria-hidden="true"></div>
 
-            <%- include('partials/header.ejs', { activePage: 'home' }) %>
             <div class="landing-inner">
                 <main class="hero">
                     <h1 class="hero-title">Управляйте здоровьем<br>всей семьи</h1>

@@ -108,9 +108,9 @@
     font-weight: 600;
     padding: 9px 22px;
     border-radius: 10px;
-    background: #9810FA;
+    background: #1682d8;
 }
-.btn-register:hover { background: #8a0de0; }
+.btn-register:hover { background: #0c84e6; }
 /* Когда меню активно */
 .profile-dropdown.show {
     display: block;
