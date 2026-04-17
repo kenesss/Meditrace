@@ -1,3 +1,9 @@
+function ChangeMenu(event) {
+  var clickedBox = event.currentTarget.closest(".box");
+  var menu = clickedBox.querySelector(".box_bar #burger-menu");
+  menu.classList.toggle("open-menu");
+}
+
 // Закрыть dropdown при клике вне него (mobile UX)
 document.addEventListener('click', function (e) {
   const trigger = document.getElementById('profileTrigger');
