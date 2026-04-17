@@ -1,7 +1,4 @@
-CSS стили для Meditrace
-
-/* CSS переменные */
-:root {
+/* :root {
     --primary-purple: #a855f7;
     --primary-purple-hover: #9333ea;
     --text-dark: #111827;
@@ -11,7 +8,6 @@ CSS стили для Meditrace
     --border-color: #f3f4f6;
 }
 
-/* Базовые стили шапки для главной страницы */
 .site-header {
     background-color: var(--bg-color);
     border-bottom: 1px solid var(--border-color);
@@ -80,7 +76,6 @@ CSS стили для Meditrace
     background-color: var(--primary-purple-hover);
 }
 
-/* Скрываем кнопку бургера на десктопе */
 .mobile-menu-btn {
     display: none;
     background: none;
@@ -90,7 +85,6 @@ CSS стили для Meditrace
     padding: 4px;
 }
 
-/* Header для страницы профиля */
 .profile-header {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
@@ -178,7 +172,6 @@ CSS стили для Meditrace
     color: white;
 }
 
-/* Адаптивность для мобильных устройств */
 @media (max-width: 768px) {
     .site-header { padding: 0 16px; }
     
@@ -187,7 +180,7 @@ CSS стили для Meditrace
         align-items: center; 
     }
     
-    .sign-in-btn { display: none; } /* Скрываем текстовый логин ради экономии места */
+    .sign-in-btn { display: none; }
     
     .get-started-btn {
         padding: 8px 16px;
@@ -196,9 +189,8 @@ CSS стили для Meditrace
 
     .auth-actions { gap: 16px; }
 
-    /* Мобильное меню (выпадающее) */
     .nav-links {
-        display: none; /* Скрыто по умолчанию */
+        display: none; 
         position: absolute;
         top: 72px;
         left: 0;
@@ -212,7 +204,6 @@ CSS стили для Meditrace
         gap: 24px;
     }
 
-    /* Класс, который будет добавлять JS */
     .nav-links.show {
         display: flex;
     }
@@ -229,7 +220,6 @@ CSS стили для Meditrace
     }
 }
 
-/* Сохраняем существующие стили для авторизации */
 .auth-page {
   background-color: #f8f9fc;
   margin: 0;
@@ -241,23 +231,21 @@ CSS стили для Meditrace
   font-family: 'Montserrat', sans-serif;
 }
 
-/* Register page (new design) — scoped, no functional changes */
 .auth-register-html,
 .auth-register-html body {
   height: 100%;
-  overflow: hidden; /* disable page scroll */
+  overflow: hidden;
 }
 
-/* Login page — static (no scroll) */
 .auth-login-html,
 .auth-login-html body {
   height: 100%;
-  overflow: hidden; /* disable page scroll */
+  overflow: hidden; 
 }
 
 .auth-page.auth-register {
   background-color: #fafafa;
-  overflow: hidden; /* disable both axes */
+  overflow: hidden;
   position: relative;
 }
 
@@ -493,7 +481,6 @@ CSS стили для Meditrace
   }
 }
 
-/* Login page (new design) — scoped */
 .auth-page.auth-login {
   background-color: #fafafa;
   overflow: hidden;
@@ -515,7 +502,6 @@ CSS стили для Meditrace
   opacity: 0.4;
 }
 
-/* Positions + sizes (reduced 2x) */
 .auth-page.auth-login .shape-top-right {
   width: 175px;
   height: 175px;
@@ -972,7 +958,6 @@ CSS стили для Meditrace
   text-decoration: none;
 }
 
-/* Сохраняем существующие стили для других страниц */
 .form {
   width: 100%;
   max-width: 400px;
@@ -1010,7 +995,6 @@ CSS стили для Meditrace
   margin-top: 5px;
 }
 
-/* Стили для отображения результатов анализа */
 .change-item {
   display: flex;
   justify-content: space-between;
@@ -1108,14 +1092,12 @@ CSS стили для Meditrace
   margin: 0 0 16px 0;
 }
 
-/* Убираем ограничение высоты для контейнера результатов */
 #trendChangesList {
   max-height: none !important;
   height: auto !important;
   overflow: visible !important;
 }
 
-/* Landing — первый блок главной (дизайн Montserrat / #1682D8) */
 .landing-hero-root,
 .landing-hero-root * {
   box-sizing: border-box;
@@ -1132,7 +1114,6 @@ CSS стили для Meditrace
   background-color: #ffffff;
 }
 
-/* Каждый блок лендинга — своя область для декора (круги обрезаются по краям блока) */
 .landing-hero-root .landing-block {
   position: relative;
   width: 100%;
@@ -1140,7 +1121,6 @@ CSS стили для Meditrace
   background-color: #ffffff;
 }
 
-/* Декор привязан к своему .landing-block, скроллится вместе с секцией */
 .landing-hero-root .decor {
   position: absolute;
   border-radius: 50%;
@@ -1148,7 +1128,6 @@ CSS стили для Meditrace
   pointer-events: none;
 }
 
-/* --- Блок 1: шапка + hero + три карточки --- */
 .landing-hero-root .landing-hero-panel .decor-blue-circle {
   width: 250px;
   height: 250px;
@@ -1332,7 +1311,6 @@ CSS стили для Meditrace
   }
 }
 
-/* Landing — секции «Персональные рекомендации» и «Интерактивная аналитика» (только внутри .landing-hero-root) */
 .landing-hero-root .section-title {
   font-size: 36px;
   font-weight: 700;
@@ -1513,7 +1491,6 @@ CSS стили для Meditrace
   justify-content: center;
 }
 
-/* --- Блок 2: рекомендации — свои круги --- */
 .landing-hero-root .landing-block.recommendations .decor-gray-circle-small {
   width: 200px;
   height: 200px;
@@ -1531,7 +1508,6 @@ CSS стили для Meditrace
   transform: translateY(-50%);
 }
 
-/* --- Блок 3: аналитика — свои круги --- */
 .landing-hero-root .landing-block.landing-analytics .decor-gray-circle-large {
   width: 400px;
   height: 400px;
@@ -1571,7 +1547,6 @@ CSS стили для Meditrace
   }
 }
 
-/* Landing: макет телефона и SVG-график (только внутри .landing-hero-root) */
 .landing-hero-root .phone-mockup {
   width: 280px;
   height: 560px;
@@ -1725,7 +1700,6 @@ CSS стили для Meditrace
   font-family: 'Montserrat', sans-serif;
 }
 
-/* Landing: тарифы, CTA, футер */
 .landing-hero-root .landing-pricing {
   padding: 80px 0;
   background-color: #ffffff;
@@ -1987,4 +1961,4 @@ CSS стили для Meditrace
     flex-direction: column;
     gap: 10px;
   }
-}
+} */
