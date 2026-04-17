@@ -255,3 +255,148 @@
     from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
 }
+/* ── МОБИЛЬНАЯ АДАПТАЦИЯ ── */
+
+@media (max-width: 768px) {
+
+    /* === ЗАЛОГИНЕН === */
+    .head-container {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0;
+      gap: 0;
+    }
+  
+    /* Верхняя строка: лого + аватар */
+    .head-container > .logo {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid #F3F4F6;
+      font-size: 22px;
+    }
+  
+    /* Прячем .logo как ссылку — переносим в новую строку через псевдо */
+    .logo { font-size: 22px; }
+  
+    /* Строка: лого слева, профиль справа */
+    .head-container {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      grid-template-areas:
+        "logo profile"
+        "nav  nav";
+      padding: 0;
+      align-items: center;
+    }
+  
+    .head-container > a.logo {
+      grid-area: logo;
+      padding: 12px 16px;
+      font-size: 22px;
+      border-bottom: 1px solid #F3F4F6;
+    }
+  
+    .head-profile {
+      grid-area: profile;
+      min-width: unset;
+      padding: 8px 16px 8px 0;
+      border-bottom: 1px solid #F3F4F6;
+    }
+  
+    .head-logo-log {
+      grid-area: nav;
+      flex: unset;
+      padding: 10px 16px;
+      border-bottom: none;
+    }
+  
+    .head-logo-log h1 {
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+  
+    .head-logo-log p {
+      font-size: 13px;
+    }
+  
+    /* Профиль-триггер: только аватар, скрыть имя и стрелку */
+    .profile-trigger {
+      padding: 6px;
+      border-radius: 50%;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+    }
+  
+    .profile-trigger-info,
+    .chevron-icon {
+      display: none;
+    }
+  
+    .profile-avatar-circle {
+      width: 34px;
+      height: 34px;
+      font-size: 14px;
+    }
+  
+    /* Dropdown — полноширинный снизу от триггера */
+    .profile-dropdown {
+      position: fixed;
+      top: auto;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      border-radius: 20px 20px 0 0;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+      padding: 16px 0 24px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+  
+    .dropdown-user {
+      padding: 14px 20px;
+    }
+  
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      font-size: 17px;
+      margin-right: 12px;
+    }
+  
+    .user-name { font-size: 16px; }
+    .user-role { font-size: 13px; }
+  
+    .manage-link {
+      font-size: 15px;
+      padding: 14px 20px;
+    }
+  
+    /* === НЕ ЗАЛОГИНЕН (landing) === */
+    .landing-top-header {
+      padding: 12px 16px;
+    }
+  
+    .logo { font-size: 22px; }
+  
+    .link-login {
+      font-size: 13px;
+      padding: 7px 14px;
+    }
+  
+    .btn-register {
+      font-size: 13px;
+      padding: 7px 14px;
+    }
+  }
+  
+  /* Очень маленькие экраны */
+  @media (max-width: 360px) {
+    .link-login { display: none; } /* Убрать "Войти", оставить только кнопку */
+  
+    .head-logo-log h1 { font-size: 16px; }
+  }
