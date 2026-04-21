@@ -10,7 +10,7 @@
 }
 
 :root {
-  --blue:        #1682D8;
+  --blue:        #0B81DA;
   --blue-dark:   #1270BC;
   --blue-light:  #E8F3FC;
   --text-dark:   #0F1117;
@@ -206,12 +206,6 @@ a { text-decoration: none; color: inherit; }
    =========================== */
 .recommendations {
   background: #fff;
-}
-
-.rec-image-wrapper {
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: var(--shadow-md);
 }
 
 .rec-image-wrapper img {
@@ -522,7 +516,7 @@ a { text-decoration: none; color: inherit; }
    CTA BLUE SECTION
    =========================== */
 .landing-cta-blue {
-  background: linear-gradient(135deg, #1271BC 0%, #1682D8 55%, #00B4D8 100%);
+  background: linear-gradient(135deg, #0B81DA 100%, #0F4F7F 100%, #0B81DA 100%);
   color: #fff;
   padding: 110px 24px;
 }
