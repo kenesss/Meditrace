@@ -107,7 +107,7 @@
     font-size: 15px;
     font-weight: 600;
     padding: 1rem 2.25rem;
-    border-radius: 10px;
+    border-radius: 50px;
     background: #1682d8;
 }
 .btn-register:hover { background: #0c84e6; }
