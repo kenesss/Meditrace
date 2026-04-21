@@ -246,6 +246,9 @@
 .profile-trigger svg{
     margin-left: 10px;
 }
+.head-container-menu{
+  display: flex;
+}
 
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-10px); }
