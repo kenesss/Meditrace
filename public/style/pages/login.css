@@ -12,12 +12,6 @@
     font-family: 'Montserrat', sans-serif;
   }
   
-  .auth-login-html,
-  .auth-login-html body {
-    height: 100%;
-    overflow: hidden;
-  }
-  
   /* =====================
    AUTH LOGIN
    ===================== */

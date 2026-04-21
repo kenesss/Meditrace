@@ -234,10 +234,6 @@ a { text-decoration: none; color: inherit; }
 /* ===========================
    ANALYTICS SECTION
    =========================== */
-.landing-analytics {
-  background: #F9FAFB;
-}
-
 .analytics-header {
   margin-bottom: 48px;
 }

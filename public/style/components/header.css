@@ -277,7 +277,7 @@
     .head-container > a.logo img {
       height: 30px;
       width: auto;
-      max-width: 110px;
+      max-width: 160px;
       object-fit: contain;
       display: block;
     }
@@ -367,13 +367,13 @@
     .logo { font-size: 22px; }
   
     .link-login {
-      font-size: 13px;
-      padding: 7px 14px;
+      font-size: 15px;
+      padding: 10px 17px;
     }
   
     .btn-register {
-      font-size: 13px;
-      padding: 7px 14px;
+      font-size: 15px;
+      padding: 10px 17px;
     }
   }
   

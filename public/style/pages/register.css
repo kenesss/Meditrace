@@ -1,13 +1,5 @@
-.auth-register-html,
-.auth-register-html body {
-  height: 100%;
-  overflow: hidden;
-}
-
 .auth-page.auth-register {
   background-color: #fafafa;
-  overflow: hidden;
-  position: relative;
 }
 
 .auth-page.auth-register .bg-shape {
