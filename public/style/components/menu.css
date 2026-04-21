@@ -128,7 +128,7 @@
           transform: translateX(-110%);
           transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
           box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
-          overflow-y: auto;
+          /* overflow-y: auto; */
           padding-top: 32px;
       }
 
