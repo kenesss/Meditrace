@@ -302,7 +302,7 @@ a { text-decoration: none; color: inherit; }
 
 .stat-value {
   font-size: 1.75rem;
-  font-weight: 800;
+  font-weight: 500;
   letter-spacing: -0.02em;
   color: var(--text-dark);
   margin-bottom: 16px;
@@ -334,7 +334,7 @@ a { text-decoration: none; color: inherit; }
 
 .chart-title {
   font-size: 1.75rem;
-  font-weight: 800;
+  font-weight: 500;
 }
 
 .chart-tabs {
@@ -521,7 +521,7 @@ a { text-decoration: none; color: inherit; }
 .landing-cta-blue {
   background: linear-gradient(135deg, #0B81DA 100%, #0F4F7F 100%, #0B81DA 100%);
   color: #fff;
-  padding: 110px 24px;
+  padding: 170px 24px;
 }
 
 .cta-title {
