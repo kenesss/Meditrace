@@ -17,8 +17,7 @@
    ===================== */
   .auth-page.auth-login {
     background-color: #fafafa;
-    overflow: hidden;
-    position: relative;
+
   }
   
   .auth-page.auth-login .bg-shape {
