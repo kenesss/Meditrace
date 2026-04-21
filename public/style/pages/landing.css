@@ -38,7 +38,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .section-subtitle {
-  font-size: 1.0625rem;
+  font-size: 1.5rem;
   color: var(--text-mid);
   margin-top: 0.75rem;
   line-height: 1.65;
@@ -109,7 +109,6 @@ a { text-decoration: none; color: inherit; }
 
 .hero {
   text-align: center;
-  max-width: 700px;
   margin: 0 auto;
 }
 
