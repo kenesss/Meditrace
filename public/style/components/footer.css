@@ -1,4 +1,7 @@
-/* ===== FOOTER ===== */
+.footer-container{
+    padding: 0 15%;
+}
+
 .landing-site-footer {
     background-color: #0d1321;
     color: #fff;
