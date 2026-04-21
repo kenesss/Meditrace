@@ -2,7 +2,7 @@
   <% if(user._id && user.full_name.length> 0){
     %>
     <div class="head-container">
-      <div>
+      <div class="head-container-menu">
         <a href="/" class="logo"><img src="/public/img/icon/logo-2.png" alt=""></a>
         <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Открыть меню">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"
@@ -101,6 +101,11 @@
                   blue: 'linear-gradient(135deg,#3B82F6,#60A5FA)' , green: 'linear-gradient(135deg,#34D399,#6EE7B7)' };
                   %>
                   <div class="dropdown-user" onclick="switchProfile('<%= m._id %>')" style="cursor:pointer">
+
+                    <div class="user-avatar" style="background: <%= avatarColor %>;">
+                      <%= m.full_name ? m.full_name[0].toUpperCase() : '?' %>
+                    </div>
+
                     <div class="user-info">
                       <span class="user-name">
                         <%= m.full_name %>
