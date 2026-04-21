@@ -1,4 +1,4 @@
-.main-index {
+/* .main-index {
     display: flex;
     justify-content: space-between;
     background-color: #F6F2FB;
@@ -24,7 +24,6 @@
     letter-spacing: 0%;
     margin-bottom: 20px;
     color: #000;
-    /* обычный черный для первой части */
 }
 
 .main-right h1 .gradient {
@@ -689,4 +688,4 @@
 .recent-analyses-head{
     display: flex;
     justify-content: space-between;
-}
+} */
