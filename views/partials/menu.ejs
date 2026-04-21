@@ -1,4 +1,15 @@
-<nav class="menu">
+<button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Открыть меню">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+      stroke="white" stroke-width="2.5" stroke-linecap="round">
+      <line x1="3" y1="6" x2="21" y2="6"/>
+      <line x1="3" y1="12" x2="21" y2="12"/>
+      <line x1="3" y1="18" x2="21" y2="18"/>
+  </svg>
+</button>
+
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+<nav class="menu" id="mobileMenu">
 
   <a href="/profile/<%= user._id %>" class="menu-item <%= activePage === 'home' ? 'active' : '' %>">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
