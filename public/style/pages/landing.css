@@ -334,7 +334,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .chart-title {
-  font-size: 1.125rem;
+  font-size: 1.75rem;
   font-weight: 800;
 }
 
@@ -346,7 +346,7 @@ a { text-decoration: none; color: inherit; }
 
 .tab {
   font-family: var(--font);
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 600;
   padding: 7px 16px;
   border-radius: 50px;
