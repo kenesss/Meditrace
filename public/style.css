@@ -502,7 +502,7 @@
 /* =====================
  LANDING
  ===================== */
-.landing-hero-root,
+/* .landing-hero-root,
 .landing-hero-root.page-wrapper {
   position: relative;
   width: 100%;
@@ -514,12 +514,12 @@
   background-color: #ffffff;
 }
 
-/* .landing-hero-root .landing-block {
+.landing-hero-root .landing-block {
   position: relative;
   width: 100%;
   overflow: hidden;
   background-color: #ffffff;
-} */
+}
 
 .landing-hero-root .decor {
   position: absolute;
@@ -877,9 +877,6 @@
   top: auto;
 }
 
-/* =====================
- PHONE MOCKUP
- ===================== */
 .landing-hero-root .phone-mockup {
   width: 280px;
   height: 560px;
@@ -1031,9 +1028,6 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-/* =====================
- PRICING
- ===================== */
 .landing-hero-root .landing-pricing {
   padding: 80px 0;
   background-color: #ffffff;
@@ -1171,9 +1165,6 @@
   box-sizing: border-box;
 }
 
-/* =====================
- CTA BLUE
- ===================== */
 .landing-hero-root .landing-cta-blue {
   background: linear-gradient(135deg, #1682d8 0%, #0b5fa5 100%);
   color: white;
@@ -1216,9 +1207,6 @@
 
 .landing-hero-root .btn-white:hover { opacity: 0.95; }
 
-/* =====================
- FOOTER
- ===================== */
 .landing-hero-root .landing-site-footer {
   background-color: #0f172a;
   color: #9ca3af;
@@ -1276,9 +1264,6 @@
   gap: 15px;
 }
 
-/* =====================
- RESPONSIVE
- ===================== */
 @media (max-width: 800px) {
   .landing-hero-root .landing-hero-features {
     grid-template-columns: 1fr;
@@ -1316,7 +1301,6 @@
 }
 
 @media (max-width: 768px) {
-  /* Site Header */
   .site-header { padding: 0 16px; }
 
   .header-container { height: 60px; }
@@ -1358,7 +1342,6 @@
     padding: 4px 0;
   }
 
-  /* Profile Header */
   .profile-header .header-container {
     flex-direction: column;
     gap: 1.5rem;
@@ -1370,7 +1353,6 @@
     justify-content: center;
   }
 
-  /* Landing Hero */
   .landing-hero-root .hero {
     margin-top: 48px;
     margin-bottom: 56px;
@@ -1491,7 +1473,6 @@
 
   .landing-hero-root .svg-chart-container { height: 220px; }
 
-  /* Pricing */
   .landing-hero-root .landing-pricing { padding: 56px 0; }
 
   .landing-hero-root .pricing-grid {
@@ -1518,7 +1499,6 @@
     margin-bottom: 18px;
   }
 
-  /* CTA Blue */
   .landing-hero-root .landing-cta-blue { padding: 64px 0; }
 
   .landing-hero-root .landing-cta-blue .cta-title {
@@ -1544,7 +1524,6 @@
     font-size: 15px;
   }
 
-  /* Footer */
   .landing-hero-root .landing-site-footer { padding: 56px 0 32px; }
 
   .landing-hero-root .landing-site-footer .footer-bottom {
@@ -1554,7 +1533,6 @@
     margin-top: 40px;
   }
 
-  /* Auth pages generic */
   .auth-page .page-wrapper {
     flex-direction: column;
     padding: 24px 20px;
@@ -1573,10 +1551,8 @@
     border-radius: 16px;
   }
 
-  /* Decorations */
   .landing-hero-root .decor { display: none; }
 
-  /* Landing inner padding */
   .landing-hero-root .landing-inner { padding: 0 16px; }
 
   .get-started-btn {
@@ -1595,4 +1571,4 @@
     font-size: 0.8rem;
     padding: 7px 12px;
   }
-}
+} */
