@@ -1,8 +1,3 @@
-/* ════════════════════════════════════════
-   profile.css — Meditrace Profile Page
-   ════════════════════════════════════════ */
-
-/* ── Layout ── */
 .meditrace-wrapper {
     display: flex;
     min-height: 100vh;
