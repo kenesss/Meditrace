@@ -105,100 +105,6 @@
   padding: 1rem 2.25rem;
 }
 
-
-/* ===========================
-   LAYOUT WRAPPERS
-   =========================== */
-.landing-block {
-  padding: 100px 24px;
-}
-
-.landing-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.landing-inner--split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: center;
-}
-
-
-/* ===========================
-   HEADER / NAV
-   =========================== */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: rgba(255,255,255,.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 24px;
-}
-
-.header-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  height: 68px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-weight: 800;
-  font-size: 1.125rem;
-  color: var(--text-dark);
-}
-
-.logo svg { flex-shrink: 0; }
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.btn-login {
-  font-weight: 700;
-  color: var(--blue);
-  padding: 0.625rem 1.25rem;
-  border-radius: 50px;
-  font-size: 0.9375rem;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: background .18s;
-  font-family: var(--font);
-}
-.btn-login:hover { background: var(--blue-light); }
-
-.btn-register {
-  background: var(--blue);
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.9375rem;
-  padding: 0.625rem 1.375rem;
-  border-radius: 50px;
-  border: none;
-  cursor: pointer;
-  font-family: var(--font);
-  transition: background .18s, box-shadow .18s;
-}
-.btn-register:hover {
-  background: var(--blue-dark);
-  box-shadow: 0 4px 14px rgba(22,130,216,.4);
-}
-
-
 /* ===========================
    HERO SECTION
    =========================== */
@@ -215,10 +121,8 @@
 
 .hero-title {
   font-size: clamp(2.5rem, 5.5vw, 3.75rem);
-  font-weight: 900;
+  font-weight: 500;
   line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: var(--text-dark);
 }
 
 .hero-subtitle {
