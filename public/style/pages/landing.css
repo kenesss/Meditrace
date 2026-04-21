@@ -34,11 +34,7 @@ a { text-decoration: none; color: inherit; }
 .text-center { text-align: center; }
 
 .section-title {
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 800;
-  line-height: 1.15;
-  color: var(--text-dark);
-  letter-spacing: -0.02em;
+  font-size: 52px;
 }
 
 .section-subtitle {
@@ -152,7 +148,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .card-number {
-  font-size: 2rem;
+  font-size: 5rem;
   font-weight: 900;
   opacity: 0.9;
   line-height: 1;
@@ -161,8 +157,8 @@ a { text-decoration: none; color: inherit; }
 }
 
 .card-icon {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   background: rgba(255,255,255,.18);
   border-radius: 10px;
   display: flex;
@@ -173,14 +169,14 @@ a { text-decoration: none; color: inherit; }
 .card-icon svg { stroke: #fff !important; }
 
 .card-title {
-  font-size: 1.125rem;
-  font-weight: 800;
+  font-size: 2rem;
+  font-weight: 600;
   line-height: 1.3;
   margin-bottom: 10px;
 }
 
 .card-text {
-  font-size: 0.875rem;
+  font-size: 1.1rem;
   opacity: 0.85;
   line-height: 1.55;
 }
@@ -312,7 +308,7 @@ a { text-decoration: none; color: inherit; }
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--text-dark);
-  margin-bottom: 6px;
+  margin-bottom: 16px;
 }
 
 .stat-label {

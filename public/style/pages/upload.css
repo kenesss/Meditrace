@@ -412,12 +412,6 @@
     margin-top: 20px;
 }
 
-.section-title {
-    margin: 0 0 20px 0;
-    font-size: 16px;
-    font-weight: 700;
-}
-
 .change-item {
     display: flex;
     justify-content: space-between;
