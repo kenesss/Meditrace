@@ -1,59 +1,74 @@
 <!DOCTYPE html>
 <html lang="ru">
 <%- include('partials/head.ejs')%>
-<body>
-    <%- include('partials/header.ejs', { activePage: 'home' }) %>
-    <div class="landing-hero-root page-wrapper">
-        <section class="landing-block landing-hero-panel" aria-label="Главный экран">
-            <!-- <div class="decor decor-blue-circle" aria-hidden="true"></div> -->
-            <!-- <div class="decor decor-gray-circle" aria-hidden="true"></div> -->
 
-            <div class="landing-inner">
-                <main class="hero">
-                    <h1 class="hero-title">Управляйте здоровьем<br>всей семьи</h1>
-                    <p class="hero-subtitle">Храните медицинские документы в одном месте, отслеживайте<br>показатели здоровья и получайте рекомендации от AI-ассистента</p>
-                    <a href="/regester" class="btn btn-primary btn-hero-cta">Начать бесплатно &rarr;</a>
-                </main>
+    <body>
+        <%- include('partials/header.ejs', { activePage: 'home' }) %>
+            <section class="landing-block landing-hero-panel" aria-label="Главный экран">
+                <!-- <div class="decor decor-blue-circle" aria-hidden="true"></div> -->
+                <!-- <div class="decor decor-gray-circle" aria-hidden="true"></div> -->
 
-                <section class="landing-hero-features" aria-label="Возможности">
-                    <div class="card">
-                        <div class="card-number">01</div>
-                        <div class="card-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1682D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                <div class="landing-inner">
+                    <main class="hero">
+                        <h1 class="hero-title">Управляйте здоровьем<br>всей семьи</h1>
+                        <p class="hero-subtitle">Храните медицинские документы в одном месте, отслеживайте<br>показатели
+                            здоровья и получайте рекомендации от AI-ассистента</p>
+                        <a href="/regester" class="btn btn-primary btn-hero-cta">Начать бесплатно &rarr;</a>
+                    </main>
+
+                    <section class="landing-hero-features" aria-label="Возможности">
+                        <div class="card">
+                            <div class="card-number">01</div>
+                            <div class="card-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1682D8"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="17 8 12 3 7 8"></polyline>
+                                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Анализ<br>результатов</h3>
+                            <p class="card-text">AI-ассистент поможет<br>разобраться в лабораторных<br>показателях</p>
                         </div>
-                        <h3 class="card-title">Анализ<br>результатов</h3>
-                        <p class="card-text">AI-ассистент поможет<br>разобраться в лабораторных<br>показателях</p>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-number">02</div>
-                        <div class="card-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1682D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        <div class="card">
+                            <div class="card-number">02</div>
+                            <div class="card-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1682D8"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Отслеживание<br>прогресса</h3>
+                            <p class="card-text">Ставьте цели и следите за<br>динамикой показателей</p>
                         </div>
-                        <h3 class="card-title">Отслеживание<br>прогресса</h3>
-                        <p class="card-text">Ставьте цели и следите за<br>динамикой показателей</p>
-                    </div>
 
-                    <div class="card">
-                        <div class="card-number">03</div>
-                        <div class="card-icon">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1682D8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                        <div class="card">
+                            <div class="card-number">03</div>
+                            <div class="card-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1682D8"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="9" cy="7" r="4"></circle>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                </svg>
+                            </div>
+                            <h3 class="card-title">Семейный<br>профиль</h3>
+                            <p class="card-text">Управляйте здоровьем всех<br>членов семьи в одном<br>приложении</p>
                         </div>
-                        <h3 class="card-title">Семейный<br>профиль</h3>
-                        <p class="card-text">Управляйте здоровьем всех<br>членов семьи в одном<br>приложении</p>
-                    </div>
-                </section>
-            </div>
-        </section>
+                    </section>
+                </div>
+            </section>
 
-        <section class="landing-block recommendations" aria-label="Персональные рекомендации">
-            <!-- <div class="decor decor-gray-circle-small" aria-hidden="true"></div>
+            <section class="landing-block recommendations" aria-label="Персональные рекомендации">
+                <!-- <div class="decor decor-gray-circle-small" aria-hidden="true"></div>
             <div class="decor decor-blue-circle-small" aria-hidden="true"></div> -->
 
-            <div class="landing-inner landing-inner--split">
-                <div class="rec-image-wrapper">
-                    <img src="/public/img/icon/mockup.jpg" alt="">
-                    <!-- <div class="phone-mockup" role="img" aria-label="Интерфейс приложения Meditrace">
+                <div class="landing-inner landing-inner--split">
+                    <div class="rec-image-wrapper">
+                        <img src="/public/img/icon/mockup.jpg" alt="">
+                        <!-- <div class="phone-mockup" role="img" aria-label="Интерфейс приложения Meditrace">
                         <div class="phone-inner">
                             <div class="status-bar">
                                 <span class="time">9:41</span>
@@ -93,200 +108,231 @@
                             </div>
                         </div> 
                     </div> -->
-                </div>
+                    </div>
 
-                <div class="rec-content">
-                    <h2 class="section-title">Персональные<br>рекомендации</h2>
-                    <p class="section-text">Вы почувствовали постоянную усталость. С помощью Meditrace вы выяснили, что у вас дефицит витамина Е. Теперь вы контролируете уровень витаминов с Meditrace и чувствуете себя полными сил и энергии.</p>
-                    <a href="/regester" class="btn btn-primary">Начать бесплатно &rarr;</a>
+                    <div class="rec-content">
+                        <h2 class="section-title">Персональные<br>рекомендации</h2>
+                        <p class="section-text">Вы почувствовали постоянную усталость. С помощью Meditrace вы выяснили,
+                            что у вас дефицит витамина Е. Теперь вы контролируете уровень витаминов с Meditrace и
+                            чувствуете себя полными сил и энергии.</p>
+                        <a href="/regester" class="btn btn-primary">Начать бесплатно &rarr;</a>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="landing-block landing-analytics" aria-label="Интерактивная аналитика здоровья">
-            <!-- <div class="decor decor-gray-circle-large" aria-hidden="true"></div>
+            <section class="landing-block landing-analytics" aria-label="Интерактивная аналитика здоровья">
+                <!-- <div class="decor decor-gray-circle-large" aria-hidden="true"></div>
             <div class="decor decor-blue-circle-bottom" aria-hidden="true"></div> -->
 
-            <div class="landing-inner">
-                <div class="analytics-header">
-                    <h2 class="section-title text-center">Интерактивная аналитика здоровья</h2>
-                    <p class="section-subtitle text-center">Визуализируйте свои показатели здоровья с помощью<br>мощных и понятных графиков</p>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-top">
-                            <div class="stat-icon icon-red">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
-                            </div>
-                            <div class="stat-badge badge-green">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>
-                                -2.5%
-                            </div>
-                        </div>
-                        <div class="stat-value">117/77</div>
-                        <div class="stat-label">Артериальное давление</div>
+                <div class="landing-inner">
+                    <div class="analytics-header">
+                        <h2 class="section-title text-center">Интерактивная аналитика здоровья</h2>
+                        <p class="section-subtitle text-center">Визуализируйте свои показатели здоровья с
+                            помощью<br>мощных и понятных графиков</p>
                     </div>
 
-                    <div class="stat-card">
-                        <div class="stat-top">
-                            <div class="stat-icon icon-blue">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-top">
+                                <div class="stat-icon icon-red">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="stat-badge badge-green">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+                                        <polyline points="17 18 23 18 23 12"></polyline>
+                                    </svg>
+                                    -2.5%
+                                </div>
                             </div>
-                            <div class="stat-badge badge-green">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>
-                                -12.5%
-                            </div>
+                            <div class="stat-value">117/77</div>
+                            <div class="stat-label">Артериальное давление</div>
                         </div>
-                        <div class="stat-value">175 mg/dL</div>
-                        <div class="stat-label">Холестерин</div>
-                    </div>
 
-                    <div class="stat-card">
-                        <div class="stat-top">
-                            <div class="stat-icon icon-purple">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                        <div class="stat-card">
+                            <div class="stat-top">
+                                <div class="stat-icon icon-blue">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#3b82f6"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                                    </svg>
+                                </div>
+                                <div class="stat-badge badge-green">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline>
+                                        <polyline points="17 18 23 18 23 12"></polyline>
+                                    </svg>
+                                    -12.5%
+                                </div>
                             </div>
-                            <div class="stat-badge badge-green">
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                                Норма
+                            <div class="stat-value">175 mg/dL</div>
+                            <div class="stat-label">Холестерин</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-top">
+                                <div class="stat-icon icon-purple">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="stat-badge badge-green">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                        <polyline points="17 6 23 6 23 12"></polyline>
+                                    </svg>
+                                    Норма
+                                </div>
                             </div>
-                        </div>
-                        <div class="stat-value">89 mg/dL</div>
-                        <div class="stat-label">Глюкоза</div>
-                    </div>
-                </div>
-
-                <div class="chart-card">
-                    <div class="chart-header">
-                        <h3 class="chart-title">Тренды здоровья</h3>
-                        <div class="chart-tabs">
-                            <button type="button" class="tab active">Артериальное давление</button>
-                            <button type="button" class="tab">Холестерин</button>
-                            <button type="button" class="tab">Глюкоза</button>
-                        </div>
-                    </div>
-                    <div class="chart-body">
-                        <div class="svg-chart-container">
-                            <svg viewBox="0 0 800 300" width="100%" height="100%" preserveAspectRatio="none" aria-label="График трендов здоровья" role="img">
-                                <line x1="40" y1="20" x2="780" y2="20" stroke="#f3f4f6" stroke-width="2" />
-                                <line x1="40" y1="85" x2="780" y2="85" stroke="#f3f4f6" stroke-width="2" />
-                                <line x1="40" y1="150" x2="780" y2="150" stroke="#f3f4f6" stroke-width="2" />
-                                <line x1="40" y1="215" x2="780" y2="215" stroke="#f3f4f6" stroke-width="2" />
-                                <line x1="40" y1="280" x2="780" y2="280" stroke="#e5e7eb" stroke-width="2" />
-
-                                <line x1="40" y1="20" x2="40" y2="280" stroke="#e5e7eb" stroke-width="2" />
-
-                                <text x="30" y="25" fill="#9ca3af" font-size="12" text-anchor="end">140</text>
-                                <text x="30" y="90" fill="#9ca3af" font-size="12" text-anchor="end">105</text>
-                                <text x="30" y="155" fill="#9ca3af" font-size="12" text-anchor="end">70</text>
-                                <text x="30" y="220" fill="#9ca3af" font-size="12" text-anchor="end">35</text>
-                                <text x="30" y="285" fill="#9ca3af" font-size="12" text-anchor="end">0</text>
-
-                                <text x="40" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">Jun</text>
-                                <text x="188" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">Feb</text>
-                                <text x="336" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">Mar</text>
-                                <text x="484" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">Apr</text>
-                                <text x="632" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">May</text>
-                                <text x="780" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">Jun</text>
-
-                                <path d="M 40 60 L 188 65 L 336 60 L 484 65 L 632 60 L 780 65" fill="none" stroke="#1682D8" stroke-width="3" />
-                                <circle cx="40" cy="60" r="5" fill="#1682D8" />
-                                <circle cx="188" cy="65" r="5" fill="#1682D8" />
-                                <circle cx="336" cy="60" r="5" fill="#1682D8" />
-                                <circle cx="484" cy="65" r="5" fill="#1682D8" />
-                                <circle cx="632" cy="60" r="5" fill="#1682D8" />
-                                <circle cx="780" cy="65" r="5" fill="#1682D8" />
-
-                                <path d="M 40 160 L 188 165 L 336 155 L 484 160 L 632 155 L 780 165" fill="none" stroke="#e5e7eb" stroke-width="3" />
-                                <circle cx="40" cy="160" r="5" fill="#e5e7eb" />
-                                <circle cx="188" cy="165" r="5" fill="#e5e7eb" />
-                                <circle cx="336" cy="155" r="5" fill="#e5e7eb" />
-                                <circle cx="484" cy="160" r="5" fill="#e5e7eb" />
-                                <circle cx="632" cy="155" r="5" fill="#e5e7eb" />
-                                <circle cx="780" cy="165" r="5" fill="#e5e7eb" />
-                            </svg>
+                            <div class="stat-value">89 mg/dL</div>
+                            <div class="stat-label">Глюкоза</div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <section class="landing-block landing-pricing" aria-label="Управление подпиской">
-            <div class="landing-inner">
-                <div class="pricing-header">
-                    <h2 class="section-title text-center">Управление подпиской</h2>
-                    <p class="section-subtitle text-center">Выберите подходящий для вас план. Все планы включают 30-дневный бесплатный пробный период.</p>
-                </div>
+                    <div class="chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Тренды здоровья</h3>
+                            <div class="chart-tabs">
+                                <button type="button" class="tab active">Артериальное давление</button>
+                                <button type="button" class="tab">Холестерин</button>
+                                <button type="button" class="tab">Глюкоза</button>
+                            </div>
+                        </div>
+                        <div class="chart-body">
+                            <div class="svg-chart-container">
+                                <svg viewBox="0 0 800 300" width="100%" height="100%" preserveAspectRatio="none"
+                                    aria-label="График трендов здоровья" role="img">
+                                    <line x1="40" y1="20" x2="780" y2="20" stroke="#f3f4f6" stroke-width="2" />
+                                    <line x1="40" y1="85" x2="780" y2="85" stroke="#f3f4f6" stroke-width="2" />
+                                    <line x1="40" y1="150" x2="780" y2="150" stroke="#f3f4f6" stroke-width="2" />
+                                    <line x1="40" y1="215" x2="780" y2="215" stroke="#f3f4f6" stroke-width="2" />
+                                    <line x1="40" y1="280" x2="780" y2="280" stroke="#e5e7eb" stroke-width="2" />
 
-                <div class="pricing-grid">
-                    <div class="price-card">
-                        <h3 class="price-name">Персональный</h3>
-                        <p class="price-desc">Идеально подходит для людей, которые управляют своими личными медицинскими данными.</p>
-                        <div class="price-amount">$0<span>/месяц</span></div>
-                        <a href="/regester" class="btn btn-outline">Начать бесплатно</a>
-                        <ul class="price-features">
-                            <li class="check">Управление своими анализами</li>
-                            <li class="check">До 2 целей</li>
-                            <li class="check">Персональные советы</li>
-                            <li class="check">Графики</li>
-                            <li class="cross">Сравнение анализов между пользователями</li>
-                            <li class="cross">Расширенные графики и советы</li>
-                        </ul>
-                    </div>
+                                    <line x1="40" y1="20" x2="40" y2="280" stroke="#e5e7eb" stroke-width="2" />
 
-                    <div class="price-card featured">
-                        <div class="badge-popular">Самый популярный</div>
-                        <h3 class="price-name">Про</h3>
-                        <p class="price-desc">Для продвинутых пользователей, которые хотят расширенные функции и подробные инсайты.</p>
-                        <div class="price-amount">$9.99<span>/месяц</span></div>
-                        <a href="/regester" class="btn btn-primary">Начать бесплатно</a>
-                        <ul class="price-features">
-                            <li class="check">Всё из Персонального</li>
-                            <li class="check">До 5 целей</li>
-                            <li class="check">Расширенные рекомендации</li>
-                            <li class="check">+ 1 человек</li>
-                            <li class="check">+ история до 2 лет</li>
-                            <li class="check">Сравнение анализов между пользователями</li>
-                            <li class="check">Расширенные графики и советы</li>
-                            <li class="cross">Для всей семьи, индивидуальные советы каждому</li>
-                            <li class="cross">Отчёты для всех членов семьи, таблицы и графики</li>
-                        </ul>
-                    </div>
+                                    <text x="30" y="25" fill="#9ca3af" font-size="12" text-anchor="end">140</text>
+                                    <text x="30" y="90" fill="#9ca3af" font-size="12" text-anchor="end">105</text>
+                                    <text x="30" y="155" fill="#9ca3af" font-size="12" text-anchor="end">70</text>
+                                    <text x="30" y="220" fill="#9ca3af" font-size="12" text-anchor="end">35</text>
+                                    <text x="30" y="285" fill="#9ca3af" font-size="12" text-anchor="end">0</text>
 
-                    <div class="price-card">
-                        <h3 class="price-name">Семейный</h3>
-                        <p class="price-desc">Полное управление здоровьем для всей вашей семьи.</p>
-                        <div class="price-amount">$19.99<span>/месяц</span></div>
-                        <a href="/regester" class="btn btn-outline">Начать бесплатно</a>
-                        <ul class="price-features">
-                            <li class="check">Всё из Про</li>
-                            <li class="check">Для всей семьи, индивидуальные советы каждому</li>
-                            <li class="check">До 15 целей на всех членов семьи</li>
-                            <li class="check">До 6 человек (в сумме до 7)</li>
-                            <li class="check">Отчёты для всех членов семьи, таблицы и графики</li>
-                            <li class="check">Напоминания и рекомендации для всей семьи</li>
-                        </ul>
+                                    <text x="40" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">Jun</text>
+                                    <text x="188" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">Feb</text>
+                                    <text x="336" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">Mar</text>
+                                    <text x="484" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">Apr</text>
+                                    <text x="632" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">May</text>
+                                    <text x="780" y="298" fill="#9ca3af" font-size="12" text-anchor="middle">Jun</text>
+
+                                    <path d="M 40 60 L 188 65 L 336 60 L 484 65 L 632 60 L 780 65" fill="none"
+                                        stroke="#1682D8" stroke-width="3" />
+                                    <circle cx="40" cy="60" r="5" fill="#1682D8" />
+                                    <circle cx="188" cy="65" r="5" fill="#1682D8" />
+                                    <circle cx="336" cy="60" r="5" fill="#1682D8" />
+                                    <circle cx="484" cy="65" r="5" fill="#1682D8" />
+                                    <circle cx="632" cy="60" r="5" fill="#1682D8" />
+                                    <circle cx="780" cy="65" r="5" fill="#1682D8" />
+
+                                    <path d="M 40 160 L 188 165 L 336 155 L 484 160 L 632 155 L 780 165" fill="none"
+                                        stroke="#e5e7eb" stroke-width="3" />
+                                    <circle cx="40" cy="160" r="5" fill="#e5e7eb" />
+                                    <circle cx="188" cy="165" r="5" fill="#e5e7eb" />
+                                    <circle cx="336" cy="155" r="5" fill="#e5e7eb" />
+                                    <circle cx="484" cy="160" r="5" fill="#e5e7eb" />
+                                    <circle cx="632" cy="155" r="5" fill="#e5e7eb" />
+                                    <circle cx="780" cy="165" r="5" fill="#e5e7eb" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section class="landing-block landing-cta-blue cta-blue" aria-label="Регистрация">
-            <div class="landing-inner text-center">
-                <h2 class="cta-title">Хотите взять своё здоровье под контроль?</h2>
-                <p class="cta-text">Безопасное и удобное хранение и анализ медицинских данных с Meditrace.</p>
-                <div class="cta-badges">
-                    <span>✓ Бесплатный 30-дневный пробный период</span>
-                    <span>✓ Отмена в любой момент</span>
-                    <span>✓ Мгновенная настройка</span>
+            <section class="landing-block landing-pricing" aria-label="Управление подпиской">
+                <div class="landing-inner">
+                    <div class="pricing-header">
+                        <h2 class="section-title text-center">Управление подпиской</h2>
+                        <p class="section-subtitle text-center">Выберите подходящий для вас план. Все планы включают
+                            30-дневный бесплатный пробный период.</p>
+                    </div>
+
+                    <div class="pricing-grid">
+                        <div class="price-card">
+                            <h3 class="price-name">Персональный</h3>
+                            <p class="price-desc">Идеально подходит для людей, которые управляют своими личными
+                                медицинскими данными.</p>
+                            <div class="price-amount">$0<span>/месяц</span></div>
+                            <a href="/regester" class="btn btn-outline">Начать бесплатно</a>
+                            <ul class="price-features">
+                                <li class="check">Управление своими анализами</li>
+                                <li class="check">До 2 целей</li>
+                                <li class="check">Персональные советы</li>
+                                <li class="check">Графики</li>
+                                <li class="cross">Сравнение анализов между пользователями</li>
+                                <li class="cross">Расширенные графики и советы</li>
+                            </ul>
+                        </div>
+
+                        <div class="price-card featured">
+                            <div class="badge-popular">Самый популярный</div>
+                            <h3 class="price-name">Про</h3>
+                            <p class="price-desc">Для продвинутых пользователей, которые хотят расширенные функции и
+                                подробные инсайты.</p>
+                            <div class="price-amount">$9.99<span>/месяц</span></div>
+                            <a href="/regester" class="btn btn-primary">Начать бесплатно</a>
+                            <ul class="price-features">
+                                <li class="check">Всё из Персонального</li>
+                                <li class="check">До 5 целей</li>
+                                <li class="check">Расширенные рекомендации</li>
+                                <li class="check">+ 1 человек</li>
+                                <li class="check">+ история до 2 лет</li>
+                                <li class="check">Сравнение анализов между пользователями</li>
+                                <li class="check">Расширенные графики и советы</li>
+                                <li class="cross">Для всей семьи, индивидуальные советы каждому</li>
+                                <li class="cross">Отчёты для всех членов семьи, таблицы и графики</li>
+                            </ul>
+                        </div>
+
+                        <div class="price-card">
+                            <h3 class="price-name">Семейный</h3>
+                            <p class="price-desc">Полное управление здоровьем для всей вашей семьи.</p>
+                            <div class="price-amount">$19.99<span>/месяц</span></div>
+                            <a href="/regester" class="btn btn-outline">Начать бесплатно</a>
+                            <ul class="price-features">
+                                <li class="check">Всё из Про</li>
+                                <li class="check">Для всей семьи, индивидуальные советы каждому</li>
+                                <li class="check">До 15 целей на всех членов семьи</li>
+                                <li class="check">До 6 человек (в сумме до 7)</li>
+                                <li class="check">Отчёты для всех членов семьи, таблицы и графики</li>
+                                <li class="check">Напоминания и рекомендации для всей семьи</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
-                <a href="/regester" class="btn btn-white">Начать бесплатно &rarr;</a>
-            </div>
-        </section>
-    </div>
-    <%- include('partials/footer.ejs')%>
-    <%- include('partials/scripts.ejs')%>
-</body>
+            </section>
+
+            <section class="landing-block landing-cta-blue cta-blue" aria-label="Регистрация">
+                <div class="landing-inner text-center">
+                    <h2 class="cta-title">Хотите взять своё здоровье под контроль?</h2>
+                    <p class="cta-text">Безопасное и удобное хранение и анализ медицинских данных с Meditrace.</p>
+                    <div class="cta-badges">
+                        <span>✓ Бесплатный 30-дневный пробный период</span>
+                        <span>✓ Отмена в любой момент</span>
+                        <span>✓ Мгновенная настройка</span>
+                    </div>
+                    <a href="/regester" class="btn btn-white">Начать бесплатно &rarr;</a>
+                </div>
+            </section>
+            <%- include('partials/footer.ejs')%>
+                <%- include('partials/scripts.ejs')%>
+    </body>
 
 </html>
