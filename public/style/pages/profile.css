@@ -422,10 +422,6 @@
 }
 
 @media (max-width: 1000px) {
-    .mt-quick-actions {
-        flex-wrap: wrap;
-    }
-
     .mt-qa-card {
         flex: 1 1 calc(50% - 7px);
     }
