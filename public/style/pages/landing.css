@@ -27,11 +27,7 @@
   --font:        'Manrope', 'Segoe UI', sans-serif;
 }
 
-
-
-.container-body{
-  padding: 0 15%;
-}
+a { text-decoration: none; color: inherit; }
 /* ===========================
    TYPOGRAPHY HELPERS
    =========================== */
@@ -189,6 +185,25 @@
   line-height: 1.55;
 }
 
+/* ===========================
+   LAYOUT WRAPPERS
+   =========================== */
+
+.landing-block {
+  padding: 100px 24px;
+}
+ 
+.landing-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+ 
+.landing-inner--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
 
 /* ===========================
    RECOMMENDATIONS SECTION
