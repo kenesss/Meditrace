@@ -1,6 +1,6 @@
 /* Основной контейнер */
 .chat-container {
-    width: 82%;
+    width: 100%;
     margin: 20px auto;
     padding: 0 15px;
     display: flex;

@@ -618,18 +618,265 @@
   color: #ef4444;
 }
 
+/* ── Планшет ── */
 @media (max-width: 900px) {
+  .analyses-page {
+    width: 100%;
+    padding: 20px;
+  }
+
   .ma-page {
     flex-direction: column;
     padding: 16px;
+    gap: 16px;
   }
 
   .ma-sidebar {
     width: 100%;
   }
 
+  .ma-chart-wrapper {
+    height: 220px;
+  }
+
+  #chartSection {
+    height: auto;
+  }
+}
+
+/* ── Мобилка ── */
+@media (max-width: 640px) {
+
+  /* Wrapper: скрываем боковое меню или делаем его шириной 0 */
+  .meditrace-wrapper {
+    flex-direction: column;
+  }
+
+  /* Страница */
+  .ma-page {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  /* Сайдбар — горизонтальный скролл на мобиле */
+  .ma-sidebar {
+    width: 100%;
+    gap: 10px;
+  }
+
+  .ma-sidebar-title {
+    font-size: 11px;
+  }
+
+  /* Карточки анализов — горизонтальный список с прокруткой */
+  .ma-analysis-card {
+    padding: 10px 12px;
+    border-radius: 10px;
+    gap: 10px;
+  }
+
+  .ma-card-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+  }
+
+  .ma-card-name {
+    font-size: 12px;
+  }
+
+  .ma-card-meta {
+    font-size: 10px;
+  }
+
+  /* Кнопка загрузки */
+  .ma-upload-btn {
+    padding: 11px 14px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+
+  /* Шапка детали */
+  .ma-detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 16px;
+    gap: 12px;
+    border-radius: 12px;
+  }
+
+  .ma-detail-title {
+    font-size: 15px;
+  }
+
+  .ma-detail-meta {
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  /* Табы — растягиваем на всю ширину */
+  .ma-tabs {
+    width: 100%;
+  }
+
+  .ma-tab {
+    flex: 1;
+    justify-content: center;
+    padding: 7px 10px;
+    font-size: 12px;
+  }
+
+  /* Карточка с графиком */
+  .ma-chart-card,
+  .ma-table-card {
+    padding: 14px 14px;
+    border-radius: 12px;
+  }
+
+  #chartSection {
+    height: auto;
+  }
+
+  .ma-chart-wrapper {
+    height: 200px;
+  }
+
+  .ma-chart-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .ma-chart-label {
+    font-size: 13px;
+  }
+
+  .ma-indicator-select {
+    width: 100%;
+    max-width: 100%;
+    font-size: 13px;
+  }
+
+  .ma-legend {
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .ma-legend-item {
+    font-size: 11px;
+  }
+
+  /* Таблица — горизонтальный скролл */
+  .ma-table-card {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .ma-table {
+    min-width: 460px;
+    font-size: 12px;
+  }
+
+  .ma-table th {
+    font-size: 10px;
+    padding: 0 10px 8px;
+  }
+
+  .ma-table td {
+    padding: 9px 10px;
+  }
+
+  .ma-status {
+    font-size: 10px;
+    padding: 2px 8px;
+  }
+
+  /* Поиск */
+  .ma-search {
+    padding: 7px 10px;
+  }
+
+  .ma-search input {
+    font-size: 12px;
+  }
+
+  /* Пустое состояние */
+  .ma-empty {
+    padding: 48px 16px;
+    gap: 12px;
+  }
+
+  .ma-empty h3 {
+    font-size: 16px;
+  }
+
+  .ma-empty p {
+    font-size: 13px;
+  }
+
+  .ma-empty-upload-btn {
+    font-size: 14px;
+    padding: 11px 20px;
+  }
+
+  /* Страница со списком анализов */
   .analyses-page {
     width: 100%;
-    padding: 20px;
+    padding: 12px 14px;
+  }
+
+  .analysis-item {
+    padding: 14px 16px;
+    border-radius: 12px;
+  }
+
+  .analysis-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  .analysis-name {
+    font-size: 14px;
+  }
+
+  .analysis-meta {
+    font-size: 12px;
+  }
+
+  .add-analysis-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  .search-box {
+    padding: 11px 16px;
+  }
+
+  .search-box input {
+    font-size: 14px;
+  }
+}
+
+/* ── Совсем маленький экран (SE, 375px) ── */
+@media (max-width: 400px) {
+  .ma-chart-wrapper {
+    height: 170px;
+  }
+
+  .ma-detail-title {
+    font-size: 14px;
+  }
+
+  .ma-tab {
+    font-size: 11px;
+    padding: 6px 8px;
+    gap: 3px;
+  }
+
+  .ma-table {
+    min-width: 380px;
   }
 }
