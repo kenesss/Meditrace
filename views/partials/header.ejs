@@ -1,6 +1,5 @@
 <header>
-  <% if(user._id && user.full_name.length> 0){
-    %>
+  <% if(user._id && user.full_name.length> 0 && !isLanding){ %>
     <div class="head-container">
       <div class="head-container-menu">
         <a href="/" class="logo"><img src="/public/img/icon/logo-2.png" alt=""></a>
