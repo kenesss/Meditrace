@@ -265,6 +265,9 @@
       padding: 0;
       gap: 0;
     }
+    .head-container-menu{
+      padding: 10px 20px;
+    }
   
     /* Верхняя строка: лого + аватар */
     .head-container > .logo {
@@ -278,11 +281,12 @@
   
     .logo img,
     .head-container > a.logo img {
-      height: 30px;
+      height: 40px;
       width: auto;
       max-width: 160px;
       object-fit: contain;
       display: block;
+      margin-left: 20px;
     }
    
     /* Landing хедер: убрать огромный горизонтальный паддинг */
