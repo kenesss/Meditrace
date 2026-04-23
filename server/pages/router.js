@@ -25,7 +25,6 @@ function getStatus(val, reference) {
 router.get('/', async (req, res) => {
   res.render("index", { 
     user: req.user ? req.user : {},
-    isLanding: true  // ← добавьте это
   });
 });
 
