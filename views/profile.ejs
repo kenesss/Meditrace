@@ -70,7 +70,8 @@
                             </div>
                         </a>
 
-                        <a class="mt-stat-card mt-stat-purple" href="/ai/<%= user._id %>">
+                        <a class="mt-stat-card mt-stat-purple" href="#"
+                        onclick="document.getElementById('soonModal').classList.add('mt-modal-active'); return false;">
                             <div class="mt-stat-top">
                                 <div class="mt-stat-icon">
                                     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white"
@@ -190,7 +191,8 @@
 
                     <!-- Нижний блок: напоминания + показатели -->
                     <div class="mt-bottom-row">
-
+                        <a class="mt-qa-card" href="#"
+                            onclick="document.getElementById('soonModal').classList.add('mt-modal-active'); return false;">
                             <div class="mt-info-card">
                                 <div class="mt-card-heading">Ближайшие напоминания</div>
                                 <div class="mt-reminder-item">
@@ -206,15 +208,18 @@
                                 <div class="mt-reminder-item">
                                     <div class="mt-reminder-dot mt-dot--green"></div>
                                     <span class="mt-reminder-text">Плановый осмотр у терапевта</span>
-                                    <span class="mt-reminder-date">15 апр</span>
+                                    <span class="mt-reminder-date">27 апр</span>
                                 </div>
                                 <div class="mt-reminder-item">
                                     <div class="mt-reminder-dot mt-dot--amber"></div>
                                     <span class="mt-reminder-text">Контроль давления</span>
-                                    <span class="mt-reminder-date">17 апр</span>
+                                    <span class="mt-reminder-date">30 апр</span>
                                 </div>
                             </div>
+                        </a>
 
+                        <a class="mt-qa-card" href="#"
+                            onclick="document.getElementById('soonModal').classList.add('mt-modal-active'); return false;">
                             <div class="mt-info-card">
                                 <div class="mt-card-heading">Показатели здоровья</div>
                                 <div class="mt-health-row">
@@ -246,6 +251,7 @@
                                     <div class="mt-health-bar-fill" style="width: 45%; background: #ef4444;"></div>
                                 </div>
                             </div>
+                        </a>
 
                     </div>
 
@@ -264,11 +270,11 @@
                         <line x1="3" y1="10" x2="21" y2="10" />
                     </svg>
                 </div>
-                <h3>Скоро будет доступно</h3>
-                <p>Функция записи к врачу пока находится в разработке. Мы планируем добавить её в ближайшее время.</p>
+                <h3>Функция недоступна</h3>
+                <p>Эта функция доступна только в Pro-версии MediTrace. Перейдите на Pro, чтобы получить полный доступ ко всем возможностям приложения.</p>
                 <button class="mt-modal-btn"
                     onclick="document.getElementById('soonModal').classList.remove('mt-modal-active')">
-                    Понятно
+                    Перейти на Pro
                 </button>
             </div>
         </div>
