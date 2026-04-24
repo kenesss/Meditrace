@@ -40,6 +40,11 @@ router.get("/regester", (req, res) => {
   res.render("regester", { user: req.user ? req.user : {}, query: req.query });
 });
 
+router.get('/test', async (req, res) => {
+  res.render("test", { 
+    user: req.user ? req.user : {},
+  });
+});
 
 router.get("/profile/:id", isAuth, async (req, res) => {
   try {

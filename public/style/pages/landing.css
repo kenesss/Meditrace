@@ -751,7 +751,7 @@ a { text-decoration: none; color: inherit; }
   }
   
   .screening-inner {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 0 auto;
   }
   
@@ -760,8 +760,7 @@ a { text-decoration: none; color: inherit; }
   }
   
   .screening-header .section-title {
-    font-size: 2.5rem;
-    font-weight: 800;
+    font-size: 52px;
     color: var(--text-dark);
     text-align: left;
     margin-bottom: 16px;
@@ -772,7 +771,6 @@ a { text-decoration: none; color: inherit; }
     color: var(--text-mid);
     line-height: 1.7;
     text-align: left;
-    max-width: 700px;
   }
   
   /* Three-column steps grid */
@@ -799,10 +797,10 @@ a { text-decoration: none; color: inherit; }
   }
   
   .screening-step p {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-dark);
-    line-height: 1.5;
+    font-size: 1.0625rem;
+    color: var(--text-mid);
+    line-height: 1.7;
+    text-align: left;
   }
   
   /* Centered CTA button */
