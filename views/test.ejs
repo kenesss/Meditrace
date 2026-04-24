@@ -1,125 +1,130 @@
 <!DOCTYPE html>
 <html lang="ru">
-    <%- include('partials/header.ejs', { activePage: 'home' }) %> 
-<body>
+<%- include('partials/head.ejs')%>
 
-    
+    <body>
 
-    <main class="si-main">
-        <div class="si-wrap">
 
-            <!-- Eyebrow -->
-            <div class="si-eyebrow">
-                <span class="si-dot"></span>
-                Перед началом теста
-            </div>
+        <%- include('partials/header.ejs', { activePage: 'home' }) %>
+            <main class="si-main">
+                <div class="si-wrap">
 
-            <!-- Title -->
-            <h1 class="si-title">Пожалуйста,<br>ознакомьтесь с условиями</h1>
-            <p class="si-subtitle">Тестирование оценит ваши индивидуальные риски развития онкологических заболеваний и
-                даст персональные рекомендации по профилактике.</p>
+                    <!-- Eyebrow -->
+                    <div class="si-eyebrow">
+                        <span class="si-dot"></span>
+                        Перед началом теста
+                    </div>
 
-            <!-- Blocks -->
-            <div class="si-blocks">
+                    <!-- Title -->
+                    <h1 class="si-title">Пожалуйста,<br>ознакомьтесь с условиями</h1>
+                    <p class="si-subtitle">Тестирование оценит ваши индивидуальные риски развития онкологических
+                        заболеваний и
+                        даст персональные рекомендации по профилактике.</p>
 
-                <div class="si-block">
-                    <div class="si-block-label">Точность прогноза</div>
-                    <div class="si-block-body">
-                        <p>Тест не гарантирует 100% точности прогноза.</p>
-                        <div class="si-row-cards">
-                            <div class="si-row-card si-row-card--green">
-                                <div class="si-rci">↓</div>
-                                <div><strong>Низкий риск</strong> — не означает, что рак не разовьётся. Вероятность ниже
-                                    среднего по популяции, но не равна нулю.</div>
-                            </div>
-                            <div class="si-row-card si-row-card--amber">
-                                <div class="si-rci">↑</div>
-                                <div><strong>Высокий риск</strong> — не означает, что рак непременно разовьётся.
-                                    Проконсультируйтесь со специалистом.</div>
+                    <!-- Blocks -->
+                    <div class="si-blocks">
+
+                        <div class="si-block">
+                            <div class="si-block-label">Точность прогноза</div>
+                            <div class="si-block-body">
+                                <p>Тест не гарантирует 100% точности прогноза.</p>
+                                <div class="si-row-cards">
+                                    <div class="si-row-card si-row-card--green">
+                                        <div class="si-rci">↓</div>
+                                        <div><strong>Низкий риск</strong> — не означает, что рак не разовьётся.
+                                            Вероятность ниже
+                                            среднего по популяции, но не равна нулю.</div>
+                                    </div>
+                                    <div class="si-row-card si-row-card--amber">
+                                        <div class="si-rci">↑</div>
+                                        <div><strong>Высокий риск</strong> — не означает, что рак непременно разовьётся.
+                                            Проконсультируйтесь со специалистом.</div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="si-block">
-                    <div class="si-block-label">Тест не подходит, если</div>
-                    <div class="si-block-body">
-                        <ul class="si-checklist">
-                            <li><span class="si-x">✕</span> Вы младше 18 лет</li>
-                            <li><span class="si-x">✕</span> У вас подтверждённый иммунодефицит</li>
-                            <li><span class="si-x">✕</span> По генетическому тестированию выявлены мутации, повышающие
-                                риск рака</li>
-                        </ul>
-                    </div>
-                </div>
+                        <div class="si-block">
+                            <div class="si-block-label">Тест не подходит, если</div>
+                            <div class="si-block-body">
+                                <ul class="si-checklist">
+                                    <li><span class="si-x">✕</span> Вы младше 18 лет</li>
+                                    <li><span class="si-x">✕</span> У вас подтверждённый иммунодефицит</li>
+                                    <li><span class="si-x">✕</span> По генетическому тестированию выявлены мутации,
+                                        повышающие
+                                        риск рака</li>
+                                </ul>
+                            </div>
+                        </div>
 
-                <div class="si-block">
-                    <div class="si-block-label">Не применяется при диагнозах</div>
-                    <div class="si-block-body">
-                        <div class="si-tags">
-                            <span class="si-tag">Рак кожи</span>
-                            <span class="si-tag">Рак лёгкого</span>
-                            <span class="si-tag">Рак молочной железы</span>
-                            <span class="si-tag">Рак желудка</span>
-                            <span class="si-tag">Рак толстой и прямой кишки</span>
-                            <span class="si-tag">Рак простаты</span>
+                        <div class="si-block">
+                            <div class="si-block-label">Не применяется при диагнозах</div>
+                            <div class="si-block-body">
+                                <div class="si-tags">
+                                    <span class="si-tag">Рак кожи</span>
+                                    <span class="si-tag">Рак лёгкого</span>
+                                    <span class="si-tag">Рак молочной железы</span>
+                                    <span class="si-tag">Рак желудка</span>
+                                    <span class="si-tag">Рак толстой и прямой кишки</span>
+                                    <span class="si-tag">Рак простаты</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="si-block si-block--notice">
+                            <svg width="18" height="18" fill="none" stroke="#0B81DA" stroke-width="2"
+                                viewBox="0 0 24 24" style="flex-shrink:0;margin-top:2px">
+                                <circle cx="12" cy="12" r="10" />
+                                <line x1="12" y1="8" x2="12" y2="12" />
+                                <circle cx="12" cy="16" r=".8" fill="#0B81DA" stroke="none" />
+                            </svg>
+                            <p>
+                                Тест не заменяет очной медицинской консультации. Вы можете пройти его без авторизации
+                                или войти
+                                в личный кабинет, чтобы сохранить результаты.
+                                <strong>Мы не собираем и не обрабатываем персональные данные.</strong>
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="si-footer">
+                        <label class="si-checkbox">
+                            <input type="checkbox" id="agree" />
+                            <span class="si-cb-box">
+                                <svg class="si-cb-tick" width="10" height="8" viewBox="0 0 10 8" fill="none">
+                                    <polyline points="1,4 4,7 9,1" stroke="white" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </span>
+                            <span class="si-cb-text">Я ознакомлен(а) с условиями и принимаю их</span>
+                        </label>
+
+                        <div class="si-actions">
+                            <button class="si-btn si-btn--primary" id="btn-start" disabled>
+                                Начать тестирование
+                                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"
+                                    viewBox="0 0 24 24">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="13,6 19,12 13,18" />
+                                </svg>
+                            </button>
+                            <button class="si-btn si-btn--ghost">Без авторизации</button>
                         </div>
                     </div>
+
                 </div>
+            </main>
 
-                <div class="si-block si-block--notice">
-                    <svg width="18" height="18" fill="none" stroke="#0B81DA" stroke-width="2" viewBox="0 0 24 24"
-                        style="flex-shrink:0;margin-top:2px">
-                        <circle cx="12" cy="12" r="10" />
-                        <line x1="12" y1="8" x2="12" y2="12" />
-                        <circle cx="12" cy="16" r=".8" fill="#0B81DA" stroke="none" />
-                    </svg>
-                    <p>
-                        Тест не заменяет очной медицинской консультации. Вы можете пройти его без авторизации или войти
-                        в личный кабинет, чтобы сохранить результаты.
-                        <strong>Мы не собираем и не обрабатываем персональные данные.</strong>
-                    </p>
-                </div>
+            <%- include('partials/footer.ejs') %>
+                <%- include('partials/scripts.ejs') %>
 
-            </div>
-
-            <!-- Footer -->
-            <div class="si-footer">
-                <label class="si-checkbox">
-                    <input type="checkbox" id="agree" />
-                    <span class="si-cb-box">
-                        <svg class="si-cb-tick" width="10" height="8" viewBox="0 0 10 8" fill="none">
-                            <polyline points="1,4 4,7 9,1" stroke="white" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" />
-                        </svg>
-                    </span>
-                    <span class="si-cb-text">Я ознакомлен(а) с условиями и принимаю их</span>
-                </label>
-
-                <div class="si-actions">
-                    <button class="si-btn si-btn--primary" id="btn-start" disabled>
-                        Начать тестирование
-                        <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"
-                            viewBox="0 0 24 24">
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                            <polyline points="13,6 19,12 13,18" />
-                        </svg>
-                    </button>
-                    <button class="si-btn si-btn--ghost">Без авторизации</button>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <%- include('partials/footer.ejs') %>
-        <%- include('partials/scripts.ejs') %>
-
-            <script>
-                const cb = document.getElementById('agree');
-                const btn = document.getElementById('btn-start');
-                cb.addEventListener('change', () => { btn.disabled = !cb.checked; });
-            </script>
-</body>
+                    <script>
+                        const cb = document.getElementById('agree');
+                        const btn = document.getElementById('btn-start');
+                        cb.addEventListener('change', () => { btn.disabled = !cb.checked; });
+                    </script>
+    </body>
 
 </html>
