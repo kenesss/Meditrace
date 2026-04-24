@@ -3,15 +3,12 @@
 <nav class="menu" id="mobileMenu">
 
   <a href="/profile/<%= user._id %>" class="menu-item <%= activePage === 'home' ? 'active' : '' %>">
-    <img src="icon/house.png" alt="">
+    <img src="/public/img/icon/house.png" alt="">
     Главная
   </a>
 
   <a href="/all-analyses/<%= user._id %>" class="menu-item <%= activePage === 'all-analyses' ? 'active' : '' %>">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="3" width="18" height="18" rx="3" />
-      <path d="M7 8h10M7 12h10M7 16h6" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round" />
-    </svg>
+    <img src="/public/img/icon/allanal.png" alt="">
     Все анализы
   </a>
 
