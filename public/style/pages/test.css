@@ -256,6 +256,16 @@
   .si-block--notice p { margin: 0; color: #2563A8; }
   .si-block--notice strong { color: #1A4F8A; }
   
+  /* ===================================
+     FOOTER
+     =================================== */
+  .si-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 8px;
+  }
+  
   /* Checkbox */
   .si-checkbox {
     display: flex;
