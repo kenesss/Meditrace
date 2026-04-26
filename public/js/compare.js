@@ -41,8 +41,8 @@
 
   function arrow(diff) {
     if (diff === null) return '<span style="color:#9ca3af">—</span>';
-    if (diff > 0) return `<span style="color:#dc2626">▲ +${diff}</span>`;
-    if (diff < 0) return `<span style="color:#2563eb">▼ ${diff}</span>`;
+    if (diff > 0) return `<span style="color:#16a34a">▲ +${diff}</span>`;
+    if (diff < 0) return `<span style="color:#ef4444">▼ ${diff}</span>`;
     return '<span style="color:#16a34a">= 0</span>';
   }
 

@@ -28,7 +28,6 @@ router.get('/', async (req, res) => {
   });
 });
 
-
 router.get("/login", (req, res) => {
   res.render("login", {
     user: req.user ? req.user : {},
@@ -36,6 +35,7 @@ router.get("/login", (req, res) => {
     githubAuthEnabled: !!(process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET),
   });
 });
+
 router.get("/regester", (req, res) => {
   res.render("regester", { user: req.user ? req.user : {}, query: req.query });
 });
@@ -44,6 +44,35 @@ router.get('/test', async (req, res) => {
   res.render("test", { 
     user: req.user ? req.user : {},
   });
+});
+
+// ✅ ИСПРАВЛЕНО: router.patch вместо app.patch
+// ✅ Обновление показателей анализа (вызывается при ручном редактировании таблицы)
+router.patch('/api/analyses/:id/indicators', isAuth, async (req, res) => {
+  try {
+    const analysis = await Analysis.findByIdAndUpdate(
+      req.params.id,
+      { indicators: req.body.indicators },
+      { new: true }
+    );
+    if (!analysis) return res.json({ success: false, error: 'Анализ не найден' });
+    res.json({ success: true, analysis });
+  } catch (err) {
+    console.error('Ошибка обновления показателей:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// ✅ Удаление анализа
+router.delete('/delete-analysis/:id', isAuth, async (req, res) => {
+  try {
+    const result = await Analysis.findByIdAndDelete(req.params.id);
+    if (!result) return res.json({ success: false, error: 'Анализ не найден' });
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Ошибка удаления анализа:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
 });
 
 router.get("/profile/:id", isAuth, async (req, res) => {
@@ -114,7 +143,6 @@ router.get("/profile/:id", isAuth, async (req, res) => {
         reminderBanner = { months: null, lastDate: null };
       }
 
-      // ── Подсчёт процента заполненности профиля ──
       const fields = [
         user.full_name,
         user.email,
@@ -136,7 +164,6 @@ router.get("/profile/:id", isAuth, async (req, res) => {
         goals: goalsWithProgress,
         reminderBanner: reminderBanner,
         activePage: 'home',
-        // ── Новые переменные для статкарточек ──
         analysesCount: String(analyses.length).padStart(2, '0'),
         familyCount: String(familyMembers.length).padStart(2, '0'),
         goalsCount: String(goals.length).padStart(2, '0'),
@@ -166,12 +193,11 @@ router.get("/debug/users", isAuth, async (req, res) => {
 
 router.get("/not-found", (req, res) => {
   res.render("notFound");
-})
+});
 
 router.get("/add-members/:id", isAuth, async function (req, res) {
   try {
     const familyMembers = await FamilyMember.find({ ownerId: req.user._id });
-
     res.render("addMembers", {
       user: req.user ? req.user : {},
       familyMembers: familyMembers,
@@ -200,6 +226,7 @@ router.get("/setting/:id", isAuth, async function (req, res) {
     res.redirect("/not-found");
   }
 });
+
 router.get("/ai/:id", isAuth, async function (req, res) {
   const user = await User.findById(req.params.id);
   if (user) {
@@ -318,22 +345,22 @@ router.get("/all-analyses/:id", isAuth, async function (req, res) {
   try {
     const user = await User.findById(req.params.id);
     if (!user) return res.redirect("/not-found");
- 
+
     const memberId = req.query.member || null;
     const analysisQuery = memberId
       ? { userId: req.params.id, memberId: memberId }
       : { userId: req.params.id, memberId: null };
- 
+
     const analyses = await Analysis.find(analysisQuery).sort({ testDate: -1 }).lean();
- 
+
     analyses.forEach(a => {
       a.indicators.forEach(ind => {
         ind.status = getStatus(ind.val, ind.reference);
       });
     });
- 
+
     const familyMembers = await FamilyMember.find({ ownerId: req.params.id }).sort({ createdAt: 1 });
- 
+
     res.render("allAnalysis", {
       user,
       loginUser: req.user,
@@ -348,4 +375,4 @@ router.get("/all-analyses/:id", isAuth, async function (req, res) {
   }
 });
 
-module.exports = router
+module.exports = router;
