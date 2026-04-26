@@ -136,7 +136,9 @@
       <% } %>
 
 </header>
+
 <script>
+  // ── Переключение профиля ──
   function switchProfile(memberId) {
     const url = new URL(window.location.href);
     if (memberId) {
@@ -146,4 +148,45 @@
     }
     window.location.href = url.toString();
   }
+
+  // ── Дропдаун профиля — инициализируем сразу, не ждём DOMContentLoaded,
+  //    так как скрипт стоит после самих элементов ──
+  (function () {
+    const trigger  = document.getElementById('profileTrigger');
+    const dropdown = document.getElementById('profileDropdown');
+    if (!trigger || !dropdown) return;
+
+    // Открыть / закрыть по клику на триггер
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      dropdown.classList.toggle('show');
+
+      // Поворачиваем стрелку
+      const chevron = trigger.querySelector('.chevron-icon');
+      if (chevron) {
+        chevron.style.transform = dropdown.classList.contains('show')
+          ? 'rotate(180deg)'
+          : 'rotate(0deg)';
+        chevron.style.transition = 'transform 0.2s';
+      }
+    });
+
+    // Закрыть при клике вне дропдауна
+    document.addEventListener('click', function (e) {
+      if (!dropdown.contains(e.target) && !trigger.contains(e.target)) {
+        dropdown.classList.remove('show');
+        const chevron = trigger.querySelector('.chevron-icon');
+        if (chevron) chevron.style.transform = 'rotate(0deg)';
+      }
+    });
+
+    // Закрыть при нажатии Escape
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && dropdown.classList.contains('show')) {
+        dropdown.classList.remove('show');
+        const chevron = trigger.querySelector('.chevron-icon');
+        if (chevron) chevron.style.transform = 'rotate(0deg)';
+      }
+    });
+  })();
 </script>
