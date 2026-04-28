@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="ru">
+<%- include('partials/head.ejs')%>
+
+    <body>
+        <%- include('partials/header.ejs', { activePage: 'home' }) %>
+            <!-- Top bar -->
+            <div class="st-topbar">
+                <div class="st-topbar-inner">
+                    <div class="st-logo">MediTrace</div>
+                    <div class="st-steps-nav">
+                        <div class="st-step-pill" data-step="0">
+                            <span class="st-step-num">1</span>
+                            <span class="st-step-name">Образ жизни</span>
+                        </div>
+                        <div class="st-step-connector"></div>
+                        <div class="st-step-pill" data-step="1">
+                            <span class="st-step-num">2</span>
+                            <span class="st-step-name">Кожа и здоровье</span>
+                        </div>
+                        <div class="st-step-connector"></div>
+                        <div class="st-step-pill" data-step="2">
+                            <span class="st-step-num">3</span>
+                            <span class="st-step-name">Анамнез</span>
+                        </div>
+                    </div>
+                    <button class="st-exit" onclick="history.back()">
+                        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"
+                            viewBox="0 0 24 24">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                        Выйти
+                    </button>
+                </div>
+            </div>
+
+            <main class="st-main">
+                <div class="st-container" id="pageContainer">
+
+                    <!-- ══════════════════════════════════
+           PAGE 1 — Образ жизни
+           ══════════════════════════════════ -->
+                    <div class="st-page" id="page-0">
+                        <div class="st-page-header">
+                            <div class="st-eyebrow"><span class="st-dot"></span>Шаг 1 из 3</div>
+                            <h1 class="st-page-title">Личные данные<br>и образ жизни</h1>
+                            <p class="st-page-desc">Расскажите о себе и своих повседневных привычках</p>
+                        </div>
+
+                        <div class="st-form">
+
+                            <!-- Row: birth year + sex -->
+                            <div class="st-row st-row--2">
+                                <div class="st-field">
+                                    <label class="st-label">Год рождения</label>
+                                    <div class="st-input-wrap">
+                                        <input class="st-input" type="number" id="birth_year" placeholder="1985"
+                                            min="1924" max="2006" />
+                                    </div>
+                                </div>
+                                <div class="st-field">
+                                    <label class="st-label">Биологический пол</label>
+                                    <div class="st-inline-opts">
+                                        <div class="st-opt-chip" data-group="sex" data-value="Мужской">
+                                            <svg width="15" height="15" fill="none" stroke="currentColor"
+                                                stroke-width="2" viewBox="0 0 24 24">
+                                                <circle cx="10" cy="14" r="5" />
+                                                <line x1="19" y1="5" x2="14.14" y2="9.86" />
+                                                <polyline points="15,5 19,5 19,9" />
+                                            </svg>
+                                            Мужской
+                                        </div>
+                                        <div class="st-opt-chip" data-group="sex" data-value="Женский">
+                                            <svg width="15" height="15" fill="none" stroke="currentColor"
+                                                stroke-width="2" viewBox="0 0 24 24">
+                                                <circle cx="12" cy="10" r="6" />
+                                                <line x1="12" y1="16" x2="12" y2="21" />
+                                                <line x1="9" y1="19" x2="15" y2="19" />
+                                            </svg>
+                                            Женский
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Row: height + weight -->
+                            <div class="st-row st-row--2">
+                                <div class="st-field">
+                                    <label class="st-label">Рост</label>
+                                    <div class="st-input-wrap">
+                                        <input class="st-input" type="number" id="height" placeholder="170" min="100"
+                                            max="230" />
+                                        <span class="st-suffix">см</span>
+                                    </div>
+                                </div>
+                                <div class="st-field">
+                                    <label class="st-label">Вес</label>
+                                    <div class="st-input-wrap">
+                                        <input class="st-input" type="number" id="weight" placeholder="70" min="30"
+                                            max="300" />
+                                        <span class="st-suffix">кг</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="st-divider">
+                                <span>Питание и спорт</span>
+                            </div>
+
+                            <div class="st-field">
+                                <label class="st-label">Как часто вы едите фрукты, овощи и зелень?</label>
+                                <p class="st-field-hint">Одна порция — один целый фрукт/овощ или 125 г продукта</p>
+                                <div class="st-opts-col" data-group="fruits_veg">
+                                    <div class="st-opt" data-value="Каждый день, 5 и более порций">Каждый день, 5 и
+                                        более порций</div>
+                                    <div class="st-opt" data-value="Каждый день, менее 5 порций">Каждый день, менее 5
+                                        порций</div>
+                                    <div class="st-opt" data-value="Несколько раз в неделю">Несколько раз в неделю</div>
+                                    <div class="st-opt" data-value="Редко или никогда">Редко или никогда</div>
+                                </div>
+                            </div>
+
+                            <div class="st-field">
+                                <label class="st-label">Как часто вы едите красное и переработанное мясо?</label>
+                                <p class="st-field-hint">Сосиски, колбаса, бекон, свинина, говядина</p>
+                                <div class="st-opts-col" data-group="red_meat">
+                                    <div class="st-opt" data-value="Каждый день">Каждый день</div>
+                                    <div class="st-opt" data-value="Несколько раз в неделю">Несколько раз в неделю</div>
+                                    <div class="st-opt" data-value="Несколько раз в месяц">Несколько раз в месяц</div>
+                                    <div class="st-opt" data-value="Редко или никогда">Редко или никогда</div>
+                                </div>
+                            </div>
+
+                            <div class="st-row st-row--2">
+                                <div class="st-field">
+                                    <label class="st-label">Как часто вы употребляете алкоголь?</label>
+                                    <div class="st-opts-col" data-group="alcohol">
+                                        <div class="st-opt" data-value="Каждый день">Каждый день</div>
+                                        <div class="st-opt" data-value="Несколько раз в неделю">Несколько раз в неделю
+                                        </div>
+                                        <div class="st-opt" data-value="Несколько раз в месяц">Несколько раз в месяц
+                                        </div>
+                                        <div class="st-opt" data-value="Редко или никогда">Редко или никогда</div>
+                                        <div class="st-opt" data-value="Не употребляю">Не употребляю</div>
+                                    </div>
+                                </div>
+                                <div class="st-field">
+                                    <label class="st-label">Сколько шагов вы проходите ежедневно?</label>
+                                    <div class="st-opts-col" data-group="steps">
+                                        <div class="st-opt" data-value="Менее 5 000">Менее 5 000 шагов</div>
+                                        <div class="st-opt" data-value="5 000 — 10 000">5 000 — 10 000 шагов</div>
+                                        <div class="st-opt" data-value="Более 10 000">Более 10 000 шагов</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="st-divider"><span>Курение</span></div>
+
+                            <div class="st-field">
+                                <label class="st-label">Курите ли вы?</label>
+                                <div class="st-opts-row" data-group="smoking">
+                                    <div class="st-opt" data-value="Да, курю сейчас">Да, курю сейчас</div>
+                                    <div class="st-opt" data-value="Курил(а), бросил(а)">Курил(а), бросил(а)</div>
+                                    <div class="st-opt" data-value="Никогда не курил(а)">Никогда не курил(а)</div>
+                                </div>
+                            </div>
+
+                        </div><!-- /st-form -->
+                    </div><!-- /page-0 -->
+
+
+                    <!-- ══════════════════════════════════
+           PAGE 2 — Кожа и здоровье
+           ══════════════════════════════════ -->
+                    <div class="st-page" id="page-1">
+                        <div class="st-page-header">
+                            <div class="st-eyebrow"><span class="st-dot"></span>Шаг 2 из 3</div>
+                            <h1 class="st-page-title">Кожа<br>и образ жизни</h1>
+                            <p class="st-page-desc">Вопросы о солнце, загаре и состоянии вашей кожи</p>
+                        </div>
+
+                        <div class="st-form">
+
+                            <div class="st-divider"><span>Солнце и загар</span></div>
+
+                            <div class="st-row st-row--2">
+                                <div class="st-field">
+                                    <label class="st-label">Пользуетесь ли вы солнцезащитными средствами?</label>
+                                    <div class="st-opts-col" data-group="sunscreen">
+                                        <div class="st-opt" data-value="Да, регулярно (SPF 30+)">Да, регулярно (SPF 30+)
+                                        </div>
+                                        <div class="st-opt" data-value="Иногда">Иногда</div>
+                                        <div class="st-opt" data-value="Нет">Нет</div>
+                                    </div>
+                                </div>
+                                <div class="st-field">
+                                    <label class="st-label">Посещаете ли вы солярий?</label>
+                                    <div class="st-opts-col" data-group="tanning_bed">
+                                        <div class="st-opt" data-value="Да, регулярно">Да, регулярно</div>
+                                        <div class="st-opt" data-value="Иногда">Иногда</div>
+                                        <div class="st-opt" data-value="Нет">Нет</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="st-field">
+                                <label class="st-label">Были ли у вас солнечные ожоги до 18 лет?</label>
+                                <p class="st-field-hint">Болезненное покраснение кожи, сохраняющееся 2 дня и более</p>
+                                <div class="st-opts-row" data-group="sunburn">
+                                    <div class="st-opt" data-value="Да">Да</div>
+                                    <div class="st-opt" data-value="Нет">Нет</div>
+                                    <div class="st-opt" data-value="Не помню">Не помню</div>
+                                </div>
+                            </div>
+
+                            <div class="st-divider"><span>Половая жизнь</span></div>
+
+                            <div class="st-field">
+                                <label class="st-label">Ведёте ли вы половую жизнь?</label>
+                                <div class="st-opts-row" data-group="sex_life">
+                                    <div class="st-opt" data-value="Да">Да</div>
+                                    <div class="st-opt" data-value="Нет">Нет</div>
+                                </div>
+                            </div>
+
+                            <div class="st-divider"><span>Кожа</span></div>
+
+                            <div class="st-row st-row--2">
+                                <div class="st-field">
+                                    <label class="st-label">Ваш натуральный цвет волос?</label>
+                                    <div class="st-opts-col" data-group="hair_color">
+                                        <div class="st-opt" data-value="Светлый (блонд, рыжий)">Светлый (блонд, рыжий)
+                                        </div>
+                                        <div class="st-opt" data-value="Средний (русый)">Средний (русый,
+                                            светло-каштановый)</div>
+                                        <div class="st-opt" data-value="Тёмный (каштановый, чёрный)">Тёмный (каштановый,
+                                            чёрный)</div>
+                                    </div>
+                                </div>
+                                <div class="st-field">
+                                    <label class="st-label">Как много родинок у вас на коже?</label>
+                                    <div class="st-opts-col" data-group="moles_count">
+                                        <div class="st-opt" data-value="Мало (до 10)">Мало (до 10)</div>
+                                        <div class="st-opt" data-value="Умеренно (10–50)">Умеренно (10–50)</div>
+                                        <div class="st-opt" data-value="Много (более 50)">Много (более 50)</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="st-field">
+                                <label class="st-label">Есть ли у вас родинка с такими признаками?</label>
+                                <p class="st-field-hint">Можно выбрать несколько вариантов</p>
+                                <div class="st-opts-check" data-group="moles_signs"
+                                    data-exclusive="Нет, таких родинок нет">
+                                    <div class="st-opt st-opt--check" data-value="Асимметричная форма">
+                                        <span class="st-cb"></span>Асимметричная форма
+                                    </div>
+                                    <div class="st-opt st-opt--check" data-value="Неровные, размытые края">
+                                        <span class="st-cb"></span>Неровные, размытые края
+                                    </div>
+                                    <div class="st-opt st-opt--check" data-value="Несколько цветов или оттенков">
+                                        <span class="st-cb"></span>Несколько цветов или оттенков
+                                    </div>
+                                    <div class="st-opt st-opt--check" data-value="Диаметр более 6 мм">
+                                        <span class="st-cb"></span>Диаметр более 6 мм
+                                    </div>
+                                    <div class="st-opt st-opt--check" data-value="Изменилась за последнее время">
+                                        <span class="st-cb"></span>Изменилась за последнее время
+                                    </div>
+                                    <div class="st-opt st-opt--check st-opt--exclusive"
+                                        data-value="Нет, таких родинок нет">
+                                        <span class="st-cb"></span>Нет, таких родинок нет
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- /page-1 -->
+
+
+                    <!-- ══════════════════════════════════
+           PAGE 3 — Анамнез
+           ══════════════════════════════════ -->
+                    <div class="st-page" id="page-2">
+                        <div class="st-page-header">
+                            <div class="st-eyebrow"><span class="st-dot"></span>Шаг 3 из 3</div>
+                            <h1 class="st-page-title">Наблюдение<br>и анамнез</h1>
+                            <p class="st-page-desc">Медицинская история вас и ваших родственников</p>
+                        </div>
+
+                        <div class="st-form">
+
+                            <div class="st-divider"><span>Наблюдение и лечение</span></div>
+
+                            <div class="st-row st-row--2">
+                                <div class="st-field">
+                                    <label class="st-label">Делали ли вам прививку от ВПЧ?</label>
+                                    <p class="st-field-hint">Вирус папилломы человека</p>
+                                    <div class="st-opts-col" data-group="hpv_vaccine">
+                                        <div class="st-opt" data-value="Да">Да</div>
+                                        <div class="st-opt" data-value="Нет">Нет</div>
+                                        <div class="st-opt" data-value="Не знаю">Не знаю</div>
+                                    </div>
+                                </div>
+                                <div class="st-field">
+                                    <label class="st-label">Диагностировали ли вам воспалительные заболевания
+                                        кишечника?</label>
+                                    <p class="st-field-hint">Язвенный колит, болезнь Крона</p>
+                                    <div class="st-opts-col" data-group="ibd">
+                                        <div class="st-opt" data-value="Да">Да</div>
+                                        <div class="st-opt" data-value="Нет">Нет</div>
+                                        <div class="st-opt" data-value="Не знаю">Не знаю</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="st-row st-row--2">
+                                <div class="st-field">
+                                    <label class="st-label">Облучали ли вам органы брюшной полости в детстве?</label>
+                                    <p class="st-field-hint">Например, в связи с онкологическим заболеванием</p>
+                                    <div class="st-opts-col" data-group="abdomen_radiation">
+                                        <div class="st-opt" data-value="Да">Да</div>
+                                        <div class="st-opt" data-value="Нет">Нет</div>
+                                        <div class="st-opt" data-value="Не знаю">Не знаю</div>
+                                    </div>
+                                </div>
+                                <div class="st-field">
+                                    <label class="st-label">Есть ли у вас следующие симптомы?</label>
+                                    <p class="st-field-hint">Кровь в моче/сперме, нарушение мочеиспускания</p>
+                                    <div class="st-opts-col" data-group="urinary_symptoms">
+                                        <div class="st-opt" data-value="Да">Да</div>
+                                        <div class="st-opt" data-value="Нет">Нет</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="st-divider"><span>Случаи заболеваний в семье</span></div>
+
+                            <div class="st-field">
+                                <label class="st-label">Были ли у близких родственников онкологические
+                                    заболевания?</label>
+                                <p class="st-field-hint">Родители, братья/сёстры, бабушки/дедушки. Можно выбрать
+                                    несколько вариантов</p>
+                                <div class="st-opts-check st-opts-check--grid" data-group="family_cancer"
+                                    data-exclusive="Нет или не знаю">
+                                    <div class="st-opt st-opt--check" data-value="Рак молочной железы"><span
+                                            class="st-cb"></span>Рак молочной железы</div>
+                                    <div class="st-opt st-opt--check" data-value="Меланома кожи"><span
+                                            class="st-cb"></span>Меланома кожи</div>
+                                    <div class="st-opt st-opt--check" data-value="Рак яичников"><span
+                                            class="st-cb"></span>Рак яичников</div>
+                                    <div class="st-opt st-opt--check" data-value="Колоректальный рак"><span
+                                            class="st-cb"></span>Колоректальный рак</div>
+                                    <div class="st-opt st-opt--check" data-value="Рак поджелудочной железы"><span
+                                            class="st-cb"></span>Рак поджелудочной железы</div>
+                                    <div class="st-opt st-opt--check" data-value="Рак почки"><span
+                                            class="st-cb"></span>Рак почки</div>
+                                    <div class="st-opt st-opt--check" data-value="Рак предстательной железы"><span
+                                            class="st-cb"></span>Рак предстательной железы</div>
+                                    <div class="st-opt st-opt--check" data-value="Рак тела матки"><span
+                                            class="st-cb"></span>Рак тела матки (рак эндометрия)</div>
+                                    <div class="st-opt st-opt--check st-opt--exclusive" data-value="Нет или не знаю">
+                                        <span class="st-cb"></span>Нет или не знаю
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="st-field">
+                                <label class="st-label">Был ли кто-то из родственников болен раком в возрасте до 50
+                                    лет?</label>
+                                <div class="st-opts-row" data-group="family_cancer_u50">
+                                    <div class="st-opt" data-value="Да">Да</div>
+                                    <div class="st-opt" data-value="Нет">Нет</div>
+                                    <div class="st-opt" data-value="Не знаю">Не знаю</div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!-- /page-2 -->
+
+                </div><!-- /st-container -->
+
+                <!-- Bottom navigation -->
+                <div class="st-bottom-nav" id="bottomNav">
+                    <div class="st-bottom-inner">
+                        <button class="st-btn st-btn--ghost" id="btnPrev" onclick="changePage(-1)"
+                            style="visibility:hidden">
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"
+                                viewBox="0 0 24 24">
+                                <line x1="19" y1="12" x2="5" y2="12" />
+                                <polyline points="11,6 5,12 11,18" />
+                            </svg>
+                            Назад
+                        </button>
+                        <div class="st-page-dots">
+                            <span class="st-pdot active" data-page="0"></span>
+                            <span class="st-pdot" data-page="1"></span>
+                            <span class="st-pdot" data-page="2"></span>
+                        </div>
+                        <button class="st-btn st-btn--primary" id="btnNext" onclick="changePage(1)">
+                            Далее
+                            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2"
+                                viewBox="0 0 24 24">
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                                <polyline points="13,6 19,12 13,18" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </main>
+
+            <%- include('partials/scripts.ejs') %>
+                <script>
+                    let currentPage = 0;
+                    const TOTAL = 3;
+
+                    function changePage(dir) {
+                        const next = currentPage + dir;
+                        if (next < 0 || next >= TOTAL) return;
+
+                        // Animate out
+                        const current = document.getElementById('page-' + currentPage);
+                        current.classList.add(dir > 0 ? 'st-page--exit-left' : 'st-page--exit-right');
+
+                        setTimeout(() => {
+                            current.classList.remove('active', 'st-page--exit-left', 'st-page--exit-right');
+                            currentPage = next;
+                            const incoming = document.getElementById('page-' + currentPage);
+                            incoming.classList.add(dir > 0 ? 'st-page--enter-right' : 'st-page--enter-left');
+                            incoming.classList.add('active');
+
+                            requestAnimationFrame(() => {
+                                requestAnimationFrame(() => {
+                                    incoming.classList.remove('st-page--enter-right', 'st-page--enter-left');
+                                    incoming.classList.add('st-page--visible');
+                                });
+                            });
+
+                            setTimeout(() => incoming.classList.remove('st-page--visible'), 400);
+                            updateUI();
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }, 250);
+                    }
+
+                    function updateUI() {
+                        // Step pills
+                        document.querySelectorAll('.st-step-pill').forEach((p, i) => {
+                            p.classList.toggle('active', i === currentPage);
+                            p.classList.toggle('done', i < currentPage);
+                        });
+
+                        // Page dots
+                        document.querySelectorAll('.st-pdot').forEach((d, i) => {
+                            d.classList.toggle('active', i === currentPage);
+                        });
+
+                        // Prev button
+                        const prev = document.getElementById('btnPrev');
+                        prev.style.visibility = currentPage === 0 ? 'hidden' : 'visible';
+
+                        // Next button
+                        const next = document.getElementById('btnNext');
+                        if (currentPage === TOTAL - 1) {
+                            next.innerHTML = `Завершить тест <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><polyline points="20,6 9,17 4,12"/></svg>`;
+                            next.onclick = finish;
+                        } else {
+                            next.innerHTML = `Далее <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="13,6 19,12 13,18"/></svg>`;
+                            next.onclick = () => changePage(1);
+                        }
+                    }
+
+                    async function finish() {
+                        // Собираем все ответы
+                        const answers = {};
+
+                        // Radio / col / row options
+                        document.querySelectorAll('[data-group]').forEach(container => {
+                            if (container.classList.contains('st-opts-check')) return;
+                            const group = container.dataset.group;
+                            const selected = container.querySelector('.st-opt.selected');
+                            if (selected) answers[group] = selected.dataset.value;
+                        });
+
+                        // Chip (sex)
+                        document.querySelectorAll('.st-opt-chip.selected').forEach(chip => {
+                            answers[chip.dataset.group] = chip.dataset.value;
+                        });
+
+                        // Checkbox (multi)
+                        document.querySelectorAll('.st-opts-check').forEach(container => {
+                            const group = container.dataset.group;
+                            const selected = [...container.querySelectorAll('.st-opt.selected')]
+                                .map(o => o.dataset.value);
+                            if (selected.length) answers[group] = selected;
+                        });
+
+                        // Number inputs
+                        ['birth_year', 'height', 'weight'].forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el && el.value) answers[id] = el.value;
+                        });
+
+                        const res = await fetch('/screening/submit', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(answers),
+                        });
+
+                        const data = await res.json();
+                        if (data.success) window.location.href = data.redirect;
+                    }
+
+                    // ── Radio options (single select) ──
+                    document.querySelectorAll('[data-group]').forEach(container => {
+                        if (container.classList.contains('st-opts-check')) return; // handled separately
+                        container.querySelectorAll('.st-opt').forEach(opt => {
+                            opt.addEventListener('click', () => {
+                                container.querySelectorAll('.st-opt').forEach(o => o.classList.remove('selected'));
+                                opt.classList.add('selected');
+                            });
+                        });
+                    });
+
+                    // ── Chip options (sex) ──
+                    document.querySelectorAll('.st-inline-opts').forEach(container => {
+                        container.querySelectorAll('.st-opt-chip').forEach(chip => {
+                            chip.addEventListener('click', () => {
+                                container.querySelectorAll('.st-opt-chip').forEach(c => c.classList.remove('selected'));
+                                chip.classList.add('selected');
+                            });
+                        });
+                    });
+
+                    // ── Checkbox options (multi-select with exclusive) ──
+                    document.querySelectorAll('.st-opts-check').forEach(container => {
+                        const exclusive = container.dataset.exclusive;
+                        container.querySelectorAll('.st-opt').forEach(opt => {
+                            opt.addEventListener('click', () => {
+                                const val = opt.dataset.value;
+                                if (val === exclusive) {
+                                    container.querySelectorAll('.st-opt').forEach(o => o.classList.remove('selected'));
+                                    opt.classList.add('selected');
+                                } else {
+                                    // Deselect exclusive
+                                    container.querySelectorAll('.st-opt').forEach(o => {
+                                        if (o.dataset.value === exclusive) o.classList.remove('selected');
+                                    });
+                                    opt.classList.toggle('selected');
+                                }
+                            });
+                        });
+                    });
+
+                    // Init
+                    document.getElementById('page-0').classList.add('active');
+                    updateUI();
+                </script>
+    </body>
+
+</html>

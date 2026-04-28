@@ -46,6 +46,50 @@ router.get('/test', async (req, res) => {
   });
 });
 
+// Скрининг — intro страница с условиями
+router.get('/screening', (req, res) => {
+  res.render('screeningIntro', {
+    user: req.user ? req.user : {},
+  });
+});
+
+// Скрининг — страница теста (3 шага)
+router.get('/screening/test', (req, res) => {
+  res.render('screeningTest', {
+    user: req.user ? req.user : {},
+  });
+});
+
+// Скрининг — сохранение ответов
+router.post('/screening/submit', async (req, res) => {
+  try {
+    const answers = req.body;
+
+    // Сохраняем в сессию
+    req.session.screeningAnswers = answers;
+
+    // Если юзер авторизован — можно будет сохранить в БД
+    // if (req.user) {
+    //   await ScreeningResult.create({ userId: req.user._id, answers });
+    // }
+
+    res.json({ success: true, redirect: '/screening/result' });
+  } catch (err) {
+    console.error('Ошибка скрининга:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Скрининг — страница результатов
+router.get('/screening/result', (req, res) => {
+  const answers = req.session.screeningAnswers || null;
+  if (!answers) return res.redirect('/screening');
+
+  res.render('screeningResult', {
+    user: req.user ? req.user : {},
+    answers,
+  });
+});
 // ✅ ИСПРАВЛЕНО: router.patch вместо app.patch
 // ✅ Обновление показателей анализа (вызывается при ручном редактировании таблицы)
 router.patch('/api/analyses/:id/indicators', isAuth, async (req, res) => {
