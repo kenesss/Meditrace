@@ -107,18 +107,6 @@ router.patch('/api/analyses/:id/indicators', isAuth, async (req, res) => {
   }
 });
 
-// ✅ Удаление анализа
-router.delete('/delete-analysis/:id', isAuth, async (req, res) => {
-  try {
-    const result = await Analysis.findByIdAndDelete(req.params.id);
-    if (!result) return res.json({ success: false, error: 'Анализ не найден' });
-    res.json({ success: true });
-  } catch (err) {
-    console.error('Ошибка удаления анализа:', err);
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
 router.get("/profile/:id", isAuth, async (req, res) => {
   try {
     const user = await User.findById(req.params.id);

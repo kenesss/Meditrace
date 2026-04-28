@@ -50,13 +50,11 @@ const signIn = (req, res) => {
   res.redirect(`/profile/${req.user._id}`);
 };
 
-const singOut = (req, res) => {
+const signOut = (req, res) => {
   req.logout(function (err) {
-    if (err) {
-      console.log(err);
-    }
+    if (err) return console.log(err);
+    res.redirect("/");
   });
-  res.redirect("/");
 };
 
 const requestPasswordReset = async (req, res) => {
