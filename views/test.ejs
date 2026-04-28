@@ -102,15 +102,11 @@
                         </label>
 
                         <div class="si-actions">
-                            <button class="si-btn si-btn--primary" id="btn-start" disabled>
+                            <button class="si-btn si-btn--primary" id="btn-start" disabled
+                                onclick="window.location.href='/screening/test'">
                                 Начать тестирование
-                                <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2"
-                                    viewBox="0 0 24 24">
-                                    <line x1="5" y1="12" x2="19" y2="12" />
-                                    <polyline points="13,6 19,12 13,18" />
-                                </svg>
                             </button>
-                            <button class="si-btn si-btn--ghost">Без авторизации</button>
+                            <!-- <button class="si-btn si-btn--ghost">Без авторизации</button> -->
                         </div>
                     </div>
 
@@ -123,7 +119,15 @@
                     <script>
                         const cb = document.getElementById('agree');
                         const btn = document.getElementById('btn-start');
-                        cb.addEventListener('change', () => { btn.disabled = !cb.checked; });
+                        cb.addEventListener('change', () => {
+                            if (cb.checked) {
+                                btn.style.pointerEvents = 'auto';
+                                btn.style.opacity = '1';
+                            } else {
+                                btn.style.pointerEvents = 'none';
+                                btn.style.opacity = '0.35';
+                            }
+                        });
                     </script>
     </body>
 
