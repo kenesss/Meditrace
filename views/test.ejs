@@ -102,8 +102,7 @@
                         </label>
 
                         <div class="si-actions">
-                            <button class="si-btn si-btn--primary" id="btn-start" disabled
-                                onclick="window.location.href='/screening/test'">
+                            <button class="si-btn si-btn--primary" id="btn-start" disabled onclick="window.location.href='/screening/test'">
                                 Начать тестирование
                             </button>
                             <!-- <button class="si-btn si-btn--ghost">Без авторизации</button> -->
@@ -119,15 +118,7 @@
                     <script>
                         const cb = document.getElementById('agree');
                         const btn = document.getElementById('btn-start');
-                        cb.addEventListener('change', () => {
-                            if (cb.checked) {
-                                btn.style.pointerEvents = 'auto';
-                                btn.style.opacity = '1';
-                            } else {
-                                btn.style.pointerEvents = 'none';
-                                btn.style.opacity = '0.35';
-                            }
-                        });
+                        cb.addEventListener('change', () => { btn.disabled = !cb.checked; });
                     </script>
     </body>
 
