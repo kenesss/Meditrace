@@ -40,7 +40,7 @@
     max-width: 1000px;
     margin: 0 auto;
     padding: 0 24px;
-    height: 64px;
+    height: 100px;
     display: flex;
     align-items: center;
     gap: 32px;
@@ -89,7 +89,7 @@
   }
   
   .st-step-name {
-    font-size: 0.875rem;
+    font-size: 1.0rem;
     font-weight: 600;
     color: var(--text-soft);
     transition: color 0.2s;
@@ -126,7 +126,7 @@
     align-items: center;
     gap: 6px;
     font-family: var(--font);
-    font-size: 0.875rem;
+    font-size: 1.0rem;
     font-weight: 600;
     color: var(--text-mid);
     background: none;
