@@ -52,7 +52,10 @@ const signIn = (req, res) => {
 
 const signOut = (req, res) => {
   req.logout(function (err) {
-    if (err) return console.log(err);
+    if (err) {
+      console.log(err);
+      return res.redirect("/");
+    }
     res.redirect("/");
   });
 };
@@ -124,7 +127,7 @@ const resetPassword = async (req, res) => {
 module.exports = {
   signUp,
   signIn,
-  singOut,
+  signOut,
   requestPasswordReset,
   resetPassword,
 };
