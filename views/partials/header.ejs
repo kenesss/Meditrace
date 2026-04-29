@@ -16,32 +16,33 @@
       <div class="head-logo-log">
         <div class="head-nav-log">
           <h1>
-            <% if (activePage==='home' ) { %>Добро пожаловать, <% if (typeof activeMember !=='undefined' &&
-                activeMember) { %>
+            <% if (activePage==='home') { %>
+              Добро пожаловать,
+              <% if (typeof activeMember !== 'undefined' && activeMember) { %>
                 <%= activeMember.full_name %>
-                  <% } else { %>
-                    <%= user.full_name %>
-                      <% } %>!
-                        <% } else if (activePage==='members' ) { %>Моя семья
-                          <% } else if (activePage==='analyses' ) { %>Мои анализы
-                            <% } else if (activePage==='comparison' ) { %>Сравнение анализов
-                              <% } else if (activePage==='ai' ) { %>AI-Ассистент
-                                <% } else if (activePage==='goals' ) { %>Цели здоровья
-                                  <% } else if (activePage==='all-analyses' ) { %>Все анализы
-                                    <% } else if (activePage==='settings' ) { %>Настройки профиля
-                                      <% } else { %>Добро пожаловать, <%= user.full_name %>!
-                                          <% } %>
+              <% } else { %>
+                <%= user.full_name %>
+              <% } %>!
+            <% } else if (activePage==='members') { %>Моя семья
+            <% } else if (activePage==='analyses') { %>Мои анализы
+            <% } else if (activePage==='comparison') { %>Сравнение анализов
+            <% } else if (activePage==='ai') { %>AI-Ассистент
+            <% } else if (activePage==='goals') { %>Цели здоровья
+            <% } else if (activePage==='all-analyses') { %>Все анализы
+            <% } else if (activePage==='settings') { %>Настройки профиля
+            <% } else { %>Добро пожаловать, <%= user.full_name %>!
+            <% } %>
           </h1>
           <p>
-            <% if (activePage==='home' ) { %>Вот обзор вашего здоровья
-              <% } else if (activePage==='members' ) { %>Управляйте медицинскими данными членов семьи
-                <% } else if (activePage==='analyses' ) { %>Загружайте и просматривайте результаты анализов
-                  <% } else if (activePage==='comparison' ) { %>Отслеживайте динамику показателей здоровья
-                    <% } else if (activePage==='ai' ) { %>Анализ результатов и консультации по здоровью
-                      <% } else if (activePage==='goals' ) { %>Ставьте цели и отслеживайте прогресс
-                        <% } else if (activePage==='all-analyses' ) { %>Список всех ваших медицинских исследований
-                          <% } else { %>&nbsp;
-                            <% } %>
+            <% if (activePage==='home') { %>Вот обзор вашего здоровья
+            <% } else if (activePage==='members') { %>Управляйте медицинскими данными членов семьи
+            <% } else if (activePage==='analyses') { %>Загружайте и просматривайте результаты анализов
+            <% } else if (activePage==='comparison') { %>Отслеживайте динамику показателей здоровья
+            <% } else if (activePage==='ai') { %>Анализ результатов и консультации по здоровью
+            <% } else if (activePage==='goals') { %>Ставьте цели и отслеживайте прогресс
+            <% } else if (activePage==='all-analyses') { %>Список всех ваших медицинских исследований
+            <% } else { %>&nbsp;
+            <% } %>
           </p>
         </div>
       </div>
@@ -51,27 +52,27 @@
           <div class="profile-trigger" id="profileTrigger">
 
             <div class="profile-avatar-circle">
-              <% if (typeof activeMember !=='undefined' && activeMember) { %>
+              <% if (typeof activeMember !== 'undefined' && activeMember) { %>
                 <%= activeMember.full_name[0].toUpperCase() %>
-                  <% } else { %>
-                    <%= user.full_name[0].toUpperCase() %>
-                      <% } %>
+              <% } else { %>
+                <%= user.full_name[0].toUpperCase() %>
+              <% } %>
             </div>
 
             <div class="profile-trigger-info">
               <span class="profile-trigger-name">
-                <% if (typeof activeMember !=='undefined' && activeMember) { %>
+                <% if (typeof activeMember !== 'undefined' && activeMember) { %>
                   <%= activeMember.full_name %>
-                    <% } else { %>
-                      <%= user.full_name %>
-                        <% } %>
+                <% } else { %>
+                  <%= user.full_name %>
+                <% } %>
               </span>
               <span class="profile-trigger-role">
-                <% if (typeof activeMember !=='undefined' && activeMember) { %>
+                <% if (typeof activeMember !== 'undefined' && activeMember) { %>
                   <%= activeMember.relationship %>
-                    <% } else { %>
-                      Владелец
-                      <% } %>
+                <% } else { %>
+                  Владелец
+                <% } %>
               </span>
             </div>
 
@@ -89,53 +90,46 @@
                 <%= user.full_name ? user.full_name[0].toUpperCase() : 'U' %>
               </div>
               <div class="user-info">
-                <span class="user-name">
-                  <%= user.full_name %>
-                </span>
+                <span class="user-name"><%= user.full_name %></span>
                 <span class="user-role">Владелец</span>
               </div>
-              <div
-                class="status-icon <%= (typeof activeMemberId === 'undefined' || !activeMemberId) ? '' : 'unchecked' %>">
-                ✔</div>
+              <div class="status-icon <%= (typeof activeMemberId === 'undefined' || !activeMemberId) ? '' : 'unchecked' %>">✔</div>
             </div>
 
-            <% if (typeof familyMembers !=='undefined' ) { %>
+            <% if (typeof familyMembers !== 'undefined') { %>
               <% familyMembers.forEach(function(m) { %>
                 <div class="dropdown-user" onclick="switchProfile('<%= m._id %>')" style="cursor:pointer">
-                  <div class="user-info">
-                    <span class="user-name">
-                      <%= m.full_name %>
-                    </span>
-                    <span class="user-role">
-                      <%= m.relationship %>
-                    </span>
+                  <div class="user-avatar" style="background: linear-gradient(135deg, #6366f1, #a855f7);">
+                    <%= m.full_name[0].toUpperCase() %>
                   </div>
-                  <div
-                    class="status-icon <%= (typeof activeMemberId !== 'undefined' && activeMemberId && activeMemberId.toString() === m._id.toString()) ? '' : 'unchecked' %>">
-                    ✔</div>
+                  <div class="user-info">
+                    <span class="user-name"><%= m.full_name %></span>
+                    <span class="user-role"><%= m.relationship %></span>
+                  </div>
+                  <div class="status-icon <%= (typeof activeMemberId !== 'undefined' && activeMemberId && activeMemberId.toString() === m._id.toString()) ? '' : 'unchecked' %>">✔</div>
                 </div>
-                <% }); %>
-                  <% } %>
+              <% }); %>
+            <% } %>
 
-                    <div class="dropdown-divider"></div>
-                    <a href="/add-members/<%= user._id %>" class="manage-link">
-                      <img src="/public/img/icon/Settings-purple.png" alt="" class="manage-icon">
-                      Управление членами семьи
-                    </a>
+            <div class="dropdown-divider"></div>
+            <a href="/add-members/<%= user._id %>" class="manage-link">
+              <img src="/public/img/icon/Settings-purple.png" alt="" class="manage-icon">
+              Управление членами семьи
+            </a>
           </div>
         </div>
       </div>
     </div>
 
-    <% } else { %>
-      <div class="landing-top-header">
-        <a href="/" class="logo"><img src="/public/img/icon/logo-2.png" alt=""></a>
-        <div class="auth-actions">
-          <a href="/login" class="link-login">Войти</a>
-          <a href="/regester" class="btn-register">Регистрация</a>
-        </div>
+  <% } else { %>
+    <div class="landing-top-header">
+      <a href="/" class="logo"><img src="/public/img/icon/logo-2.png" alt=""></a>
+      <div class="auth-actions">
+        <a href="/login" class="link-login">Войти</a>
+        <a href="/regester" class="btn-register">Регистрация</a>
       </div>
-      <% } %>
+    </div>
+  <% } %>
 </header>
 
 <script>

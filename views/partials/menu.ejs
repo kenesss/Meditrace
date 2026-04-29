@@ -1,18 +1,20 @@
+<% var mq = (typeof activeMemberId !== 'undefined' && activeMemberId) ? '?member=' + activeMemberId : ''; %>
+
 <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
 
 <nav class="menu" id="mobileMenu">
 
-  <a href="/profile/<%= user._id %>" class="menu-item <%= activePage === 'home' ? 'active' : '' %>">
+  <a href="/profile/<%= user._id %><%= mq %>" class="menu-item <%= activePage === 'home' ? 'active' : '' %>">
     <img src="/public/img/icon/house.png" alt="">
     Главная
   </a>
 
-  <a href="/all-analyses/<%= user._id %>" class="menu-item <%= activePage === 'all-analyses' ? 'active' : '' %>">
+  <a href="/all-analyses/<%= user._id %><%= mq %>" class="menu-item <%= activePage === 'all-analyses' ? 'active' : '' %>">
     <img src="/public/img/icon/allanal.png" alt="">
     Все анализы
   </a>
 
-  <a href="/ai/<%= user._id %>" class="menu-item <%= activePage === 'ai' ? 'active' : '' %>">
+  <a href="/ai/<%= user._id %><%= mq %>" class="menu-item <%= activePage === 'ai' ? 'active' : '' %>">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <rect x="3" y="14" width="4" height="7" rx="1" />
       <rect x="10" y="9" width="4" height="12" rx="1" />
@@ -21,17 +23,17 @@
     AI-Ассистент
   </a>
 
-  <a href="/pdf-upload-page/<%= user._id %>" class="menu-item <%= activePage === 'analyses' ? 'active' : '' %>">
+  <a href="/pdf-upload-page/<%= user._id %><%= mq %>" class="menu-item <%= activePage === 'analyses' ? 'active' : '' %>">
     <img src="/public/img/icon/upload.png" alt="">
     Загрузить анализы 
   </a>
 
-  <a href="/comparison/<%= user._id %>" class="menu-item <%= activePage === 'comparison' ? 'active' : '' %>">
+  <a href="/comparison/<%= user._id %><%= mq %>" class="menu-item <%= activePage === 'comparison' ? 'active' : '' %>">
     <img src="/public/img/icon/comparison.png" alt="">
     Сравнение
   </a>
 
-  <a href="/goals/<%= user._id %>" class="menu-item <%= activePage === 'goals' ? 'active' : '' %>">
+  <a href="/goals/<%= user._id %><%= mq %>" class="menu-item <%= activePage === 'goals' ? 'active' : '' %>">
     <img src="/public/img/icon/goal.png" alt="">
     Цели
   </a>
