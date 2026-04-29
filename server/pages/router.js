@@ -23,7 +23,7 @@ function getStatus(val, reference) {
 }
 
 router.get('/', async (req, res) => {
-  res.render("index", { 
+  res.render("index", {
     user: req.user ? req.user : {},
   });
 });
@@ -41,7 +41,7 @@ router.get("/regester", (req, res) => {
 });
 
 router.get('/test', async (req, res) => {
-  res.render("test", { 
+  res.render("test", {
     user: req.user ? req.user : {},
   });
 });
@@ -230,10 +230,13 @@ router.get("/not-found", (req, res) => {
 router.get("/add-members/:id", isAuth, async function (req, res) {
   try {
     const familyMembers = await FamilyMember.find({ ownerId: req.user._id });
+    const memberId = req.query.member || null;
+    const activeMember = memberId ? await FamilyMember.findById(memberId) : null;
     res.render("addMembers", {
       user: req.user ? req.user : {},
       familyMembers: familyMembers,
-      activeMemberId: req.query.member || null,
+      activeMember: activeMember,
+      activeMemberId: memberId,
       activePage: 'members',
     });
   } catch (error) {
@@ -245,12 +248,15 @@ router.get("/add-members/:id", isAuth, async function (req, res) {
 router.get("/setting/:id", isAuth, async function (req, res) {
   const user = await User.findById(req.params.id);
   if (user) {
+    const memberId = req.query.member || null;
     const familyMembers = await FamilyMember.find({ ownerId: req.user._id }).sort({ createdAt: 1 });
+    const activeMember = memberId ? await FamilyMember.findById(memberId) : null;
     res.render("setting", {
       user: user,
       loginUser: req.user,
       familyMembers: familyMembers,
-      activeMemberId: req.query.member || null,
+      activeMember: activeMember,
+      activeMemberId: memberId,
       query: req.query,
       activePage: 'settings',
     });
@@ -262,12 +268,15 @@ router.get("/setting/:id", isAuth, async function (req, res) {
 router.get("/ai/:id", isAuth, async function (req, res) {
   const user = await User.findById(req.params.id);
   if (user) {
+    const memberId = req.query.member || null;
     const familyMembers = await FamilyMember.find({ ownerId: req.user._id }).sort({ createdAt: 1 });
+    const activeMember = memberId ? await FamilyMember.findById(memberId) : null;
     res.render("ai", {
       user: user,
       loginUser: req.user,
       familyMembers: familyMembers,
-      activeMemberId: req.query.member || null,
+      activeMember: activeMember,
+      activeMemberId: memberId,
       activePage: 'ai',
     });
   } else {
@@ -294,12 +303,14 @@ router.get("/comparison/:id", isAuth, async function (req, res) {
     });
 
     const familyMembers = await FamilyMember.find({ ownerId: req.params.id }).sort({ createdAt: 1 });
+    const activeMember = memberId ? await FamilyMember.findById(memberId) : null;
 
     res.render("comparison", {
       user,
       loginUser: req.user,
       analyses,
       familyMembers,
+      activeMember: activeMember,
       activeMemberId: memberId,
       activePage: 'comparison',
     });
@@ -357,6 +368,7 @@ router.get("/goals/:id", isAuth, async function (req, res) {
     });
 
     const familyMembers = await FamilyMember.find({ ownerId: req.params.id }).sort({ createdAt: 1 });
+    const activeMember = memberId ? await FamilyMember.findById(memberId) : null;
 
     res.render("goals", {
       user,
@@ -364,8 +376,9 @@ router.get("/goals/:id", isAuth, async function (req, res) {
       analyses,
       goals: goalsWithProgress,
       familyMembers,
+      activeMember: activeMember,
       activeMemberId: memberId,
-      activePage: 'goals', 
+      activePage: 'goals',
     });
   } catch (error) {
     console.error("Ошибка при загрузке страницы целей:", error);
@@ -392,12 +405,13 @@ router.get("/all-analyses/:id", isAuth, async function (req, res) {
     });
 
     const familyMembers = await FamilyMember.find({ ownerId: req.params.id }).sort({ createdAt: 1 });
-
+    const activeMember = memberId ? await FamilyMember.findById(memberId) : null;
     res.render("allAnalysis", {
       user,
       loginUser: req.user,
       analyses,
       familyMembers,
+      activeMember: activeMember,
       activeMemberId: memberId,
       activePage: 'all-analyses',
     });
